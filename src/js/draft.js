@@ -71,4 +71,4 @@ function cardMarkup(results) {
   return cardSection.insertAdjacentHTML('beforeend', markup);
 }
 
-openModal();
+// openModal();
