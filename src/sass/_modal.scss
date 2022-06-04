@@ -1,0 +1,137 @@
+.open{
+  opacity: 1;
+  visibility: visible;
+  pointer-events:visible;
+}
+.movie-overlay {
+  position: relative;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.774);
+}
+.movie-window {
+  position: absolute;
+  left: 115px;
+  top: 120px;
+  max-width: 815px;
+  max-height: 560px;
+  background-color: #fff;
+  position: relative;
+}
+.close-btn {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  width: 14px;
+  height: 14px;
+}
+
+.movie-modal {
+  //   todo here needs grid
+
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  & img {
+    grid-column: 1/3;
+    margin-left: 20px;
+  }
+}
+.info-container {
+  grid-column: 4/3;
+  margin-left: 16px;
+  margin-right: 8px;
+}
+
+.movie-title {
+  margin-bottom: 20px;
+  font-size: 30px;
+  line-height: 1.16;
+
+  color: #000000;
+}
+.movie-list {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
+}
+.movie-items {
+  display: flex;
+  justify-content: space-between;
+  &:not(:last-child) {
+    margin-bottom: 8px;
+  }
+}
+.movie-description {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.33;
+
+  color: #8c8c8c;
+}
+.vote-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+.property-vote {
+  width: 36px;
+  height: 16px;
+  background-color: #ff6b01;
+  border-radius: 5px;
+
+  line-height: 1.16;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+
+  color: #ffffff;
+}
+
+.property-vote-alt {
+  color: #000000;
+  background-color: #f7f7f7;
+}
+.article {
+  margin-bottom: 20px;
+}
+.article-caption {
+  margin-bottom: 8px;
+  line-height: 1.33;
+  text-transform: uppercase;
+  color: #000000;
+}
+
+.article-text {
+
+  line-height: 1.67;
+
+  color: #000000;
+}
+
+.button-box {
+  display: flex;
+  padding-left: 8px;
+}
+.movie-button {
+  width: 136px;
+  height: 44px;
+  padding: 14px 8px 12px;
+  border-radius: 5px;
+  line-height: 1.33;
+  text-transform: uppercase;
+}
+.primary-btn {
+  background-color: #ff6b01;
+  color: #fff;
+  border: none;
+  margin-right: 15px;
+
+  color: #ffffff;
+}
+.secondary-btn {
+  border: 1px solid #000000;
+  color: #000000;
+}
