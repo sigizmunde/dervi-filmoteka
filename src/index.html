@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -18,98 +18,18 @@
     <title>Заголовок страницы</title>
   </head>
   <body>
-    <div class="hero-container">
-      <section class="section hero-section">
-        <div class="logo">
-          <svg class="logo-icon">
-            <use href="./images/icons/search.svg#logo"></use>
-          </svg>
-          <p>Filmoteka</p>
-        </div>
-        <nav class="nav">
-          <ul class="nav-list">
-            <li class="nav-items">
-              <a href="" class="nav-link nav-link--current-page nav-home" data-home>Home</a>
-            </li>
-            <li class="nav-items">
-              <a href="" class="nav-link">My Library</a>
-            </li>
-          </ul>
-        </nav>
-      </section>
-      <div class="search">
-        <form class="movie-search" id="movie-search">
-          <input
-            type="text"
-            class="search-input"
-            name="query"
-            autocomplete="off"
-            placeholder="Search movie..."
-          />
-          <button type="submit" class="submit-btn">
-            <svg class="search-icon">
-              <use href="./images/icons/search.svg#search"></use>
-            </svg>
-          </button>
-        </form>
-        <div class="line"></div>
-      </div>
-    </div>
+
+    <include src="./partials/header.html"></include>
+    <include src="./partials/modal.html"></include>
+
+
+
+   
     <section class="section">
       <div class="container"></div>
     </section>
 
-    <div class="modal is-hidden">
-      <div class="movie-overlay">
-      <div class="movie-window">
-        <button type="button" class="close-btn" data-close>&times;</button>
-        <div class="movie-modal">
-          <img src="./images/modal-picture.jpg" alt="movie-picture" width="375" height="480" />
-          <div class="info-container">
-            <h1 class="movie-title">A FISTFUL OF LEAD</h1>
-            <ul class="movie-list">
-              <li class="movie-items">
-                <p class="movie-description">Vote / Votes</p>
-                <div class="vote-box">
-                  <span class="property-vote">7.3</span>
-                  <span>/</span>
-                  <span class="property-vote property-vote-alt">1260</span>
-                </div>
-              </li>
-              <li class="movie-items">
-                <p class="movie-description">Popularity</p>
-                <span class="property-rang">100.2</span>
-              </li>
-              <li class="movie-items">
-                <p class="movie-description">Original Title</p>
-                <span class="property-title">A FISTFUL OF LEAD</span>
-              </li>
-              <li class="movie-items">
-                <p class="movie-description">Genre</p>
-                <span class="property-genre">Western</span>
-              </li>
-            </ul>
-            <article class="article">
-              <p class="article-caption">About</p>
-              <p class="article-text">
-                Four of the West’s most infamous outlaws assemble to steal a huge stash of gold from
-                the most corrupt settlement of the gold rush towns. But not all goes to plan one is
-                killed and the other three escapes with bags of gold hide out in the abandoned gold
-                mine where they happen across another gang of three – who themselves were planning
-                to hit the very same bank! As tensions rise, things go from bad to worse as they
-                realise the bags of gold are filled with lead... they’ve been double crossed – but
-                by who and how?
-              </p>
-            </article>
-            <div class="button-box">
-              <button class="movie-button primary-btn">add to Watched</button>
-              <button class="movie-button secondary-btn">add to queue</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    </div>
+   
     <script type="module" src="./index.js"></script>
   </body>
 </html>
