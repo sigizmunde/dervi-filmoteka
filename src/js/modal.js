@@ -1,3 +1,5 @@
+// draft file
+
 const movieModal = document.querySelector('.modal');
 
 export function openModal() {
@@ -9,7 +11,6 @@ function closeModal() {
   movieModal.classList.remove('open');
   movieModal.classList.add('is-hidden');
 }
-
 
 movieModal.addEventListener('click', onCloseClick);
 
