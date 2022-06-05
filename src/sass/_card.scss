@@ -1,8 +1,12 @@
-.container {
+.card-section {
   display: flex;
   flex-wrap: wrap;
   margin-right: -17px;
   margin-bottom: -32px;
+
+  // @media screen and (max-width: 1024px) {
+  //   width: 1024px;
+  // }
 }
 
 .card {

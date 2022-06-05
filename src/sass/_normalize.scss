@@ -25,7 +25,15 @@ a {
 li {
   list-style: none;
 }
-.section {
-  padding-left: 32px;
-  padding-right: 32px;
+.container {
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-left: auto;
+  margin-right: auto;
+
+  @media screen and (min-width: 768px) {
+    padding-left: 32px;
+    padding-right: 32px;
+    max-width: 1024px;
+  }
 }

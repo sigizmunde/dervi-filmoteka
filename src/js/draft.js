@@ -9,7 +9,7 @@ const API_KEY = '8302862792abaeee103b53516f1a680a';
 const BASE_URL = 'https://api.themoviedb.org/3/';
 const IMAGE_PATH = 'https://image.tmdb.org/t/p/w342/';
 
-const container = document.querySelector('.container');
+const cardSection = document.querySelector('.card-section');
 const searchForm = document.querySelector('.movie-search');
 const homePage = document.querySelector('.nav-home');
 console.log(homePage);
@@ -43,7 +43,7 @@ function getMovieByQuery(searchQuery) {
     .then(resolve => resolve.json())
     .then(data => {
       console.log(data.genres);
-      container.innerHTML = '';
+      cardSection.innerHTML = '';
       cardMarkup(data.results);
     })
     .catch(err => {
@@ -68,7 +68,7 @@ function cardMarkup(results) {
     )
     .join('');
 
-  return container.insertAdjacentHTML('beforeend', markup);
+  return cardSection.insertAdjacentHTML('beforeend', markup);
 }
 
-openModal();
+// openModal();

@@ -1,0 +1,31 @@
+.library-box {
+  position: absolute;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+}
+.library-btn {
+  width: 148px;
+  height: 42px;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+
+  line-height: 1.33;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  text-transform: uppercase;
+}
+.btn-primary {
+  background: #ff6b01;
+  margin-right: 16px;
+}
+.btn-secondary {
+  background: transparent;
+  border: 1px solid #fff;
+}

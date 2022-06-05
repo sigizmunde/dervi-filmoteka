@@ -1,21 +1,49 @@
-.open{
+.open {
   opacity: 1;
   visibility: visible;
-  pointer-events:visible;
+  pointer-events: visible;
 }
-.movie-overlay {
-  position: relative;
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.774);
+  background: rgba(0, 0, 0, 0.5);
+  // z-index: 1;
 }
+
 .movie-window {
-  position: absolute;
-  left: 115px;
-  top: 120px;
-  max-width: 815px;
-  max-height: 560px;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  height: auto;
   background-color: #fff;
-  position: relative;
+
+  @media screen and(min-width:768px) {
+    width: 704px;
+    height: 552px;
+  }
+
+  @media screen and (min-width: 1024px) {
+    width: 816px;
+    height: 558px;
+  }
+}
+.movie-picture {
+  width: 240px;
+  height: 357px;
+  @media screen and(min-width:768px) {
+    width: 264px;
+    height: 373px;
+  }
+  @media screen and(min-width:1024px) {
+    width: 375px;
+    height: 478px;
+  }
 }
 .close-btn {
   position: absolute;
@@ -73,7 +101,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  
 }
 .property-vote {
   width: 36px;
@@ -105,7 +132,6 @@
 }
 
 .article-text {
-
   line-height: 1.67;
 
   color: #000000;
