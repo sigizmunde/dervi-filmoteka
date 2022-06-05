@@ -1,31 +1,28 @@
 .library-box {
-  position: absolute;
-  bottom: 60px;
-  left: 50%;
-  transform: translateX(-50%);
   display: flex;
+  margin: 0 auto;
 }
 .library-btn {
   width: 148px;
   height: 42px;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-
-  line-height: 1.33;
 
   display: flex;
   justify-content: center;
   align-items: center;
-  text-align: center;
-  text-transform: uppercase;
-}
-.btn-primary {
-  background: #ff6b01;
-  margin-right: 16px;
-}
-.btn-secondary {
-  background: transparent;
+
+  color: #fff;
   border: 1px solid #fff;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 5px;
+  text-transform: uppercase;
+
+  line-height: 1.33;
+  &:not(:last-child) {
+    margin-right: 16px;
+  }
+}
+.accent-btn {
+  background: #ff6b01;
+  border: none;
 }

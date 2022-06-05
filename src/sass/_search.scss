@@ -1,14 +1,29 @@
 .search {
+  margin: 0 auto;
+}
+.movie-form {
+  margin-left: auto;
+  margin-right: auto;
   width: 280px;
-  bottom: 92px;
-  @media screen and (min-width: $tablet) {
-    width: 315px;
+  margin-bottom: 20px;
+  @media screen and (min-width: 321px) {
+    width: 336px;
+    bottom: 80px;
   }
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+}
+.movie-warning {
+  width: 280px;
 
-  //   todo  don't forget to set the transition trasform to parent "hero-section"
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: red;
+  @media screen and (min-width: 321px) {
+    width: 393px;
+  }
 }
 
 .movie-search {
@@ -46,5 +61,5 @@
 }
 
 .line {
-  border: 0.5px solid #ffffff;
+  border: 1px solid #ffffff;
 }
