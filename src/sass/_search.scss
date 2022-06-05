@@ -1,14 +1,13 @@
 .search {
   width: 280px;
-  position: absolute;
   bottom: 92px;
+  @media screen and (min-width: $tablet) {
+    width: 315px;
+  }
+  position: absolute;
   left: 50%;
   transform: translateX(-50%);
 
-  @media screen and (min-width: 321px) {
-    width: 336px;
-    bottom: 80px;
-  }
   //   todo  don't forget to set the transition trasform to parent "hero-section"
 }
 
@@ -23,11 +22,10 @@
   background-color: transparent;
   outline: none;
   border: none;
-  width: 315px;
   font-family: inherit;
   font-weight: 400;
   font-size: 14px;
-  line-height: 16px;
+  line-height: (16/14);
   color: white;
   &::placeholder {
     color: #ffffff;

@@ -3,10 +3,25 @@
   align-items: center;
   font-weight: 500;
   font-size: 30px;
-  line-height: 35px;
+  line-height: (35 / 30);
 
   color: #ffffff;
 }
+// .logo-text {
+//   position: unset;
+//   clip: unset;
+//   width: auto;
+//   height: auto;
+//   margin: auto;
+//   @media screen and (max-width: $tablet) {
+//     position: absolute;
+//     clip: rect(0 0 0 0);
+//     width: 1px;
+//     height: 1px;
+//     margin: -1px;
+//   }
+// }
+
 .logo-icon {
   width: 24px;
   height: 24px;
