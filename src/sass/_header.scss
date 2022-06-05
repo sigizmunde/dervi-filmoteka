@@ -5,7 +5,7 @@
   height: 230px;
   max-width: 1024px;
 
-  background-image: url(../images/hero.jpg);
+  // background-image: url(../images/hero.jpg);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -20,6 +20,15 @@
     margin-right: auto;
   }
 }
+
+.header.header.header-search {
+  background-image: url(../images/hero.jpg);
+}
+
+.header.header.header-library {
+  background-image: url(../images/library.jpg);
+}
+
 .header-box {
   max-width: 320px;
   margin-left: auto;
