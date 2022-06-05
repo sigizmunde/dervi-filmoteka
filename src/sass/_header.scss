@@ -35,7 +35,31 @@
 .header.header-search .library-box {
   display: none;
 }
+.header.header-search .nav-home {
+  &::after {
+    content: ' ';
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+
+    width: 100%;
+    height: 3px;
+    background: #ff6b08;
+  }
+}
 
 .header.header-library .search {
   display: none;
+}
+.header.header-library .nav-library {
+  &::after {
+    content: ' ';
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+
+    width: 100%;
+    height: 3px;
+    background: #ff6b08;
+  }
 }
