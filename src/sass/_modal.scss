@@ -23,12 +23,12 @@
   height: auto;
   background-color: #fff;
 
-  @media screen and(min-width:768px) {
+  @media screen and(min-width: $tablet) {
     width: 704px;
     height: 552px;
   }
 
-  @media screen and (min-width: 1024px) {
+  @media screen and (min-width: $desktop) {
     width: 816px;
     height: 558px;
   }
@@ -36,11 +36,11 @@
 .movie-picture {
   width: 240px;
   height: 357px;
-  @media screen and(min-width:768px) {
+  @media screen and(min-width:$tablet) {
     width: 264px;
     height: 373px;
   }
-  @media screen and(min-width:1024px) {
+  @media screen and(min-width:$desktop) {
     width: 375px;
     height: 478px;
   }
