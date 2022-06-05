@@ -1,4 +1,4 @@
-.search{
+.search {
   margin: 0 auto;
 }
 .movie-form {
@@ -6,7 +6,7 @@
   margin-right: auto;
   width: 280px;
   margin-bottom: 20px;
-  @media screen and (min-width: 321px) {
+  @media screen and (min-width: $tablet) {
     width: 336px;
     bottom: 80px;
   }
@@ -21,7 +21,7 @@
   align-items: center;
   text-align: center;
   color: red;
-  @media screen and (min-width: 321px) {
+  @media screen and (min-width: $tablet) {
     width: 393px;
   }
 }
@@ -37,11 +37,10 @@
   background-color: transparent;
   outline: none;
   border: none;
-  width: 315px;
   font-family: inherit;
   font-weight: 400;
   font-size: 14px;
-  line-height: 16px;
+  line-height: (16/14);
   color: white;
   &::placeholder {
     color: #ffffff;
