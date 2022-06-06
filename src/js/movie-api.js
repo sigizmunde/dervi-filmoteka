@@ -2,29 +2,17 @@
 
 import { API_BASE_URL, API_KEY } from "./global";
 
-// // temporary dummy data
-import * as genres from './dummy-array-objs/genres.json';
-// import * as movieDetails from './dummy-array-objs/movie-details.json';
-// import * as trendingMovies from './dummy-array-objs/trending-movies.json';
-
-// export function fetchMovie(id) {
-//   // returns movie info as an object
-//   return JSON.parse(movieDetails);
-// }
-
-// export function fetchMovies(params) {
-//   // search for movies by params and returns an array of objects
-//   return JSON.parse(trendingMovies);
-// }
-
-// export function getGenres() {
-//   // returns list of genres in some format (to consider)
-//   return JSON.parse(genres);
-// }
-
 export default class APIService {
   constructor() {
+    if (APIService._instance) {
+      return APIService._instance;
+    }
+    APIService._instance = this;
+
     this.searchQuery = "";
+    this.genres = [];
+
+    this.#loadGenres();
   }
 
   #fetchQuery(pathParams, searchParams) {
@@ -78,9 +66,6 @@ export default class APIService {
         });
 
         return this.#fetchQuery(pathParams.split, searchParams);
-            // .then(response => {
-            //     return response.results;
-            // });
     }
 
     // GET MOVIE
@@ -103,8 +88,30 @@ export default class APIService {
         return this.#fetchQuery(pathParams.split, searchParams);
   }
   
-  getGenres() {  
-    return genres.genres;  
+  // GENRES
+  #loadGenres() {  
+    // return genres.genres;  
+    const pathParams = {
+      resource: "genre",
+      mediaType: "movie",
+      list: "list",
+
+      get split() {
+        return `${this.resource}/${this.mediaType}/${this.list}`;
+      }
+    }
+
+    // Search params
+      const searchParams = new URLSearchParams({
+          api_key: API_KEY,
+      });
+    
+    this.#fetchQuery(pathParams.split, searchParams)
+                .then(result => this.genres = result.genres);
+  }
+
+  getGenres() {
+    return this.genres;
   }
 }
 
