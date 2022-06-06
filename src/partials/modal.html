@@ -1,34 +1,40 @@
 <div class="modal is-hidden" id="movie-info">
   <div class="movie-window">
-    <button type="button" class="close-btn" data-close>&times;</button>
+    <button type="button" class="close-btn" data-close>
+      <svg class="close-icon">
+        <use href="./images/icons/sprite.svg#close"></use>
+      </svg>
+    </button>
     <div class="movie-modal">
-      <img
-        src="./images/modal-picture.jpg"
-        alt="movie-picture"
-        class="movie-picture"
-      />
+      <div class="movie-picture-box">
+        <img
+          src="./images/modal-picture.jpg"
+          alt="movie-picture"
+          class="movie-picture"
+        />
+      </div>
       <div class="info-container">
         <h1 class="movie-title">A FISTFUL OF LEAD</h1>
         <ul class="movie-list">
-          <li class="movie-items">
-            <p class="movie-description">Vote / Votes</p>
-            <div class="vote-box">
-              <span class="property-vote">7.3</span>
-              <span>/</span>
-              <span class="property-vote property-vote-alt">1260</span>
+          <li class="movie-items item-right">
+            <div class="description-box">
+              <p class="movie-description">Vote / Votes</p>
+              <p class="movie-description">Popularity</p>
+              <p class="movie-description">Original Title</p>
+              <p class="movie-description">Genre</p>
             </div>
           </li>
           <li class="movie-items">
-            <p class="movie-description">Popularity</p>
-            <span class="property-rang">100.2</span>
-          </li>
-          <li class="movie-items">
-            <p class="movie-description">Original Title</p>
-            <span class="property-title">A FISTFUL OF LEAD</span>
-          </li>
-          <li class="movie-items">
-            <p class="movie-description">Genre</p>
-            <span class="property-genre">Western</span>
+            <div class="property-box">
+              <div class="vote-box property">
+                <p class="property-vote property-accent" id="vote">7.3</p>
+                <span class="vote-slash">/</span>
+                <p class="property-vote property-vote-alt" id="votes">1260</p>
+              </div>
+              <p class="property" id="popularity">100.2</p>
+              <p class="property" id="title">A FISTFUL OF LEAD</p>
+              <p class="property" id="genre">Western</p>
+            </div>
           </li>
         </ul>
         <article class="article">
@@ -46,7 +52,7 @@
         </article>
         <div class="button-box">
           <button class="movie-button primary-btn">add to Watched</button>
-          <button class="movie-button secondary-btn">add to queue</button>
+          <button class="movie-button">add to queue</button>
         </div>
       </div>
     </div>

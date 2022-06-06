@@ -5,7 +5,10 @@
 
 // Стили для файла с примером HTML-фрагмента
 @import './var';
+
 @import './normalize';
+@import './common';
+
 @import './header';
 @import './modal';
 @import './wrapper';
@@ -16,3 +19,5 @@
 @import './library';
 @import './genres';
 @import './utilits';
+@import './footer';
+@import './modal-our-team';
