@@ -5,6 +5,6 @@ import { getMovieList } from './movies';
 
 export function init() {
   //refs, event listeners, genres request, popular movies request
-  // refs.cardsBox = document.querySelector(".cards-box");
+  refs.cardsBox = document.querySelector('.cards-box');
   getMovieList();
 }

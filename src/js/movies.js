@@ -1,6 +1,6 @@
 // main module to manipulate with data inside an application
 
-import { genreList, API_KEY, API_BASE_URL, API_IMG_URL, refs } from './global';
+import { API_KEY, API_BASE_URL, API_IMG_URL, refs } from './global';
 // import { fetchMovie, fetchMovies, getGenres } from 'movie-api';
 import { showMovies } from './markup';
 import APIService from './movie-api';
@@ -13,11 +13,13 @@ const API = new APIService();
 
 export function getMovieList(params) {
   // depending on params requests API or data
-  API.getTrending()
-    .then(responseData => {      
-      showMovies(responseData);
-    })
-    .catch(result => console.log(result));
+  if (!params) {
+    API.getTrending()
+      .then(responseData => {
+        showMovies(responseData);
+      })
+      .catch(result => console.log(result));
+  }
 }
 
 function getMovieInfo(id) {
@@ -30,20 +32,21 @@ function search(params) {
   return fetchMovies();
 }
 
-function loadGenres() {
+import * as initialGenres from './dummy-array-objs/genres.json';
+
+function getGenres() {
   // genreList = getGenres();
   const genreList = API.getGenres();
-  
   return genreList;
 }
 
 export function parseGenresByString(genre_ids = [], maxCount = 0) {
-  const genreList = loadGenres();
+  const genreList = getGenres();
   const genreNames = [];
 
   for (let i = 0; i < genre_ids.length; i++) {
-    if (maxCount && i === maxCount) {
-      genreNames.push("others");
+    if (maxCount && i === maxCount && i < genre_ids.length - 1) {
+      genreNames.push('others');
       break;
     }
 
@@ -53,8 +56,8 @@ export function parseGenresByString(genre_ids = [], maxCount = 0) {
       genreNames.push(findValue.name);
     }
   }
-  
-  return genreNames.join(", ");  
+
+  return genreNames.join(', ');
 }
 
 function addQueue(film) {
@@ -72,4 +75,3 @@ function removeQueue(film) {
 function removeWatched(film) {
   // gets dataStorage.getQueue, removes film.id and then sets dataStorage.setQueue
 }
-
