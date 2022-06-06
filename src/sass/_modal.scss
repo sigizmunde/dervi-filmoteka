@@ -65,21 +65,23 @@
 }
 .close-btn {
   position: absolute;
-  cursor: pointer;
   right: 8px;
   top: 8px;
-  color: #000000;
-  border: none;
-  background-color: transparent;
+  width: 30px;
+  height: 30px;
   padding: 0;
-  &:hover{
+  color: #000000;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  &:hover {
     color: #ff6b01;
   }
 }
 .close-icon {
   fill: currentColor;
-  width: 30px;
-  height: 30px;
+  width: 14px;
+  height: 14px;
 }
 .info-container {
   @media screen and(min-width: $tablet) {
