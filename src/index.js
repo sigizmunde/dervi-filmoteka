@@ -1,6 +1,7 @@
 import './sass/main.scss'; // draft file
 // import './js/draft'; // draft file
-import './js/movies'; // movies
+import './js/controller'; // movies
+
 
 //================================= test field =======================================
 

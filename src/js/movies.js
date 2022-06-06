@@ -2,6 +2,7 @@
 
 import { genreList, API_KEY, API_BASE_URL, API_IMG_URL, refs } from './global';
 // import { fetchMovie, fetchMovies, getGenres } from 'movie-api';
+import { showMovies } from './markup';
 import APIService from './movie-api';
 // import DataStorage from './data.js';
 
@@ -10,26 +11,11 @@ const API = new APIService();
 
 // let currentMovieList = [{ film1 }, { film2 }, { film3 }];
 
-function getMovieList(params) {
+export function getMovieList(params) {
   // depending on params requests API or data
   API.getTrending()
     .then(responseData => {      
-      responseData.results.map(movie => {
-        refs.cardsBox.innerHTML += `
-          <li class="card">
-            <a href="" class="card-link" movie-id="${movie.id}">
-              <img
-                src="${API_IMG_URL}${movie.poster_path}"
-                class="card-image"
-                alt=""
-              />
-              <div class="card-body">
-                <p class="card-title"><b>${movie.original_title}</b></p>
-                <p class="card-genres"><b>${parseGenresByString(movie.genre_ids, 2)} | ${movie.release_date.substr(0, 4)}</b></p>
-              </div>
-            </a>
-          </li>`
-      });
+      showMovies(responseData);
     })
     .catch(result => console.log(result));
 }
@@ -51,7 +37,7 @@ function loadGenres() {
   return genreList;
 }
 
-function parseGenresByString(genre_ids = [], maxCount = 0) {
+export function parseGenresByString(genre_ids = [], maxCount = 0) {
   const genreList = loadGenres();
   const genreNames = [];
 
@@ -87,4 +73,3 @@ function removeWatched(film) {
   // gets dataStorage.getQueue, removes film.id and then sets dataStorage.setQueue
 }
 
-getMovieList();
