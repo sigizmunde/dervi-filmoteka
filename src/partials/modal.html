@@ -1,6 +1,10 @@
 <div class="modal is-hidden" id="movie-info">
   <div class="movie-window">
-    <button type="button" class="close-btn" data-close>&times;</button>
+    <button type="button" class="close-btn" data-close>
+      <svg class="icon-close">
+        <use href="./images/icons/close.svg#close-icon"></use>
+      </svg>
+    </button>
     <div class="movie-modal">
       <img
         src="./images/modal-picture.jpg"
@@ -8,29 +12,33 @@
         class="movie-picture"
       />
       <div class="info-container">
-        <h1 class="movie-title">A FISTFUL OF LEAD</h1>
-        <ul class="movie-list">
-          <li class="movie-items">
-            <p class="movie-description">Vote / Votes</p>
-            <div class="vote-box">
+        <h2 class="movie-title">A FISTFUL OF LEAD</h2>
+        <div class="movie-head-info">
+          <ul class="movie-list-title">
+            <li class="movie-items">
+              <p class="movie-description">Vote / Votes</p>
+            </li>
+            <li class="movie-items">
+              <p class="movie-description">Popularity</p>
+            </li>
+            <li class="movie-items">
+              <p class="movie-description">Original Title</p>
+            </li>
+            <li class="movie-items">
+              <p class="movie-description">Genre</p>
+            </li>
+          </ul>
+          <ul class="movie-list-data">
+            <li class="movie-items vote-box">
               <span class="property-vote">7.3</span>
-              <span>/</span>
+              <span> / </span>
               <span class="property-vote property-vote-alt">1260</span>
-            </div>
-          </li>
-          <li class="movie-items">
-            <p class="movie-description">Popularity</p>
-            <span class="property-rang">100.2</span>
-          </li>
-          <li class="movie-items">
-            <p class="movie-description">Original Title</p>
-            <span class="property-title">A FISTFUL OF LEAD</span>
-          </li>
-          <li class="movie-items">
-            <p class="movie-description">Genre</p>
-            <span class="property-genre">Western</span>
-          </li>
-        </ul>
+            </li>
+            <li class="movie-items property-rang">100.2</li>
+            <li class="movie-items property-title">A FISTFUL OF LEAD</li>
+            <li class="movie-items property-genre">Western</li>
+          </ul>
+        </div>
         <article class="article">
           <p class="article-caption">About</p>
           <p class="article-text">
