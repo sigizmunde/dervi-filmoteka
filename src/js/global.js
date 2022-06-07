@@ -6,3 +6,5 @@ export const API_BASE_URL = 'https://api.themoviedb.org/3';
 export const API_IMG_URL = 'http://image.tmdb.org/t/p/w500';
 
 export const refs = {};
+export let watchedIdArr = [];
+export let queueIdArr = [];
