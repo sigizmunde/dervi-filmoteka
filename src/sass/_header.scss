@@ -41,7 +41,7 @@
 }
 .header-bgc {
   @media screen and (min-width: $desktop) {
-    background-color: black;
+    background-color: var(--helpers-bg-color);
     width: 100vw;
   }
 }
@@ -58,7 +58,7 @@
 
     width: 100%;
     height: 3px;
-    background: #ff6b08;
+    background: var(--accent-color);
   }
 }
 
@@ -74,6 +74,6 @@
 
     width: 100%;
     height: 3px;
-    background: #ff6b08;
+    background: var(--accent-color);
   }
 }

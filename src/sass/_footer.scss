@@ -1,14 +1,14 @@
 .footer{
     padding-top: 30px;
     padding-bottom: 30px;
-    background-color: #F7F7F7;
+    background-color: var(--secondary-bg-color);
     text-align: center;
 }
 
 .footer__text{
     font-size: 14px;
     line-height:1.14;
-    color: #545454;
+    color: var(--ft-text-color);
 
     @media screen and (min-width: $tablet){
     font-size: 16px;
@@ -19,7 +19,7 @@
 .footer__button-about-us{
     padding: 0;
     border: none;
-    border-bottom: 1px solid #545454;
+    border-bottom: 1px solid var(--ft-text-color);
     background-color: transparent;
     color: inherit;
     cursor: pointer;
