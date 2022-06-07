@@ -1,15 +1,19 @@
 .pagination {
     display: flex;
     padding: 0;
-    margin-top: 40px;
+    
     margin-right: auto;
     margin-left: auto;
     justify-content: center;
     @media screen and (max-width: 480px), (min-width: 480px) {
         width: 280px;
+        margin-top: 40px;
+        margin-bottom: 40px;
     }
     @media screen and (min-width: 768px) {
         width: 374px;
+        margin-top: 60px;
+        margin-bottom: 60px;
     }
 }
 .pagination-list{
