@@ -1,7 +1,7 @@
 // draft file
 
 import { openModal } from './modal.js';
-
+// import dummy from './dummy-array-objs/trending-movies.json';
 const v4Auth =
   'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4MzAyODYyNzkyYWJhZWVlMTAzYjUzNTE2ZjFhNjgwYSIsInN1YiI6IjYyOTYzY2FiZDQ4Y2VlMGQ3MTIzM2MwOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.M248raofLEo0F8tv67xOg13dzslsK-jehk_QOEqvYj8';
 
@@ -52,21 +52,35 @@ function getMovieByQuery(searchQuery) {
 }
 
 // * this function is marking up the movie card into a div"container"
+// cardMarkup(dummy.results);
+
 function cardMarkup(results) {
   console.log(results);
   const markup = results
     .map(
-      ({ poster_path, title, name }) => `<div class="card">
-      <a href="" class="card-link">
-        <img src="${IMAGE_PATH}${poster_path}" class="card-image" alt="" />
-        <div class="card-body">
-          <p class="card-title"><b>${title || name}</b></p>          
-          <p class="card-genres"><b>Genres..</b></p>          
-        </div>
-      </a>
-    </div>`
+      ({ poster_path, title, name }) => `
+      <li class="card">
+        <a href="" class="card-link">
+          <div class="card-button-slider">
+            <img src="${IMAGE_PATH}${poster_path}" class="card-image" alt="" />
+            <div class="card-button-background">
+             <button class="card-button in-watched">watched</button>
+              <button class="card-button in-queue">queue</button>
+             </div>
+          </div>
+          <div class="card-label-wrapper">
+            <div class="card-label-in-watched"></div>
+            <div class="card-label-in-queue"></div>
+          </div>
+          <div class="card-body">
+            <p class="card-title"><b>${title || name}</b></p>          
+           <p class="card-genres"><b>Genres..</b></p>          
+          </div>
+        </a>
+      </li>`
     )
     .join('');
+  // console.log(markup);
 
   return cardSection.insertAdjacentHTML('beforeend', markup);
 }
