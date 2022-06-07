@@ -1,7 +1,6 @@
 .pagination {
     display: flex;
     padding: 0;
-    
     margin-right: auto;
     margin-left: auto;
     justify-content: center;
@@ -24,7 +23,6 @@
     display: flex;
     align-items: center;
     width: 40px;
-    // height: 40px;
     background: #F7F7F7;
     border-radius: 5px;
 }
@@ -40,32 +38,35 @@
         @media screen and (min-width: 768px) {
             display: flex;
         }
-        
-    }   
-    // &:nth-child(3), &:nth-child(7) {
-
-    //     @media screen and (max-width: 480px),
-    //     (min-width: 480px) {
-    //         margin-right: 4px;
-    //     }
-
-    //     @media screen and (min-width: 768px) {
-    //         margin-right: 0;
-    //     }
-    // }
+    }
+    &:nth-child(3) {
+        @media screen and (max-width: 480px),
+        (min-width: 480px) {
+            margin-left: 10px;
+        }
+        @media screen and (min-width: 768px) {
+            margin-left: 0;
+        }
+    }
+    &:nth-child(7) {
+        @media screen and (max-width: 480px),
+        (min-width: 480px) {
+            margin-right: 10px;
+        }
+        @media screen and (min-width: 768px) {
+            margin-right: 0;
+        }
+    }
 }
 .pagination-link{
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-left: auto;
     text-decoration: none;
     color: #000000;
-    // padding-right: 20px;
-    padding-top: auto;
     width: 32px;
     height: 40px;
-    // transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    font-family: 'Roboto';
     &:hover:not(.current){
         background-color: #F7F7F7;
         border-radius: 5px;
@@ -75,6 +76,8 @@
 .pagination-link.current{
     width: 40px;
     height: 40px;
-    background: #FF6B08;
+    margin: 0 8px ;
+    color: #FFFFFF;
+    background-color: #FF6B08;
     border-radius: 5px;
 }
