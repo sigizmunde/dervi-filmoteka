@@ -10,7 +10,7 @@
   transform: translate(-50%, -50%);
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--overlay-color);
   // z-index: 1;
 }
 
@@ -21,7 +21,7 @@
   transform: translate(-50%, -50%);
   width: 90%;
   height: auto;
-  background-color: #fff;
+  background-color: var(--main-bg-color);
 
   @media screen and(min-width: $tablet) {
     width: 704px;
@@ -70,12 +70,14 @@
   width: 30px;
   height: 30px;
   padding: 0;
-  color: #000000;
+  color: var(--secondary-text-color);
   background-color: transparent;
   border: none;
   cursor: pointer;
+  transition: color var(--transition-params);
+  
   &:hover {
-    color: #ff6b01;
+    color: var(--accent-color);
   }
 }
 .close-icon {
@@ -93,7 +95,7 @@
   font-size: 30px;
   line-height: 1.16;
 
-  color: #000000;
+  color: var(--secondary-text-color);
 }
 .movie-list {
   display: flex;
@@ -112,7 +114,7 @@
   font-size: 12px;
   line-height: 1.33;
 
-  color: #8c8c8c;
+  color: var(--helpers-text-color);
   &:not(:last-child) {
     margin-bottom: 8px;
   }
@@ -126,7 +128,7 @@
   line-height: calc(14 / 12);
   text-transform: uppercase;
 
-  color: #000000;
+  color: var(--secondary-text-color);
   &:not(:last-child) {
     margin-bottom: 8px;
   }
@@ -141,8 +143,8 @@
   align-items: center;
   justify-content: center;
 
-  color: #000000;
-  background-color: #f7f7f7;
+  color: var(--secondary-text-color);
+  background-color: var(--secondary-bg-color);
   border-radius: 5px;
   line-height: 1.16;
   text-transform: uppercase;
@@ -153,12 +155,12 @@
   }
 }
 .vote-slash {
-  color: #8c8c8c;
+  color: var(--helpers-text-color);
 }
 
 .property-accent {
-  background-color: #ff6b01;
-  color: #ffffff;
+  background-color: var(--accent-color);
+  color: var(--main-bg-color);
 }
 .article {
   margin-bottom: 20px;
@@ -167,7 +169,7 @@
   margin-bottom: 8px;
   line-height: 1.33;
   text-transform: uppercase;
-  color: #000000;
+  color: var(--secondary-text-color);
 }
 
 .article-text {
@@ -175,7 +177,7 @@
   max-height: 200px;
   line-height: 1.67;
 
-  color: #000000;
+  color: var(--secondary-text-color);
 }
 
 .button-box {
@@ -192,8 +194,8 @@
   border-radius: 5px;
   line-height: 1.33;
   text-transform: uppercase;
-  border: 1px solid #000000;
-  color: #000000;
+  border: 1px solid var(--secondary-text-color);
+  color: var(--secondary-text-color);
   background-color: transparent;
 
   &:not(:last-child) {
@@ -201,7 +203,7 @@
   }
 }
 .primary-btn {
-  background-color: #ff6b01;
-  color: #fff;
+  background-color: var(--accent-color);
+  color: var(--main-text-color);
   border: none;
 }
