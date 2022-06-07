@@ -35,61 +35,61 @@
     height: 558px;
   }
 }
-.movie-picture {
-  width: 240px;
+
+.movie-modal {
+  display: flex;
+  @media screen and (min-width: $tablet) {
+    padding: 40px 36px;
+  }
+  @media screen and (min-width: $desktop) {
+    padding: 40px 16px;
+  }
+}
+
+.movie-picture-box {
+  min-width: 240px;
   height: 357px;
+  border-radius: 5px;
+  overflow: hidden;
   @media screen and(min-width:$tablet) {
-    width: 264px;
+    min-width: 264px;
     height: 373px;
+    margin-right: 68px;
   }
   @media screen and(min-width:$desktop) {
-    width: 375px;
+    min-width: 375px;
     height: 478px;
+    margin-right: 16px;
   }
+}
+.movie-picture {
+  width: 100%;
 }
 .close-btn {
   position: absolute;
   right: 8px;
   top: 8px;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-}
-.icon-close {
-  width: 18px;
+  width: 30px;
   height: 30px;
-  fill: red;
+  padding: 0;
+  color: #000000;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  &:hover {
+    color: #ff6b01;
+  }
 }
-
-.movie-modal {
-  //   todo here needs grid
-  display: flex;
-  flex-direction: column;
-  padding: 48px 20px 40px 20px;
-  @media screen and (min-width: $tablet) {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    padding-top: 40px;
-    padding-bottom: 40px;
-  }
-  & img {
-    width: 100%;
-    grid-column: 1/3;
-    margin-bottom: 20px;
-    border-radius: 5px;
-  }
+.close-icon {
+  fill: currentColor;
+  width: 14px;
+  height: 14px;
 }
 .info-container {
-  grid-column: 4/3;
-  // margin-left: 16px;
-  // margin-right: 8px;
+  @media screen and(min-width: $tablet) {
+    margin-right: 36px;
+  }
 }
-
 .movie-title {
   font-weight: 500;
   font-size: 20px;
@@ -113,15 +113,15 @@
 }
 .movie-head-info {
   display: flex;
+  flex-direction: row;
   margin-bottom: 20px;
 }
-.movie-items {
+.movie-items.item-right {
+  width: 155px;
+}
+.description-box {
   display: flex;
-  font-family: Roboto;
-
-  &:not(:last-child) {
-    margin-bottom: 8px;
-  }
+  flex-direction: column;
 }
 .movie-description {
   font-weight: 500;
@@ -129,36 +129,53 @@
   line-height: calc(16 / 12);
 
   color: #8c8c8c;
+  &:not(:last-child) {
+    margin-bottom: 8px;
+  }
+}
+
+.property-box {
+  display: flex;
+  flex-direction: column;
+}
+.property {
+  line-height: calc(14 / 12);
+  text-transform: uppercase;
+
+  color: #000000;
+  &:not(:last-child) {
+    margin-bottom: 8px;
+  }
 }
 .vote-box {
   display: flex;
+}
+.property-vote {
+  width: 36px;
+  height: 16px;
+  display: flex;
   align-items: center;
-  line-height: 14px;
-}
-.property {
-  &-vote {
-    width: 36px;
-    height: 16px;
-    background-color: #ff6b01;
-    border-radius: 5px;
+  justify-content: center;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-transform: uppercase;
-
-    color: #ffffff;
-    &-alt {
-      color: #000000;
-      background-color: #f7f7f7;
-    }
-  }
-  &-rang,
-  &-genre {
-    line-height: 16px;
+  color: #000000;
+  background-color: #f7f7f7;
+  border-radius: 5px;
+  line-height: 1.16;
+  text-transform: uppercase;
+  margin-right: 2px;
+  &:last-child {
+    margin-left: 3px;
+    margin-right: 0;
   }
 }
+.vote-slash {
+  color: #8c8c8c;
+}
 
+.property-accent {
+  background-color: #ff6b01;
+  color: #ffffff;
+}
 .article {
   margin-bottom: 20px;
 }
@@ -171,10 +188,10 @@
 }
 
 .article-text {
-  max-height: 236px;
-  line-height: calc(20 / 12);
-  font-family: Roboto;
-  overflow: scroll;
+  overflow: auto;
+  max-height: 200px;
+  line-height: 1.67;
+
   color: #000000;
 }
 
@@ -185,11 +202,20 @@
 .movie-button {
   width: 136px;
   height: 44px;
-  padding: 14px 8px 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   border-radius: 5px;
   line-height: 1.33;
   text-transform: uppercase;
-  font-weight: 500;
+  border: 1px solid #000000;
+  color: #000000;
+  background-color: transparent;
+
+  &:not(:last-child) {
+    margin-right: 15px;
+  }
 }
 .primary-btn {
   display: flex;
@@ -197,14 +223,4 @@
   background-color: #ff6b01;
   color: #fff;
   border: none;
-  margin-right: 15px;
-
-  color: #ffffff;
-}
-.secondary-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid #000000;
-  color: #000000;
 }

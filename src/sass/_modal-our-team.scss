@@ -1,0 +1,148 @@
+.our-team__backdrop{
+    position: fixed;
+    top:0;
+    left:0;
+
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.25);
+    transition: opacity 250ms, visibility 250ms;
+
+    &.is-hidden .our-team__modal{
+            transform: translate(-50%, -50%) scale(0.1);
+        }
+}
+
+.our-team__modal{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1);
+
+    width: calc(100vw - 40px);
+    max-width: 375px;
+    height: calc(100vh - 60px);
+    padding: 40px 20px;
+    
+    border: 2px solid #fff;
+    background-color: #fff;
+    background-image: linear-gradient(rgba(47, 48, 58, 0.2), rgba(47, 48, 58, 0.2)), url('../images/team-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow-y: scroll;
+    transition: transform 250ms, opacity 250ms;
+    
+    @media screen and (min-width: $tablet) {
+    // height: 550px;
+    // width: 700px;
+    height: 500px;
+    width: 700px;
+    padding: 40px 35px;
+    max-width:none;
+    }
+
+    @media screen and (min-width: $desktop){
+    // height: 560px;
+    // width: 815px;
+    padding: 40px 15px;
+    }  
+}
+
+
+
+.our-team__title{
+    text-align: center;
+    margin-bottom: 20px;
+    color: #fff;
+    font-size: 36px;
+    line-height: 1.14;
+    text-transform: uppercase;
+}
+
+.our-team__modal-button{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor:pointer;
+}
+
+.team-members-container{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: fit-content;
+    row-gap: 20px;
+
+    @media screen and (min-width: $tablet){
+    grid-template-columns: repeat(4,1fr);
+    column-gap: 10px;
+    }
+}
+
+.team-member{
+    background-color: #fff;
+    box-shadow:  0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.14),
+    0px 2px 1px rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+}
+
+.team-member__img-container{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.team-member__text-container{
+    padding: 20px 15px;
+    text-align: center;
+}
+
+.team-member__name{
+    margin-bottom: 10px;
+    font-size: 18px;
+    line-height: 1.14;
+}
+
+.team-member__link{
+    display: block;
+    margin-bottom: 5px;
+    font-size: 12px;
+    line-height: 1.14;
+    color: rgba(255, 107, 8, 1);
+}
+
+.team-member__role{
+    margin-bottom: 5px;
+    font-size: 12px;
+    line-height: 1.14;
+    color: #545454;
+    text-transform: uppercase;
+}
+
+.command-logo-container{
+   position: absolute;
+   top: -10px;
+   right: -10px;
+   border-radius: 50%;
+   overflow: hidden;
+    @media screen and (min-width: $tablet){
+        width: 50px;
+        height: 50px;
+        top: -5px;
+        right: -5px;
+    }
+}
+
+.team-logo{
+    @media screen and (min-width: $tablet) {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+}
