@@ -55,13 +55,13 @@
 
   text-transform: uppercase;
 
-  color: #000000;
+  color: var(--secondary-text-color);
 }
 .card-genres {
   font-weight: 500;
   font-size: 12px;
   line-height: calc(16 / 12);
-  color: #ff6b08;
+  color: var(--accent-color);
 }
 
 // .card {
