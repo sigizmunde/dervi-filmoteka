@@ -109,7 +109,7 @@
 
 @media screen and (min-width: $desktop) {
   .card-link:hover .card-button-background,
-  .card-link:focus .card-button-background {
+  .card-link:focus-within .card-button-background {
     transform: translateY(0);
     transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
 
