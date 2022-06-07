@@ -51,7 +51,7 @@
 .card-title {
   font-weight: 500;
   font-size: 12px;
-  line-height: (16/12);
+  line-height: calc(16 / 12);
 
   text-transform: uppercase;
 
@@ -60,7 +60,7 @@
 .card-genres {
   font-weight: 500;
   font-size: 12px;
-  line-height: (16/12);
+  line-height: calc(16 / 12);
   color: #ff6b08;
 }
 

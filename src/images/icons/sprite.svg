@@ -13,5 +13,8 @@
 <path  style="stroke: var(--color1, #818181)" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4" stroke-width="2" d="M17 17h5"></path>
 <path  style="stroke: var(--color1, #818181)" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4" stroke-width="2" d="M17 7h5"></path>
 </symbol>
+<symbol id="close" viewBox="0 0 20 20">
+<path d="M10 8.586l-7.071-7.071-1.414 1.414 7.071 7.071-7.071 7.071 1.414 1.414 7.071-7.071 7.071 7.071 1.414-1.414-7.071-7.071 7.071-7.071-1.414-1.414-7.071 7.071z"></path>
+</symbol>
 </defs>
 </svg>
