@@ -19,7 +19,8 @@
 
   line-height: 1.33;
 
-  transition: background-color var(--transition-params), border var(--transition-params);
+  transition: background-color var(--transition-params),
+    border var(--transition-params);
 
   &:not(:last-child) {
     margin-right: 16px;

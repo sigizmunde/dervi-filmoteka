@@ -5,47 +5,44 @@ import { getMovieList } from './movies';
 
 export function init() {
   //refs, event listeners, genres request, popular movies request
+  
   refs.cardsBox = document.querySelector('.cards-box');
   refs.header = document.querySelector('.header');
-  refs.homePage = document.querySelector('#home');
-  refs.libraryPage = document.querySelector('#library');
-  refs.logoPage = document.querySelector('#logo');
-  refs.libWatch = document.querySelector('#lib-w');
-  refs.libQue = document.querySelector('#lib-q');
+  refs.homeLink = document.querySelector('#home');
+  refs.libraryLink = document.querySelector('#library');
+  refs.logo = document.querySelector('#logo');
+  refs.libraryWatchBtn = document.querySelector('#lib-w');
+  refs.libraryQueBtn = document.querySelector('#lib-q');
 
-  refs.logoPage.addEventListener('click', onLogoPageClick);
-  refs.homePage.addEventListener('click', onHeaderPageClick);
-  refs.libraryPage.addEventListener('pageshow', onLibraryPageClick);
-  refs.libWatch.addEventListener('click', onWatchBtnClick);
-  refs.libQue.addEventListener('click', onQueBtnClick);
+  refs.logo.addEventListener('click', onHomeLinkClick);
+  refs.homeLink.addEventListener('click', onHomeLinkClick);
+  refs.libraryLink.addEventListener('click', onLibraryLinkClick);
+  refs.libraryWatchBtn.addEventListener('click', onLibraryWatchBtnClick);
+  refs.libraryQueBtn.addEventListener('click', onLibraryQueBtnClick);
   getMovieList();
 }
 
-function onHeaderPageClick() {
+function onHomeLinkClick(event) {
+  event.preventDefault();
   refs.header.classList.remove('header-library');
   refs.header.classList.add('header-search');
 }
 
-function onLibraryPageClick() {
+function onLibraryLinkClick(event) {
+  event.preventDefault();
   refs.header.classList.remove('header-search');
   refs.header.classList.add('header-library');
-  onWatchBtnClick();
+  onLibraryWatchBtnClick();
 }
 
-function onLogoPageClick() {
-  if (onHeaderPageClick) {
-    console.log('hello from Home');
-  }
-  onHeaderPageClick();
-}
-function onWatchBtnClick() {
-  refs.libWatch.classList.remove('accent-btn');
-  refs.libWatch.classList.add('accent-btn');
-  refs.libQue.classList.remove('accent-btn');
+function onLibraryWatchBtnClick() {
+  refs.libraryWatchBtn.classList.remove('accent-btn');
+  refs.libraryWatchBtn.classList.add('accent-btn');
+  refs.libraryQueBtn.classList.remove('accent-btn');
 }
 
-function onQueBtnClick() {
-  refs.libQue.classList.remove('accent-btn');
-  refs.libQue.classList.add('accent-btn');
-  refs.libWatch.classList.remove('accent-btn');
+function onLibraryQueBtnClick() {
+  refs.libraryQueBtn.classList.remove('accent-btn');
+  refs.libraryQueBtn.classList.add('accent-btn');
+  refs.libraryWatchBtn.classList.remove('accent-btn');
 }
