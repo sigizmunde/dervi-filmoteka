@@ -8,11 +8,12 @@
   @media screen and (min-width: $tablet) {
     flex-direction: unset;
     flex-wrap: wrap;
-    margin-bottom: 60px;
     margin: -16px;
+    margin-bottom: 60px;
   }
   @media screen and (min-width: $desktop) {
     margin: -8px;
+    margin-bottom: 60px;
   }
 }
 
