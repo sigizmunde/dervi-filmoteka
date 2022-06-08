@@ -3,7 +3,7 @@
   margin: 0 auto;
 }
 .library-btn {
-  width: 148px;
+  width: 130px;
   height: 42px;
 
   display: flex;
@@ -22,8 +22,24 @@
   transition: background-color var(--transition-params),
     border var(--transition-params);
 
+  @media screen and(min-width: $tablet) {
+    width: 152px;
+  }
+  @media screen and(min-width: $desktop) {
+    width: 147px;
+  }
   &:not(:last-child) {
-    margin-right: 16px;
+    margin-right: 20px;
+  }
+  @media screen and(min-width: $tablet) {
+    &:not(:last-child) {
+      margin-right: 32px;
+    }
+  }
+  @media screen and(min-width: $desktop) {
+    &:not(:last-child) {
+      margin-right: 16px;
+    }
   }
 
   &:hover,
