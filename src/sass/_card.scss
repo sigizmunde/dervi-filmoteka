@@ -1,3 +1,15 @@
+.main {
+  width: 100vw;
+}
+.cards-section {
+  padding-top: 20px;
+  padding-bottom: 40px;
+  @media screen and (min-width: $tablet) {
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+}
+
 .cards-box {
   display: flex;
   flex-direction: column;

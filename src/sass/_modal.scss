@@ -4,40 +4,83 @@
   pointer-events: visible;
 }
 .modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: absolute;
+  top: 0;
+  left: 0;
+  @media screen and(min-width: $tablet) {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: fixed;
+  }
   width: 100vw;
   height: 100vh;
   background: var(--overlay-color);
   // z-index: 1;
 }
 
-.movie-window {
-  position: fixed;
+body.modal-open {
+  overflow: hidden;
+}
+.modal-window {
+  position: absolute;
+  top: 20px;
   left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 90%;
+  bottom: 38px;
+  transform: translateX(-50%);
+  overflow: auto;
+  // width: 90%;
+  width: 280px;
   height: auto;
+  // height: 100vh;
   background-color: var(--main-bg-color);
 
   @media screen and(min-width: $tablet) {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
     width: 704px;
     height: 552px;
   }
 
   @media screen and (min-width: $desktop) {
-    width: 816px;
+    width: 814px;
     height: 558px;
   }
+}
+.close-btn {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  width: 14px;
+  height: 14px;
+  padding: 0;
+  color: var(--secondary-text-color);
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color var(--transition-params);
+
+  &:hover {
+    color: var(--accent-color);
+  }
+}
+.close-icon {
+  fill: currentColor;
+  width: 14px;
+  height: 14px;
 }
 
 .movie-modal {
   display: flex;
+  flex-direction: column;
+  padding: 48px 20px 40px 20px;
   @media screen and (min-width: $tablet) {
-    padding: 40px 36px;
+    flex-direction: unset;
+
+    padding: 40px 72px 40px 36px;
   }
   @media screen and (min-width: $desktop) {
     padding: 40px 16px;
@@ -45,14 +88,17 @@
 }
 
 .movie-picture-box {
+  display: flex;
   min-width: 240px;
   height: 357px;
+  margin-bottom: 20px;
   border-radius: 5px;
   overflow: hidden;
   @media screen and(min-width:$tablet) {
     min-width: 264px;
     height: 373px;
     margin-right: 68px;
+    margin-bottom: 0;
   }
   @media screen and(min-width:$desktop) {
     min-width: 375px;
@@ -63,74 +109,69 @@
 .movie-picture {
   width: 100%;
 }
-.close-btn {
-  position: absolute;
-  right: 8px;
-  top: 8px;
-  width: 30px;
-  height: 30px;
-  padding: 0;
-  color: var(--secondary-text-color);
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  transition: color var(--transition-params);
-  
-  &:hover {
-    color: var(--accent-color);
-  }
-}
-.close-icon {
-  fill: currentColor;
-  width: 14px;
-  height: 14px;
-}
 .info-container {
-  @media screen and(min-width: $tablet) {
-    margin-right: 36px;
-  }
+  // @media screen and(min-width: $tablet) {
+  //   margin-right: 36px;
+  // }
 }
 .movie-title {
   margin-bottom: 20px;
-  font-size: 30px;
-  line-height: 1.16;
+  color: #000000;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: calc(23 / 20);
+  @media screen and (min-width: $desktop) {
+    font-size: 30px;
+  }
+}
 
-  color: var(--secondary-text-color);
+.movie-items.item-right {
+  width: 118px;
+
+  @media screen and (min-width: $desktop) {
+    width: 152px;
+  }
 }
 .movie-list {
   display: flex;
-  flex-direction: row;
   margin-bottom: 20px;
 }
-.movie-items.item-right {
-  width: 155px;
-}
 .description-box {
-  display: flex;
-  flex-direction: column;
+  @media screen and (min-width: $desktop) {
+    // display: flex;
+    // flex-direction: column;
+  }
 }
 .movie-description {
   font-weight: 500;
   font-size: 12px;
-  line-height: 1.33;
-
+  line-height: calc(16 / 12);
   color: var(--helpers-text-color);
+
   &:not(:last-child) {
     margin-bottom: 8px;
   }
 }
 
 .property-box {
-  display: flex;
-  flex-direction: column;
+  @media screen and (min-width: $desktop) {
+    // display: flex;
+    // flex-direction: column;
+  }
 }
 .property {
-  line-height: calc(14 / 12);
+  line-height: calc(16 / 12);
   text-transform: uppercase;
 
   color: var(--secondary-text-color);
   &:not(:last-child) {
     margin-bottom: 8px;
+  }
+  &#genre {
+    text-transform: unset;
+    #genre::first-letter {
+      text-transform: uppercase;
+    }
   }
 }
 .vote-box {
@@ -146,7 +187,7 @@
   color: var(--secondary-text-color);
   background-color: var(--secondary-bg-color);
   border-radius: 5px;
-  line-height: 1.16;
+  line-height: calc(14 / 12);
   text-transform: uppercase;
   margin-right: 2px;
   &:last-child {
@@ -167,39 +208,55 @@
 }
 .article-caption {
   margin-bottom: 8px;
-  line-height: 1.33;
+  line-height: calc(16 / 12);
   text-transform: uppercase;
   color: var(--secondary-text-color);
 }
 
 .article-text {
-  overflow: auto;
-  max-height: 200px;
-  line-height: 1.67;
+  line-height: calc(20 / 12);
 
   color: var(--secondary-text-color);
+  @media screen and (min-width: $tablet) {
+    overflow: auto;
+    max-height: 236px;
+  }
+
+  @media screen and (min-width: $desktop) {
+    max-height: 160px;
+  }
 }
 
 .button-box {
   display: flex;
-  padding-left: 8px;
+  justify-content: space-between;
+  @media screen and (min-width: $desktop) {
+    justify-content: unset;
+  }
 }
 .movie-button {
-  width: 136px;
-  height: 44px;
   display: flex;
   justify-content: center;
   align-items: center;
-
-  border-radius: 5px;
-  line-height: 1.33;
+  width: 110px;
+  height: 44px;
+  line-height: calc(16 / 12);
   text-transform: uppercase;
+  font-weight: 500;
+  border-radius: 5px;
   border: 1px solid var(--secondary-text-color);
   color: var(--secondary-text-color);
   background-color: transparent;
+  @media screen and (min-width: $tablet) {
+    width: 125px;
+  }
 
-  &:not(:last-child) {
-    margin-right: 15px;
+  @media screen and (min-width: $desktop) {
+    width: 136px;
+    margin-left: 8px;
+    &:last-child {
+      margin-left: 15px;
+    }
   }
 }
 .primary-btn {
