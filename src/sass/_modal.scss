@@ -4,28 +4,43 @@
   pointer-events: visible;
 }
 .modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: absolute;
+  top: 0;
+  left: 0;
+  @media screen and(min-width: $tablet) {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: fixed;
+  }
   width: 100vw;
   height: 100vh;
   background: var(--overlay-color);
   // z-index: 1;
 }
 
+body.modal-open {
+  overflow: hidden;
+}
 .modal-window {
-  position: fixed;
+  position: absolute;
+  top: 20px;
   left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  bottom: 38px;
+  transform: translateX(-50%);
+  overflow: auto;
   // width: 90%;
   width: 280px;
-
   height: auto;
+  // height: 100vh;
   background-color: var(--main-bg-color);
 
   @media screen and(min-width: $tablet) {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
     width: 704px;
     height: 552px;
   }
@@ -199,11 +214,13 @@
 }
 
 .article-text {
-  overflow: auto;
-  max-height: 236px;
   line-height: calc(20 / 12);
 
   color: var(--secondary-text-color);
+  @media screen and (min-width: $tablet) {
+    overflow: auto;
+    max-height: 236px;
+  }
 
   @media screen and (min-width: $desktop) {
     max-height: 160px;
