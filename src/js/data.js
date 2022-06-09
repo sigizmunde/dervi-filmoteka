@@ -1,4 +1,8 @@
+ const KEY_WATCHED = 'Watched';
+ const KEY_QUEUE = 'Queue';
+
 export class DataStorage {
+
   constructor(apiKey) {
     // singleton pattern
     if (DataStorage._instance) {
@@ -10,11 +14,36 @@ export class DataStorage {
     this.apiKey = apiKey;
   }
 
-  getWatched() {}
+  getWatched() {
 
-  getQueue() {}
+    const watchedArr = (key) => {
+      try {
+        const serializedData = localStorage.getItem(key);
+        return serializedData === null ? [] : JSON.parse(serializedData);
+      } catch (err) {
+        console.error('Get state error: ', err);
+      }
+      return watchedArr;
+    };
+  }
 
-  setWatched() {}
+  getQueue() {
+    const queueArr = key => {
+      try {
+        const serializedData = localStorage.getItem(key);
+        return serializedData === null ? [] : JSON.parse(serializedData);
+      } catch (err) {
+        console.error('Get state error: ', err);
+      }
+    }
+    return queueArr;
+  };
 
-  setQueue() {}
-}
+  setWatched(value) {
+    localStorage.setItem(KEY_WATCHED, JSON.stringify(value));
+  };
+
+  setQueue(value) {
+    localStorage.setItem(KEY_QUEUE, JSON.stringify(value))
+  }
+};
