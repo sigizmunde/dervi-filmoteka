@@ -13,12 +13,14 @@ export function init() {
   refs.logo = document.querySelector('#logo');
   refs.libraryWatchBtn = document.querySelector('#lib-w');
   refs.libraryQueBtn = document.querySelector('#lib-q');
+  refs.movieModal = document.querySelector('.modal');
 
   refs.logo.addEventListener('click', onHomeLinkClick);
   refs.homeLink.addEventListener('click', onHomeLinkClick);
   refs.libraryLink.addEventListener('click', onLibraryLinkClick);
   refs.libraryWatchBtn.addEventListener('click', onLibraryWatchBtnClick);
-  refs.libraryQueBtn.addEventListener('click', onLibraryQueBtnClick);
+  refs.libraryQueBtn.addEventListener('click', onLibraryQueBtnClick); 
+  
   getMovieList();
 }
 
