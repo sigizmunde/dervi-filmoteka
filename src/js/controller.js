@@ -22,8 +22,8 @@ export function init() {
   refs.libraryLink.addEventListener('click', onLibraryLinkClick);
   refs.libraryWatchBtn.addEventListener('click', onLibraryWatchBtnClick);
   refs.libraryQueBtn.addEventListener('click', onLibraryQueBtnClick);
-  refs.ourTeamLink.addEventListener('click', onOpenModal);
-  refs.closeModalBtn.addEventListener('click', onCloseModal);
+  refs.ourTeamLink.addEventListener('click', openModal);
+  refs.closeModalBtn.addEventListener('click', closeModal);
   refs.backdrop.addEventListener('click', onBackdropClick);
   getMovieList();
 }
@@ -54,24 +54,24 @@ function onLibraryQueBtnClick() {
 }
 
 
-function onOpenModal() {
+function openModal() {
     window.addEventListener('keydown', checkKeyPress);
     document.body.classList.add('modal-open');
 }
 
-function onCloseModal() {
+function closeModal() {
     window.removeEventListener('keydown', checkKeyPress);
     document.body.classList.remove('modal-open');
 }
 
 function checkKeyPress(event) {
     if (event.code === 'Escape') {
-        onCloseModal();
+        closeModal();
     }
 }
 
 function onBackdropClick(event) {
     if (event.currentTarget === event.target) {
-        onCloseModal();
+        closeModal();
     }
 }
