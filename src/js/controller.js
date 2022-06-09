@@ -13,12 +13,18 @@ export function init() {
   refs.logo = document.querySelector('#logo');
   refs.libraryWatchBtn = document.querySelector('#lib-w');
   refs.libraryQueBtn = document.querySelector('#lib-q');
+  refs.ourTeamLink = document.querySelector('#our-team');
+  refs.closeModalBtn = document.querySelector('[data-action="close-modal"]');
+  refs.backdrop = document.querySelector('.js-backdrop');
 
   refs.logo.addEventListener('click', onHomeLinkClick);
   refs.homeLink.addEventListener('click', onHomeLinkClick);
   refs.libraryLink.addEventListener('click', onLibraryLinkClick);
   refs.libraryWatchBtn.addEventListener('click', onLibraryWatchBtnClick);
   refs.libraryQueBtn.addEventListener('click', onLibraryQueBtnClick);
+  refs.ourTeamLink.addEventListener('click', onOpenModal);
+  refs.closeModalBtn.addEventListener('click', onCloseModal);
+  refs.backdrop.addEventListener('click', onBackdropClick);
   getMovieList();
 }
 
@@ -45,4 +51,27 @@ function onLibraryQueBtnClick() {
   refs.libraryQueBtn.classList.remove('accent-btn');
   refs.libraryQueBtn.classList.add('accent-btn');
   refs.libraryWatchBtn.classList.remove('accent-btn');
+}
+
+
+function onOpenModal() {
+    window.addEventListener('keydown', checkKeyPress);
+    document.body.classList.add('modal-open');
+}
+
+function onCloseModal() {
+    window.removeEventListener('keydown', checkKeyPress);
+    document.body.classList.remove('modal-open');
+}
+
+function checkKeyPress(event) {
+    if (event.code === 'Escape') {
+        onCloseModal();
+    }
+}
+
+function onBackdropClick(event) {
+    if (event.currentTarget === event.target) {
+        onCloseModal();
+    }
 }
