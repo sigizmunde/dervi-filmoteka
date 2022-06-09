@@ -2,6 +2,7 @@
 
 import { API_KEY, refs } from './global';
 import { getMovieList } from './movies';
+import { openModal } from './modal';
 
 export function init() {
   //refs, event listeners, genres request, popular movies request
@@ -16,6 +17,7 @@ export function init() {
   refs.ourTeamLink = document.querySelector('#our-team');
   refs.closeModalBtn = document.querySelector('[data-action="close-modal"]');
   refs.backdrop = document.querySelector('.js-backdrop');
+  refs.movieModal = document.querySelector('.modal');
 
   refs.logo.addEventListener('click', onHomeLinkClick);
   refs.homeLink.addEventListener('click', onHomeLinkClick);
@@ -25,7 +27,24 @@ export function init() {
   refs.ourTeamLink.addEventListener('click', openModal);
   refs.closeModalBtn.addEventListener('click', closeModal);
   refs.backdrop.addEventListener('click', onBackdropClick);
+  // refs.movieModal.addEventListener('click', onCloseClick);
+  
   getMovieList();
+
+  // before getMovieList()
+  // refs.cardLinks = document.querySelectorAll('.card-link');
+
+  // console.log(refs.cardLinks)
+
+  // refs.cardLinks.forEach(cardLink => {
+  //   console.log(cardLink);
+  //   cardLink.addEventListener('click', () => {
+  //     event.preventDefault();
+  //     console.log(refs.cardLink)
+  //   });
+  // });  
+
+
 }
 
 function onHomeLinkClick(event) {
