@@ -2,6 +2,7 @@
 
 import { API_KEY, refs } from './global';
 import { getMovieList } from './movies';
+import { openModal } from './modal';
 
 export function init() {
   //refs, event listeners, genres request, popular movies request
@@ -13,13 +14,31 @@ export function init() {
   refs.logo = document.querySelector('#logo');
   refs.libraryWatchBtn = document.querySelector('#lib-w');
   refs.libraryQueBtn = document.querySelector('#lib-q');
+  refs.movieModal = document.querySelector('.modal');
 
   refs.logo.addEventListener('click', onHomeLinkClick);
   refs.homeLink.addEventListener('click', onHomeLinkClick);
   refs.libraryLink.addEventListener('click', onLibraryLinkClick);
   refs.libraryWatchBtn.addEventListener('click', onLibraryWatchBtnClick);
   refs.libraryQueBtn.addEventListener('click', onLibraryQueBtnClick);
+  // refs.movieModal.addEventListener('click', onCloseClick);
+  
   getMovieList();
+
+  // before getMovieList()
+  // refs.cardLinks = document.querySelectorAll('.card-link');
+
+  // console.log(refs.cardLinks)
+
+  // refs.cardLinks.forEach(cardLink => {
+  //   console.log(cardLink);
+  //   cardLink.addEventListener('click', () => {
+  //     event.preventDefault();
+  //     console.log(refs.cardLink)
+  //   });
+  // });  
+
+
 }
 
 function onHomeLinkClick(event) {
