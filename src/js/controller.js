@@ -2,7 +2,7 @@
 
 import { API_KEY, refs } from './global';
 import { getMovieList } from './movies';
-import { openModal } from './modal';
+// import { openModal } from './modal';
 
 export function init() {
   //refs, event listeners, genres request, popular movies request
@@ -19,6 +19,7 @@ export function init() {
   refs.backdrop = document.querySelector('.js-backdrop');
   refs.movieModal = document.querySelector('.modal');
 
+  try {
   refs.logo.addEventListener('click', onHomeLinkClick);
   refs.homeLink.addEventListener('click', onHomeLinkClick);
   refs.libraryLink.addEventListener('click', onLibraryLinkClick);
@@ -28,6 +29,9 @@ export function init() {
   refs.closeModalBtn.addEventListener('click', closeModal);
   refs.backdrop.addEventListener('click', onBackdropClick);
   // refs.movieModal.addEventListener('click', onCloseClick);
+  } catch (error) {
+    console.log(error);
+    }
   
   getMovieList();
 
