@@ -1,7 +1,7 @@
 // module for interface elements and their event listeners
 
 import { API_KEY, refs } from './global';
-import { getMovieList } from './movies';
+import { getMovieList, searchMovies } from './movies';
 import { openModal } from './modal';
 import { showLoader, hideLoader } from './loader';
 
@@ -18,18 +18,30 @@ export function init() {
   refs.logo = document.querySelector('#logo');
   refs.libraryWatchBtn = document.querySelector('#lib-w');
   refs.libraryQueBtn = document.querySelector('#lib-q');
+  refs.ourTeamLink = document.querySelector('#our-team');
+  refs.closeModalBtn = document.querySelector('[data-action="close-modal"]');
+  refs.backdrop = document.querySelector('.js-backdrop');
   refs.movieModal = document.querySelector('.modal');
-  refs.loader = document.querySelector('.lds-ripple');
+  refs.searchForm = document.querySelector('#movie-search');
 
-  refs.logo.addEventListener('click', onHomeLinkClick);
-  refs.homeLink.addEventListener('click', onHomeLinkClick);
-  refs.libraryLink.addEventListener('click', onLibraryLinkClick);
-  refs.libraryWatchBtn.addEventListener('click', onLibraryWatchBtnClick);
-  refs.libraryQueBtn.addEventListener('click', onLibraryQueBtnClick);
-  // refs.movieModal.addEventListener('click', onCloseClick);
-  
-  
+  try {
+    refs.logo.addEventListener('click', onHomeLinkClick);
+    refs.homeLink.addEventListener('click', onHomeLinkClick);
+    refs.libraryLink.addEventListener('click', onLibraryLinkClick);
+    refs.libraryWatchBtn.addEventListener('click', onLibraryWatchBtnClick);
+    refs.libraryQueBtn.addEventListener('click', onLibraryQueBtnClick);
+    refs.ourTeamLink.addEventListener('click', openTeamModal);
+    refs.closeModalBtn.addEventListener('click', closeTeamModal);
+    refs.backdrop.addEventListener('click', onBackdropClick);
+    refs.searchForm.addEventListener('submit', onMoviesSearch);
+
+    // refs.movieModal.addEventListener('click', onCloseClick);
+  } catch (error) {
+    console.log(error);
+  }
+
   getMovieList();
+  // searchMovies();
 
   // before getMovieList()
   // refs.cardLinks = document.querySelectorAll('.card-link');
@@ -42,9 +54,7 @@ export function init() {
   //     event.preventDefault();
   //     console.log(refs.cardLink)
   //   });
-  // });  
-
-
+  // });
 }
 
 function onHomeLinkClick(event) {
@@ -71,3 +81,33 @@ function onLibraryQueBtnClick() {
   refs.libraryQueBtn.classList.add('accent-btn');
   refs.libraryWatchBtn.classList.remove('accent-btn');
 }
+
+function openTeamModal() {
+  window.addEventListener('keydown', checkKeyPress);
+  document.body.classList.add('modal-open');
+}
+
+function closeTeamModal() {
+  window.removeEventListener('keydown', checkKeyPress);
+  document.body.classList.remove('modal-open');
+}
+
+function checkKeyPress(event) {
+  if (event.code === 'Escape') {
+    closeTeamModal();
+  }
+}
+
+function onBackdropClick(event) {
+  if (event.currentTarget === event.target) {
+    closeTeamModal();
+  }
+}
+
+function onMoviesSearch(event) {
+  event.preventDefault();
+  const query = event.target.elements.query.value;
+  refs.cardsBox.innerHTML = '';
+  searchMovies(query);
+}
+
