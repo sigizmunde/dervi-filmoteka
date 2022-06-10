@@ -1,7 +1,7 @@
 // module for interface elements and their event listeners
 
 import { API_KEY, refs } from './global';
-import { getMovieList, searchMovies } from './movies';
+import { getMovieList, searchMovies, getMovieInfo } from './movies';
 import { openModal } from './modal';
 
 export function init() {
@@ -17,7 +17,7 @@ export function init() {
   refs.ourTeamLink = document.querySelector('#our-team');
   refs.closeModalBtn = document.querySelector('[data-action="close-modal"]');
   refs.backdrop = document.querySelector('.js-backdrop');
-  refs.movieModal = document.querySelector('.modal');
+  refs.movieModal = document.querySelector('.movie-modal');
 
   try {
     refs.logo.addEventListener('click', onHomeLinkClick);
@@ -29,25 +29,13 @@ export function init() {
     refs.closeModalBtn.addEventListener('click', closeTeamModal);
     refs.backdrop.addEventListener('click', onBackdropClick);
     // refs.movieModal.addEventListener('click', onCloseClick);
+    refs.cardsBox.addEventListener('click', openMovieModal)
   } catch (error) {
     console.log(error);
   }
 
   getMovieList();
-  // searchMovies();
-
-  // before getMovieList()
-  // refs.cardLinks = document.querySelectorAll('.card-link');
-
-  // console.log(refs.cardLinks)
-
-  // refs.cardLinks.forEach(cardLink => {
-  //   console.log(cardLink);
-  //   cardLink.addEventListener('click', () => {
-  //     event.preventDefault();
-  //     console.log(refs.cardLink)
-  //   });
-  // });
+  
 }
 
 function onHomeLinkClick(event) {
@@ -95,4 +83,19 @@ function onBackdropClick(event) {
   if (event.currentTarget === event.target) {
     closeTeamModal();
   }
+}
+
+function openMovieModal(event) {
+  event.preventDefault();
+  
+  event.path.map(currentMovieLink => {
+    if (currentMovieLink.nodeName === "A") {      
+      // Open modal
+      refs.movieModal.classList.remove('is-hidden');
+      
+      // Load movie detail
+      console.log(currentMovieLink.getAttribute("movie-id"));
+      // getMovieInfo(currentMovieLink.getAttribute("movie-id"));
+    }     
+  })  
 }

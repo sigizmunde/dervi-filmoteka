@@ -5,8 +5,9 @@ import { API_IMG_URL, refs } from './global';
 import { parseGenresByString } from './movies';
 
 export function showMovies(objectsArray) {
+  codeHTML = "";
   objectsArray.map(movie => {
-    refs.cardsBox.innerHTML += `
+    codeHTML += `
         <li class="card ${movie.wachedOrQueueClass}">
           <a href="" class="card-link" movie-id="${movie.id}">
             <div class="card-button-slider">
@@ -31,6 +32,13 @@ export function showMovies(objectsArray) {
           </a>
         </li>`;
   })
+
+  printHTMLmarkup(codeHTML);
+}
+
+// Show elements on page
+function printHTMLmarkup(codeHTML) {
+  refs.cardsBox.innerHTML = codeHTML;  
 }
 
 export function showMovieInfo() {}

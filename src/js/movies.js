@@ -101,7 +101,7 @@ export function getMovieList(params) {
         return responseData.results;
       })
       .then(movieList => {
-        objectsArray = [];
+        const objectsArray = [];
 
         movieList.map(movieItem => {          
           const movie = new Movie(movieItem); // class instance
@@ -110,32 +110,13 @@ export function getMovieList(params) {
         })
         
         showMovies(objectsArray);
-
-        // Получаем все селекторы с классом ".card-link", это ссылки, для открытия деталей фильма
-        refs.cardLinks = document.querySelectorAll('.card-link');
-
-        // console.log(refs.cardLinks); // ВРЕМЕННО
-
-        // Перебираем все селекторы и для каждого навязываем событие 'click'
-        refs.cardLinks.forEach(cardLink => {
-          // console.log(cardLink); // ВРЕМЕННО
-          cardLink.addEventListener('click', () => {
-            event.preventDefault();
-            console.log(cardLink); // ВРЕМЕННО
-
-            // Открываем модальное окно (убираем класс "is-hidden")
-            // cardLink.toggleAttribute(".is-hidden");
-              
-            });
-          });
-
       })      
       .catch(result => console.log(result));
   }
 }
 
-function getMovieInfo(id) {
-  return fetchMovie(id);
+export function getMovieInfo(id) {
+  // console.log(currentMovieLink.getAttribute("movie-id"));
 }
 
 export function searchMovies(params) {
@@ -147,7 +128,7 @@ export function searchMovies(params) {
         return responseData.results;
       })
       .then(movieList => {        
-        objectsArray = [];
+        const objectsArray = [];
 
         movieList.map(movieItem => {
           const movie = new Movie(movieItem); // class instance
