@@ -30,7 +30,7 @@ export function showMovies(objectsArray) {
             </div>
           </a>
         </li>`;
-  })
+  });
 }
 
 export function showMovieInfo() {}

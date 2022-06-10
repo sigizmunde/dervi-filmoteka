@@ -35,6 +35,7 @@
 
 .search-input {
   background-color: transparent;
+  width: 100%;
   outline: none;
   border: none;
   font-family: inherit;
@@ -49,6 +50,7 @@
 
 .submit-btn {
   border: none;
+  cursor: pointer;
   color: var(--main-text-color);
   background-color: transparent;
   margin-left: auto;
