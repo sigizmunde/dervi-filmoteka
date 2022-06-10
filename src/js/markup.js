@@ -4,8 +4,9 @@ const cardSection = document.querySelector('.card-section');
 import { API_IMG_URL, refs } from './global';
 import { parseGenresByString } from './movies';
 
-export function showMovies(movie) {
-  refs.cardsBox.innerHTML += `
+export function showMovies(objectsArray) {
+  objectsArray.map(movie => {
+    refs.cardsBox.innerHTML += `
         <li class="card ${movie.wachedOrQueueClass}">
           <a href="" class="card-link" movie-id="${movie.id}">
             <div class="card-button-slider">
@@ -29,6 +30,7 @@ export function showMovies(movie) {
             </div>
           </a>
         </li>`;
+  })
 }
 
 export function showMovieInfo() {}

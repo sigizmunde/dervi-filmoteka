@@ -101,11 +101,16 @@ export function getMovieList(params) {
         return responseData.results;
       })
       .then(movieList => {
+        objectsArray = [];
+
         movieList.map(movieItem => {          
-          const movie = new Movie(movieItem); // class instance          
-          showMovies(movie);
+          const movie = new Movie(movieItem); // class instance
+          
+          objectsArray.push(movie);
         })
         
+        showMovies(objectsArray);
+
         // Получаем все селекторы с классом ".card-link", это ссылки, для открытия деталей фильма
         refs.cardLinks = document.querySelectorAll('.card-link');
 
@@ -133,10 +138,28 @@ function getMovieInfo(id) {
   return fetchMovie(id);
 }
 
-function search(params) {
+export function searchMovies(params) {
   // depending on params searches films in current list
+  if (params) {
+    API.searchMovie(params)
+      .then(responseData => {
+        console.log(`Current page: ${responseData.page}, total page: ${responseData.total_pages}`); // --> for pagination
+        return responseData.results;
+      })
+      .then(movieList => {        
+        objectsArray = [];
 
-  return fetchMovies();
+        movieList.map(movieItem => {
+          const movie = new Movie(movieItem); // class instance
+          
+          objectsArray.push(movie);
+        })
+        
+        showMovies(objectsArray);
+      })
+      .catch(result => console.log(result));
+  }
+  
 }
 
 function addQueue(film) {
