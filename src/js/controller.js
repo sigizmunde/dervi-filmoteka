@@ -18,6 +18,7 @@ export function init() {
   refs.closeModalBtn = document.querySelector('[data-action="close-modal"]');
   refs.backdrop = document.querySelector('.js-backdrop');
   refs.movieModal = document.querySelector('.modal');
+  refs.searchForm = document.querySelector('#movie-search');
 
   try {
     refs.logo.addEventListener('click', onHomeLinkClick);
@@ -28,6 +29,8 @@ export function init() {
     refs.ourTeamLink.addEventListener('click', openTeamModal);
     refs.closeModalBtn.addEventListener('click', closeTeamModal);
     refs.backdrop.addEventListener('click', onBackdropClick);
+    refs.searchForm.addEventListener('submit', onMoviesSearch);
+
     // refs.movieModal.addEventListener('click', onCloseClick);
   } catch (error) {
     console.log(error);
@@ -96,3 +99,11 @@ function onBackdropClick(event) {
     closeTeamModal();
   }
 }
+
+function onMoviesSearch(event) {
+  event.preventDefault();
+  const query = event.target.elements.query.value;
+  refs.cardsBox.innerHTML = '';
+  searchMovies(query);
+}
+
