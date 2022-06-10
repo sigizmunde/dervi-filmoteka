@@ -1,20 +1,23 @@
 <header class="header-bgc">
-  <div class="header header-library">
+  <div class="header header-search">
     <div class="container">
       <div class="header-box">
-        <a href="#" class="logo">
+        <a href="#" class="logo" id="logo">
           <svg class="logo-icon">
             <use href="./images/icons/sprite.svg#logo"></use>
           </svg>
           <span class="logo-text">Filmoteka</span>
+          <!-- Filmoteka -->
         </a>
         <nav class="nav">
           <ul class="nav-list">
             <li class="nav-items">
-              <a href="" class="nav-link nav-home" data-home>Home</a>
+              <a href="" class="nav-link nav-home" id="home">Home</a>
             </li>
             <li class="nav-items">
-              <a href="" class="nav-link nav-library">My Library</a>
+              <a href="" class="nav-link nav-library" id="library"
+                >My Library</a
+              >
             </li>
           </ul>
         </nav>
@@ -38,13 +41,15 @@
             </form>
             <div class="line"></div>
           </div>
-          <p class="movie-warning">
+          <p class="movie-warning is-hidden">
             Search result not successful. Enter the correct movie name and
           </p>
         </div>
         <div class="library-box">
-          <button type="button" class="library-btn accent-btn">watched</button>
-          <button type="button" class="library-btn">queue</button>
+          <button type="button" class="library-btn accent-btn" id="lib-w">
+            watched
+          </button>
+          <button type="button" class="library-btn" id="lib-q">queue</button>
         </div>
       </div>
     </div>

@@ -1,7 +1,5 @@
 .header {
-  height: 219px;
   position: relative;
-  margin-bottom: 60px;
   height: 230px;
   max-width: 1024px;
 
@@ -20,11 +18,11 @@
   }
 }
 
-.header.header.header-search {
+.header.header-search {
   background-image: url(../images/hero.jpg);
 }
 
-.header.header.header-library {
+.header.header-library {
   background-image: url(../images/library.jpg);
 }
 
