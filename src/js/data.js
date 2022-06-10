@@ -16,28 +16,27 @@ export class DataStorage {
 
   getWatched() {
 
-    const watchedArr = (key) => {
       try {
-        const serializedData = localStorage.getItem(key);
+        const serializedData = localStorage.getItem('watched');
         return serializedData === null ? [] : JSON.parse(serializedData);
       } catch (err) {
         console.error('Get state error: ', err);
       }
       return watchedArr;
-    };
-  }
+    
+  };
 
   getQueue() {
-    const queueArr = key => {
+    
       try {
-        const serializedData = localStorage.getItem(key);
+        const serializedData = localStorage.getItem('queue');
         return serializedData === null ? [] : JSON.parse(serializedData);
       } catch (err) {
         console.error('Get state error: ', err);
-      }
     }
     return queueArr;
-  };
+    }
+    
 
   setWatched(value) {
     localStorage.setItem(KEY_WATCHED, JSON.stringify(value));
