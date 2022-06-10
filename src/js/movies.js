@@ -148,13 +148,12 @@ export function searchMovies(params) {
       })
       .then(movieList => {        
         objectsArray = [];
-
         movieList.map(movieItem => {
           const movie = new Movie(movieItem); // class instance
-          
+        
           objectsArray.push(movie);
         })
-        
+        console.log('objectsArray', objectsArray);
         showMovies(objectsArray);
       })
       .catch(result => console.log(result));
