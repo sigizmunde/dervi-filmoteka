@@ -3,9 +3,13 @@
 import { API_KEY, refs } from './global';
 import { getMovieList } from './movies';
 import { openModal } from './modal';
+import { showLoader, hideLoader } from './loader';
 
 export function init() {
   //refs, event listeners, genres request, popular movies request
+  showLoader();
+  // hideLoader();
+  
   
   refs.cardsBox = document.querySelector('.cards-box');
   refs.header = document.querySelector('.header');
@@ -15,6 +19,7 @@ export function init() {
   refs.libraryWatchBtn = document.querySelector('#lib-w');
   refs.libraryQueBtn = document.querySelector('#lib-q');
   refs.movieModal = document.querySelector('.modal');
+  refs.loader = document.querySelector('.lds-ripple');
 
   refs.logo.addEventListener('click', onHomeLinkClick);
   refs.homeLink.addEventListener('click', onHomeLinkClick);
@@ -22,6 +27,7 @@ export function init() {
   refs.libraryWatchBtn.addEventListener('click', onLibraryWatchBtnClick);
   refs.libraryQueBtn.addEventListener('click', onLibraryQueBtnClick);
   // refs.movieModal.addEventListener('click', onCloseClick);
+  
   
   getMovieList();
 
