@@ -1,7 +1,7 @@
 // module for interface elements and their event listeners
 
 import { API_KEY, refs } from './global';
-import { getMovieList } from './movies';
+import { getMovieList, searchMovies } from './movies';
 import { openModal } from './modal';
 
 export function init() {
@@ -34,6 +34,7 @@ export function init() {
   }
 
   getMovieList();
+  // searchMovies();
 
   // before getMovieList()
   // refs.cardLinks = document.querySelectorAll('.card-link');
