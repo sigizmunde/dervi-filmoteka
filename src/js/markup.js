@@ -10,7 +10,7 @@ export function clearMovies() {
 }
 
 export function showMovies(objectsArray) {
-  codeHTML = '';
+  let codeHTML = '';
   objectsArray.map(movie => {
     codeHTML += `
         <li class="card ${movie.watchedOrQueueClass}">
