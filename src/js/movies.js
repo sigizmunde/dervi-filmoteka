@@ -26,7 +26,8 @@ import { showMovies, showMovieInfo } from './markup';
 import APIService from './movie-api';
 import * as initialGenres from './dummy-array-objs/genres.json';
 import { DataStorage } from './data.js';
-import { watchedMovieData, queueMovieData } from '../index';
+const dataStorage = new DataStorage();
+
 class Movie {
   constructor(responseData) {
     // console.log(responseData);
@@ -86,11 +87,11 @@ class Movie {
   }
 
   #getInWatched() {
-    return !!watchedMovieData.find(item => item === this.id);
+    return !!dataStorage.getWatched.find(item => item === this.id);
   }
 
   #getInQueue() {
-    return !!queueMovieData.find(item => item === this.id);
+    return !!dataStorage.getQueue.find(item => item === this.id);
   }
 
   #getGenres() {
