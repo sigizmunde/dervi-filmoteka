@@ -23,6 +23,8 @@ export function init() {
   refs.backdrop = document.querySelector('.js-backdrop');
   refs.movieModal = document.querySelector('.movie-modal');
   refs.searchForm = document.querySelector('#movie-search');
+  refs.btnQueue = document.querySelector('.btn-queue');
+  refs.btnWatched = document.querySelector('.btn-watched');
 
   try {
     refs.logo.addEventListener('click', onHomeLinkClick);
@@ -34,7 +36,7 @@ export function init() {
     refs.closeModalBtn.addEventListener('click', closeTeamModal);
     refs.backdrop.addEventListener('click', onBackdropClick);
     refs.searchForm.addEventListener('submit', onMoviesSearch);
-    refs.cardsBox.addEventListener('click', openMovieModal);
+    refs.cardsBox.addEventListener('click', onActionMovieCard);
 
     // refs.movieModal.addEventListener('click', onCloseClick);
   } catch (error) {
@@ -98,19 +100,27 @@ function onMoviesSearch(event) {
   searchMovies(query);
 }
 
-function openMovieModal(event) {
+function onActionMovieCard(event) {
   event.preventDefault();
 
   event.path.map(currentMovieLink => {
-    if (currentMovieLink.nodeName === 'A') {
-      // Open modal
-      // refs.movieModal.classList.remove('is-hidden');
+    if (currentMovieLink.nodeName === 'BUTTON') {
+      if (currentMovieLink.classList.contains('in-watched')) {
+        console.log('click in watched');
+      } else if (currentMovieLink.classList.contains('in-queue')) {
+        console.log('click in queue');
+      }
+      event.stopPropagation();
+    }
 
-      // // Load movie detail
-      // console.log(currentMovieLink.getAttribute("movie-id"));
-      getMovieInfo(currentMovieLink.getAttribute('movie-id'));
+    if (currentMovieLink.nodeName === 'A') {
+      getMovieInfo(currentMovieLink.getAttribute('data-movie-id'));
 
       event.stopPropagation();
     }
   });
 }
+
+function onBtnToQueueCard(event) {}
+
+function onBtnToWatchedCard(movieId) {}

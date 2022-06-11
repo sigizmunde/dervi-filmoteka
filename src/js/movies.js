@@ -11,12 +11,20 @@
 
 // main module to manipulate with data inside an application
 
-import { API_KEY, API_BASE_URL, API_IMG_URL, NOPOSTER_IMG_URL, refs, watchedIdArr, queueIdArr } from './global';
+import {
+  API_KEY,
+  API_BASE_URL,
+  API_IMG_URL,
+  NOPOSTER_IMG_URL,
+  refs,
+  watchedIdArr,
+  queueIdArr,
+} from './global';
 // import { fetchMovie, fetchMovies, getGenres } from 'movie-api';
 import { showMovies, showMovieInfo } from './markup';
 import APIService from './movie-api';
 import * as initialGenres from './dummy-array-objs/genres.json';
-// import DataStorage from './data.js';
+// import { DataStorage } from './data.js';
 
 class Movie {
   constructor(responseData) {
@@ -51,7 +59,7 @@ class Movie {
   }
 
   get wachedOrQueueClass() {
-    return this.inWached ? "in-watched" : this.inQueue ? "in-queue" : "";
+    return this.inWached ? 'in-watched' : this.inQueue ? 'in-queue' : '';
   }
 
   // Private methods
@@ -85,7 +93,7 @@ class Movie {
   }
 
   #getGenres() {
-  return API.getGenres();
+    return API.getGenres();
   }
 
   #getPosterPath(poster_path) {
@@ -95,14 +103,12 @@ class Movie {
 
     // const poster = new Image();
     // poster.src = fullPosterPatch;
-    // 
+    //
     // poster.onload = () => fullPosterPatch;
     // poster.onerror = () => alert("NoImage");
   }
-
 }
 
-// const dataStorage = new DataStorage(API_KEY);
 const API = new APIService();
 
 // let currentMovieList = [{ film1 }, { film2 }, { film3 }];
@@ -111,33 +117,34 @@ export function getMovieList(params) {
   // depending on params requests API or data
   if (!params) {
     API.getTrending()
-      .then(responseData => {        
-        console.log(`Current page: ${responseData.page}, total page: ${responseData.total_pages}`); // --> for pagination
+      .then(responseData => {
+        console.log(
+          `Current page: ${responseData.page}, total page: ${responseData.total_pages}`
+        ); // --> for pagination
         return responseData.results;
       })
       .then(movieList => {
         const objectsArray = [];
 
-        movieList.map(movieItem => {          
+        movieList.map(movieItem => {
           const movie = new Movie(movieItem); // class instance
-          
+
           objectsArray.push(movie);
-        })
-        
+        });
+
         showMovies(objectsArray);
-      })      
+      })
       .catch(result => console.log(result));
   }
 }
 
 export function getMovieInfo(id) {
   if (id) {
-    API.getMovie(id)
-      .then(movieDetails => {
-        const movie = new Movie(movieDetails);
-        showMovieInfo(movie);        
-      });
-    
+    API.getMovie(id).then(movieDetails => {
+      const movie = new Movie(movieDetails);
+      showMovieInfo(movie);
+    });
+
     refs.movieModal.classList.remove('is-hidden');
   }
 }
@@ -147,36 +154,21 @@ export function searchMovies(params, page = 1) {
   if (params) {
     API.searchMovie(params, page)
       .then(responseData => {
-        console.log(`Current page: ${responseData.page}, total page: ${responseData.total_pages}`); // --> for pagination
+        console.log(
+          `Current page: ${responseData.page}, total page: ${responseData.total_pages}`
+        ); // --> for pagination
         return responseData.results;
       })
-      .then(movieList => {        
+      .then(movieList => {
         const objectsArray = [];
         movieList.map(movieItem => {
           const movie = new Movie(movieItem); // class instance
-        
+
           objectsArray.push(movie);
-        })
+        });
 
         showMovies(objectsArray);
       })
       .catch(result => console.log(result));
   }
-  
-}
-
-function addQueue(film) {
-  // gets dataStorage.getQueue, adds film.id and then sets dataStorage.setQueue
-}
-
-function addWatched(film) {
-  // gets dataStorage.getQueue, adds film.id and then sets dataStorage.setQueue
-}
-
-function removeQueue(film) {
-  // gets dataStorage.getQueue, removes film.id and then sets dataStorage.setQueue
-}
-
-function removeWatched(film) {
-  // gets dataStorage.getQueue, removes film.id and then sets dataStorage.setQueue
 }

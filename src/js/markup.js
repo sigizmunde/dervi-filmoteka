@@ -10,7 +10,7 @@ export function showMovies(objectsArray) {
   objectsArray.map(movie => {
     codeHTML += `
         <li class="card ${movie.wachedOrQueueClass}">
-          <a href="" class="card-link" movie-id="${movie.id}">
+          <a href="" class="card-link" data-movie-id="${movie.id}">
             <div class="card-button-slider">
               <img
                 src="${movie.posterPath}"
@@ -88,8 +88,8 @@ export function showMovieInfo(movieObject) {
           </p>
         </article>
         <div class="button-box">
-          <button class="movie-button primary-btn">add to Watched</button>
-          <button class="movie-button">add to queue</button>
+          <button class="movie-button watched-btn"></button>
+          <button class="movie-button queue-btn"></button>
         </div>
       </div>`;
 
