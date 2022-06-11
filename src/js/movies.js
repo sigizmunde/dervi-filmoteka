@@ -11,13 +11,20 @@
 
 // main module to manipulate with data inside an application
 
-import { API_KEY, API_BASE_URL, API_IMG_URL, NOPOSTER_IMG_URL, refs, watchedIdArr, queueIdArr } from './global';
+import {
+  API_KEY,
+  API_BASE_URL,
+  API_IMG_URL,
+  NOPOSTER_IMG_URL,
+  refs,
+  watchedIdArr,
+  queueIdArr,
+} from './global';
 // import { fetchMovie, fetchMovies, getGenres } from 'movie-api';
 import { showMovies } from './markup';
 import APIService from './movie-api';
 import * as initialGenres from './dummy-array-objs/genres.json';
-// import DataStorage from './data.js';
-
+import { DataStorage } from './data.js';
 class Movie {
   constructor(responseData) {
     // console.log(responseData);
@@ -26,7 +33,7 @@ class Movie {
     this.title = responseData.original_title;
     this.genres = responseData.genre_ids;
     this.releaseDate = responseData.release_date.substr(0, 4);
-    this.inWached = this.#getInWached();
+    this.inWatched = this.#getInWatched();
     this.inQueue = this.#getInQueue();
   }
 
@@ -35,8 +42,8 @@ class Movie {
     return this.#parseGenresByString(2);
   }
 
-  get wachedOrQueueClass() {
-    return this.inWached ? "in-watched" : this.inQueue ? "in-queue" : "";
+  get watchedOrQueueClass() {
+    return this.inWatched ? 'in-watched' : this.inQueue ? 'in-queue' : '';
   }
 
   // Private methods
@@ -61,7 +68,7 @@ class Movie {
     return genreNames.join(', ');
   }
 
-  #getInWached() {
+  #getInWatched() {
     return !!watchedIdArr.find(item => item === this.id);
   }
 
@@ -70,7 +77,7 @@ class Movie {
   }
 
   #getGenres() {
-  return API.getGenres();
+    return API.getGenres();
   }
 
   #getPosterPath(poster_path) {
@@ -80,11 +87,10 @@ class Movie {
 
     // const poster = new Image();
     // poster.src = fullPosterPatch;
-    // 
+    //
     // poster.onload = () => fullPosterPatch;
     // poster.onerror = () => alert("NoImage");
   }
-
 }
 
 // const dataStorage = new DataStorage(API_KEY);
@@ -96,19 +102,21 @@ export function getMovieList(params) {
   // depending on params requests API or data
   if (!params) {
     API.getTrending()
-      .then(responseData => {        
-        console.log(`Current page: ${responseData.page}, total page: ${responseData.total_pages}`); // --> for pagination
+      .then(responseData => {
+        console.log(
+          `Current page: ${responseData.page}, total page: ${responseData.total_pages}`
+        ); // --> for pagination
         return responseData.results;
       })
       .then(movieList => {
         objectsArray = [];
 
-        movieList.map(movieItem => {          
+        movieList.map(movieItem => {
           const movie = new Movie(movieItem); // class instance
-          
+
           objectsArray.push(movie);
-        })
-        
+        });
+
         showMovies(objectsArray);
 
         // Получаем все селекторы с классом ".card-link", это ссылки, для открытия деталей фильма
@@ -125,14 +133,38 @@ export function getMovieList(params) {
 
             // Открываем модальное окно (убираем класс "is-hidden")
             // cardLink.toggleAttribute(".is-hidden");
-              
-            });
           });
-
-      })      
+        });
+      })
       .catch(result => console.log(result));
   }
 }
+
+export function getAndShowLibrary(localArray) {
+  // console.log(localArray);
+  libraryArray = [];
+  localArray.map(movieId => {
+    console.log(movieId);
+    API.getMovie(movieId).then(response => {
+      const movies = new Movie(response);
+      libraryArray.push(movies);
+    });
+  });
+  console.log(libraryArray);
+  showMovies(libraryArray);
+}
+// export function getAndShowLibrary(localArray) {
+//   libraryArray = [];
+//   localArray.map(movieId => {
+//     console.log(movieId);
+//     API.getMovie(movieId).then(response => {
+//       const movies = new Movie(response);
+//       libraryArray.push(movies);
+//     });
+//   });
+//   console.log(libraryArray);
+//   showMovies(libraryArray);
+// }
 
 function getMovieInfo(id) {
   return fetchMovie(id);
@@ -143,22 +175,23 @@ export function searchMovies(params) {
   if (params) {
     API.searchMovie(params)
       .then(responseData => {
-        console.log(`Current page: ${responseData.page}, total page: ${responseData.total_pages}`); // --> for pagination
+        console.log(
+          `Current page: ${responseData.page}, total page: ${responseData.total_pages}`
+        ); // --> for pagination
         return responseData.results;
       })
-      .then(movieList => {        
+      .then(movieList => {
         objectsArray = [];
         movieList.map(movieItem => {
           const movie = new Movie(movieItem); // class instance
-        
+
           objectsArray.push(movie);
-        })
+        });
         console.log('objectsArray', objectsArray);
         showMovies(objectsArray);
       })
       .catch(result => console.log(result));
   }
-  
 }
 
 function addQueue(film) {

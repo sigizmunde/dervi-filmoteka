@@ -1,7 +1,7 @@
 // module for interface elements and their event listeners
 
-import { API_KEY, refs } from './global';
-import { getMovieList, searchMovies } from './movies';
+import { API_KEY, refs, watchedIdArr, queueIdArr } from './global';
+import { getMovieList, searchMovies, getAndShowLibrary } from './movies';
 import { openModal } from './modal';
 
 export function init() {
@@ -36,7 +36,7 @@ export function init() {
     console.log(error);
   }
 
-  getMovieList();
+  // getMovieList();
   // searchMovies();
 
   // before getMovieList()
@@ -70,6 +70,7 @@ function onLibraryWatchBtnClick() {
   refs.libraryWatchBtn.classList.remove('accent-btn');
   refs.libraryWatchBtn.classList.add('accent-btn');
   refs.libraryQueBtn.classList.remove('accent-btn');
+  getAndShowLibrary(watchedIdArr);
 }
 
 function onLibraryQueBtnClick() {
@@ -106,4 +107,3 @@ function onMoviesSearch(event) {
   refs.cardsBox.innerHTML = '';
   searchMovies(query);
 }
-

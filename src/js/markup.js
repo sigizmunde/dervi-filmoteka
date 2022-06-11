@@ -7,7 +7,7 @@ import { parseGenresByString } from './movies';
 export function showMovies(objectsArray) {
   objectsArray.map(movie => {
     refs.cardsBox.innerHTML += `
-        <li class="card ${movie.wachedOrQueueClass}">
+        <li class="card ${movie.watchedOrQueueClass}">
           <a href="" class="card-link card-button-slider" movie-id="${movie.id}">
             
               <img
