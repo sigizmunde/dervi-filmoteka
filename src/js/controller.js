@@ -29,6 +29,9 @@ export function init() {
   refs.backdrop = document.querySelector('.js-backdrop');
   refs.movieModal = document.querySelector('.movie-modal');
   refs.searchForm = document.querySelector('#movie-search');
+  refs.cardsSection = document.querySelector('.cards-section');
+  refs.pagination = document.querySelector('.pagination');
+  refs.cardLabelWrapper = document.querySelector('.card-label-wrapper');
 
   try {
     refs.logo.addEventListener('click', onHomeLinkClick);
@@ -51,15 +54,18 @@ export function init() {
 }
 
 function onHomeLinkClick(event) {
-  event.preventDefault();
+  // event.preventDefault();
   refs.header.classList.remove('header-library');
   refs.header.classList.add('header-search');
+  refs.pagination.classList.remove('on-empty-library');
 }
 
 function onLibraryLinkClick(event) {
   event.preventDefault();
   refs.header.classList.remove('header-search');
   refs.header.classList.add('header-library');
+  refs.pagination.classList.add('on-empty-library');
+  refs.cardLabelWrapper;
   onLibraryWatchBtnClick();
 }
 
@@ -67,14 +73,28 @@ function onLibraryWatchBtnClick() {
   refs.libraryWatchBtn.classList.remove('accent-btn');
   refs.libraryWatchBtn.classList.add('accent-btn');
   refs.libraryQueBtn.classList.remove('accent-btn');
-  getAndShowLibrary(data.getWatched());
+  if (data.getWatched().length === 0) {
+    refs.cardsSection.classList.add('empty-library');
+    refs.pagination.classList.add('on-empty-library');
+    return;
+  } else {
+    refs.cardsSection.classList.remove('empty-library');
+    getAndShowLibrary(data.getWatched());
+  }
 }
 
 function onLibraryQueBtnClick() {
   refs.libraryQueBtn.classList.remove('accent-btn');
   refs.libraryQueBtn.classList.add('accent-btn');
   refs.libraryWatchBtn.classList.remove('accent-btn');
-  getAndShowLibrary(data.getQueue());
+  if (data.getQueue().length === 0) {
+    refs.cardsSection.classList.add('empty-library');
+    refs.pagination.classList.add('on-empty-library');
+    return;
+  } else {
+    getAndShowLibrary(data.getQueue());
+    refs.cardsSection.classList.remove('empty-library');
+  }
 }
 
 function openTeamModal() {
