@@ -1,0 +1,67 @@
+.filter__button {
+    display: inline-block;
+    background-color: var(--main-bg-color);
+    text-align: center;
+    border: 2px solid rgba(128, 128, 128, 0.1);
+    border-radius: 6px;
+    text-decoration: none;
+    vertical-align: middle;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 1.62;
+    width: 250px;
+    padding: 5px 21px;
+    transition: color 250ms ease-out, background-color var(--accent-color), box-shadow var(--transition-params);
+
+    @media screen and (min-width: $tablet) {
+            justify-content: center;
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 1.62;
+            min-width: 73px;
+            padding: 5px 21px;
+            width: auto;
+        }
+
+                 &:hover,
+                 &:focus {
+                     color: var(--main-bg-color);
+                     background-color: #ff6b01;
+                     box-shadow: var(--btn-shadow);
+                 }
+}
+
+
+// .buttons__container {
+//     margin-bottom: 10px;
+// }
+
+.filter__list {
+    display: flex;
+
+    @media screen and (max-width: $mobile) {
+        flex-wrap: wrap;
+        flex-direction: column;
+    }
+
+    @media screen and (min-width: $tablet) {
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    @media screen and (min-width: $desktop) {
+        margin-bottom: 20px;
+    }
+}
+
+.filter__item {
+    @media screen and (max-width: $mobile) {
+        margin: 5px auto;
+    }
+
+    @media screen and (min-width: $tablet) {
+        &:not(:last-child) {
+            margin-right: 8px;
+        }
+    }
+}
