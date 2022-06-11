@@ -5,8 +5,12 @@ import { API_IMG_URL, refs } from './global';
 import { parseGenresByString } from './movies';
 import { openModal, printToModal } from './modal';
 
+export function clearMovies() {
+  refs.cardsBox.innerHTML = '';
+}
+
 export function showMovies(objectsArray) {
-  codeHTML = '';
+  let codeHTML = '';
   objectsArray.map(movie => {
     codeHTML += `
         <li class="card ${movie.watchedOrQueueClass}">
@@ -45,7 +49,7 @@ function printHTMLmarkup(codeHTML) {
 }
 
 export function showMovieInfo(movieObject) {
-  codeHTML = `
+  let codeHTML = `
       <div class="movie-picture-box">
         <img
           src="${movieObject.posterPath}"

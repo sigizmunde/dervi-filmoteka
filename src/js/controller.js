@@ -8,6 +8,7 @@ import {
   getAndShowLibrary,
 } from './movies';
 import { modalInit } from './modal';
+import { clearMovies } from './markup';
 import { showLoader, hideLoader } from './loader';
 import { DataStorage } from './data';
 const data = new DataStorage();
@@ -79,6 +80,7 @@ function onLibraryWatchBtnClick() {
     return;
   } else {
     refs.cardsSection.classList.remove('empty-library');
+    clearMovies();
     getAndShowLibrary(data.getWatched());
   }
 }
@@ -92,8 +94,9 @@ function onLibraryQueBtnClick() {
     refs.pagination.classList.add('on-empty-library');
     return;
   } else {
-    getAndShowLibrary(data.getQueue());
     refs.cardsSection.classList.remove('empty-library');
+    clearMovies();
+    getAndShowLibrary(data.getQueue());
   }
 }
 
@@ -123,6 +126,7 @@ function onMoviesSearch(event) {
   event.preventDefault();
   const query = event.target.elements.query.value;
   refs.cardsBox.innerHTML = '';
+  clearMovies();
   searchMovies(query);
 }
 
