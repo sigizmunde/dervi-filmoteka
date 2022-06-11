@@ -9,7 +9,7 @@ import {
 } from './movies';
 import { modalInit } from './modal';
 import { showLoader, hideLoader } from './loader';
-
+import { watchedMovieData, queueMovieData } from '../index';
 export function init() {
   //refs, event listeners, genres request, popular movies request
   // showLoader();
@@ -46,7 +46,7 @@ export function init() {
     console.log(error);
   }
 
-  // getMovieList();
+  getMovieList();
 }
 
 function onHomeLinkClick(event) {
@@ -66,13 +66,14 @@ function onLibraryWatchBtnClick() {
   refs.libraryWatchBtn.classList.remove('accent-btn');
   refs.libraryWatchBtn.classList.add('accent-btn');
   refs.libraryQueBtn.classList.remove('accent-btn');
-  getAndShowLibrary(watchedIdArr);
+  getAndShowLibrary(watchedMovieData);
 }
 
 function onLibraryQueBtnClick() {
   refs.libraryQueBtn.classList.remove('accent-btn');
   refs.libraryQueBtn.classList.add('accent-btn');
   refs.libraryWatchBtn.classList.remove('accent-btn');
+  getAndShowLibrary(queueMovieData);
 }
 
 function openTeamModal() {

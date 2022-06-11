@@ -20,11 +20,13 @@ import {
   watchedIdArr,
   queueIdArr,
 } from './global';
+
 // import { fetchMovie, fetchMovies, getGenres } from 'movie-api';
 import { showMovies, showMovieInfo } from './markup';
 import APIService from './movie-api';
 import * as initialGenres from './dummy-array-objs/genres.json';
 import { DataStorage } from './data.js';
+import { watchedMovieData, queueMovieData } from '../index';
 class Movie {
   constructor(responseData) {
     // console.log(responseData);
@@ -84,11 +86,11 @@ class Movie {
   }
 
   #getInWatched() {
-    return !!watchedIdArr.find(item => item === this.id);
+    return !!watchedMovieData.find(item => item === this.id);
   }
 
   #getInQueue() {
-    return !!queueIdArr.find(item => item === this.id);
+    return !!queueMovieData.find(item => item === this.id);
   }
 
   #getGenres() {
@@ -138,31 +140,35 @@ export function getMovieList(params) {
   }
 }
 
-export function getAndShowLibrary(localArray) {
-  // console.log(localArray);
-  libraryArray = [];
-  localArray.map(movieId => {
-    console.log(movieId);
-    API.getMovie(movieId).then(response => {
-      const movies = new Movie(response);
-      libraryArray.push(movies);
-    });
+export function getAndShowLibrary(localDataArray) {
+  // console.log(localDataArray);
+  let libraryArray = [];
+  let promisesMovies = [];
+  localDataArray.map(movieId => {
+    // console.log(movieId);
+
+    promisesMovies.push(
+      API.getMovie(movieId).then(response => {
+        // console.log(response.map(item => item));
+        response.genres = response.genres.map(item => {
+          return item.id;
+        });
+        console.log('object', response.genres);
+        // console.log(promisesMovies);
+        const libMovie = new Movie(response);
+        return libMovie;
+      })
+    );
+    Promise.all(promisesMovies)
+      .then(response => {
+        console.log(response);
+        showMovies(response);
+      })
+      .catch(result => console.log(result));
+
+    // console.log(libMovie);
   });
-  console.log(libraryArray);
-  showMovies(libraryArray);
 }
-// export function getAndShowLibrary(localArray) {
-//   libraryArray = [];
-//   localArray.map(movieId => {
-//     console.log(movieId);
-//     API.getMovie(movieId).then(response => {
-//       const movies = new Movie(response);
-//       libraryArray.push(movies);
-//     });
-//   });
-//   console.log(libraryArray);
-//   showMovies(libraryArray);
-// }
 
 export function getMovieInfo(id) {
   if (id) {

@@ -10,8 +10,9 @@ export function showMovies(objectsArray) {
   objectsArray.map(movie => {
     codeHTML += `
         <li class="card ${movie.watchedOrQueueClass}">
-          <a href="" class="card-link" movie-id="${movie.id}">
-            <div class="card-button-slider">
+          <a href="" class="card-link card-button-slider" movie-id="${
+            movie.id
+          }">
               <img
                 src="${movie.posterPath}"
                 class="card-image"
@@ -32,7 +33,6 @@ export function showMovies(objectsArray) {
               <p class="card-genres"><b>${movie.genresInRow(3)} | ${
       movie.releaseDate
     }</b></p>
-            </div>
         </li>`;
   });
 
