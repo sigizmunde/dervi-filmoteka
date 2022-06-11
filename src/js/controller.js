@@ -1,16 +1,16 @@
 // module for interface elements and their event listeners
 
 import { API_KEY, refs } from './global';
-import { getMovieList, searchMovies } from './movies';
-import { openModal } from './modal';
+import { getMovieList, searchMovies, getMovieInfo } from './movies';
+import { modalInit } from './modal';
 import { showLoader, hideLoader } from './loader';
 
 export function init() {
   //refs, event listeners, genres request, popular movies request
-  showLoader();
+  // showLoader();
   // hideLoader();
-  
-  
+
+  modalInit();
   refs.cardsBox = document.querySelector('.cards-box');
   refs.header = document.querySelector('.header');
   refs.homeLink = document.querySelector('#home');
@@ -21,7 +21,7 @@ export function init() {
   refs.ourTeamLink = document.querySelector('#our-team');
   refs.closeModalBtn = document.querySelector('[data-action="close-modal"]');
   refs.backdrop = document.querySelector('.js-backdrop');
-  refs.movieModal = document.querySelector('.modal');
+  refs.movieModal = document.querySelector('.movie-modal');
   refs.searchForm = document.querySelector('#movie-search');
 
   try {
@@ -34,6 +34,7 @@ export function init() {
     refs.closeModalBtn.addEventListener('click', closeTeamModal);
     refs.backdrop.addEventListener('click', onBackdropClick);
     refs.searchForm.addEventListener('submit', onMoviesSearch);
+    refs.cardsBox.addEventListener('click', openMovieModal);
 
     // refs.movieModal.addEventListener('click', onCloseClick);
   } catch (error) {
@@ -41,20 +42,6 @@ export function init() {
   }
 
   getMovieList();
-  // searchMovies();
-
-  // before getMovieList()
-  // refs.cardLinks = document.querySelectorAll('.card-link');
-
-  // console.log(refs.cardLinks)
-
-  // refs.cardLinks.forEach(cardLink => {
-  //   console.log(cardLink);
-  //   cardLink.addEventListener('click', () => {
-  //     event.preventDefault();
-  //     console.log(refs.cardLink)
-  //   });
-  // });
 }
 
 function onHomeLinkClick(event) {
@@ -111,3 +98,19 @@ function onMoviesSearch(event) {
   searchMovies(query);
 }
 
+function openMovieModal(event) {
+  event.preventDefault();
+
+  event.path.map(currentMovieLink => {
+    if (currentMovieLink.nodeName === 'A') {
+      // Open modal
+      // refs.movieModal.classList.remove('is-hidden');
+
+      // // Load movie detail
+      // console.log(currentMovieLink.getAttribute("movie-id"));
+      getMovieInfo(currentMovieLink.getAttribute('movie-id'));
+
+      event.stopPropagation();
+    }
+  });
+}
