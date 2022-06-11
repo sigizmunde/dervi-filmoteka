@@ -13,7 +13,7 @@
 
 import { API_KEY, API_BASE_URL, API_IMG_URL, NOPOSTER_IMG_URL, refs, watchedIdArr, queueIdArr } from './global';
 // import { fetchMovie, fetchMovies, getGenres } from 'movie-api';
-import { showMovies } from './markup';
+import { showMovies, showMovieInfo } from './markup';
 import APIService from './movie-api';
 import * as initialGenres from './dummy-array-objs/genres.json';
 // import DataStorage from './data.js';
@@ -23,16 +23,31 @@ class Movie {
     // console.log(responseData);
     this.id = responseData.id;
     this.posterPath = this.#getPosterPath(responseData.poster_path);
-    this.title = responseData.original_title;
+    this.title = responseData.title;
+    this.originalTitle = responseData.original_title;
+    this.popularity = responseData.popularity;
     this.genres = responseData.genre_ids;
     this.releaseDate = responseData.release_date.substr(0, 4);
     this.inWached = this.#getInWached();
     this.inQueue = this.#getInQueue();
+    this.voteAverage = responseData.vote_average;
+    this.voteCount = responseData.vote_count;
+    this.popularity = responseData.popularity;
+    this.overview = responseData.overview;
+
+    // В API метод getMovie возвращает жанры в свойстве "genres", значением которого есть массив объектов
+    // Поэтому, если не удалось получить список жанров - получаем из метода "genres"
+    if (!this.genres) {
+      this.genres = [];
+      responseData.genres.map(item => {
+        this.genres.push(item.id);
+      });
+    }
   }
 
   // Genres in row
-  get genresInRow() {
-    return this.#parseGenresByString(2);
+  genresInRow(maxCount = 0) {
+    return this.#parseGenresByString(maxCount);
   }
 
   get wachedOrQueueClass() {
@@ -101,7 +116,7 @@ export function getMovieList(params) {
         return responseData.results;
       })
       .then(movieList => {
-        objectsArray = [];
+        const objectsArray = [];
 
         movieList.map(movieItem => {          
           const movie = new Movie(movieItem); // class instance
@@ -110,32 +125,21 @@ export function getMovieList(params) {
         })
         
         showMovies(objectsArray);
-
-        // Получаем все селекторы с классом ".card-link", это ссылки, для открытия деталей фильма
-        refs.cardLinks = document.querySelectorAll('.card-link');
-
-        // console.log(refs.cardLinks); // ВРЕМЕННО
-
-        // Перебираем все селекторы и для каждого навязываем событие 'click'
-        refs.cardLinks.forEach(cardLink => {
-          // console.log(cardLink); // ВРЕМЕННО
-          cardLink.addEventListener('click', () => {
-            event.preventDefault();
-            console.log(cardLink); // ВРЕМЕННО
-
-            // Открываем модальное окно (убираем класс "is-hidden")
-            // cardLink.toggleAttribute(".is-hidden");
-              
-            });
-          });
-
       })      
       .catch(result => console.log(result));
   }
 }
 
-function getMovieInfo(id) {
-  return fetchMovie(id);
+export function getMovieInfo(id) {
+  if (id) {
+    API.getMovie(id)
+      .then(movieDetails => {
+        const movie = new Movie(movieDetails);
+        showMovieInfo(movie);        
+      });
+    
+    refs.movieModal.classList.remove('is-hidden');
+  }
 }
 
 export function searchMovies(params) {
@@ -147,13 +151,13 @@ export function searchMovies(params) {
         return responseData.results;
       })
       .then(movieList => {        
-        objectsArray = [];
+        const objectsArray = [];
         movieList.map(movieItem => {
           const movie = new Movie(movieItem); // class instance
         
           objectsArray.push(movie);
         })
-        console.log('objectsArray', objectsArray);
+
         showMovies(objectsArray);
       })
       .catch(result => console.log(result));
