@@ -8,6 +8,7 @@ import {
   getAndShowLibrary,
 } from './movies';
 import { modalInit } from './modal';
+import { clearMovies } from './markup';
 import { showLoader, hideLoader } from './loader';
 import { DataStorage } from './data';
 const data = new DataStorage();
@@ -73,6 +74,7 @@ function onLibraryWatchBtnClick() {
   refs.libraryWatchBtn.classList.remove('accent-btn');
   refs.libraryWatchBtn.classList.add('accent-btn');
   refs.libraryQueBtn.classList.remove('accent-btn');
+  clearMovies();
   getAndShowLibrary(data.getWatched());
 }
 
@@ -80,6 +82,7 @@ function onLibraryQueBtnClick() {
   refs.libraryQueBtn.classList.remove('accent-btn');
   refs.libraryQueBtn.classList.add('accent-btn');
   refs.libraryWatchBtn.classList.remove('accent-btn');
+  clearMovies();
   getAndShowLibrary(data.getQueue());
 }
 
@@ -109,6 +112,7 @@ function onMoviesSearch(event) {
   event.preventDefault();
   const query = event.target.elements.query.value;
   refs.cardsBox.innerHTML = '';
+  clearMovies();
   searchMovies(query);
 }
 
