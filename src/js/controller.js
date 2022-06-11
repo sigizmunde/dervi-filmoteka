@@ -50,7 +50,7 @@ export function init() {
     refs.closeModalBtn.addEventListener('click', closeTeamModal);
     refs.backdrop.addEventListener('click', onBackdropClick);
     refs.searchForm.addEventListener('submit', onMoviesSearch);
-    refs.cardsBox.addEventListener('click', openMovieModal);
+    refs.cardsBox.addEventListener('click', onActionMovieCard);
   } catch (error) {
     console.log(error);
   }
@@ -122,19 +122,26 @@ function onMoviesSearch(event) {
   searchMovies(query);
 }
 
-function openMovieModal(event) {
+function onActionMovieCard(event) {
   event.preventDefault();
 
+  let btnClicked = false;
+
   event.path.map(currentMovieLink => {
-    if (currentMovieLink.nodeName === 'A') {
-      // Open modal
-      // refs.movieModal.classList.remove('is-hidden');
+    if (currentMovieLink.nodeName === 'BUTTON') {
+      if (currentMovieLink.classList.contains('in-watched')) {
+        console.log('onInWatchedBtn()'); // <----- add function
+      } else if (currentMovieLink.classList.contains('in-queue')) {
+        console.log('onInQueueBtn()'); // <----- add function
+      }
+      btnClicked = true;
+      // event.stopImmediatePropagation();
+    }
 
-      // // Load movie detail
-      // console.log(currentMovieLink.getAttribute("movie-id"));
-      getMovieInfo(currentMovieLink.getAttribute('movie-id'));
+    if (currentMovieLink.nodeName === 'A' && !btnClicked) {
+      getMovieInfo(currentMovieLink.dataset.id);
 
-      event.stopPropagation();
+      // event.stopImmediatePropagation();
     }
   });
 }
