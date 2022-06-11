@@ -87,11 +87,11 @@ class Movie {
   }
 
   #getInWatched() {
-    return !!dataStorage.getWatched.find(item => item === this.id);
+    return !!dataStorage.getWatched().find(item => item === this.id);
   }
 
   #getInQueue() {
-    return !!dataStorage.getQueue.find(item => item === this.id);
+    return !!dataStorage.getQueue().find(item => item === this.id);
   }
 
   #getGenres() {
