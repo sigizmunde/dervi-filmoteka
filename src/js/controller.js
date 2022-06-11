@@ -113,22 +113,23 @@ function onMoviesSearch(event) {
 function onActionMovieCard(event) {
   event.preventDefault();
 
+  let btnClicked = false;
+
   event.path.map(currentMovieLink => {
-    
     if (currentMovieLink.nodeName === 'BUTTON') {
       if (currentMovieLink.classList.contains('in-watched')) {
         console.log('onInWatchedBtn()'); // <----- add function
       } else if (currentMovieLink.classList.contains('in-queue')) {
         console.log('onInQueueBtn()'); // <----- add function
       }
-
-      event.stopPropagation();
+      btnClicked = true;
+      // event.stopImmediatePropagation();
     }
-    
-    if (currentMovieLink.nodeName === 'A') {
+
+    if (currentMovieLink.nodeName === 'A' && !btnClicked) {
       getMovieInfo(currentMovieLink.dataset.id);
 
-      event.stopPropagation();
+      // event.stopImmediatePropagation();
     }
   });
 }
