@@ -140,23 +140,23 @@ export function getMovieList(params) {
   }
 }
 
-export function getAndShowLibrary(localDataArray) {
+export function getAndShowLibrary(idArray) {
   let promisesMovies = [];
-  localDataArray.map(movieId => {
+  idArray.forEach(movieId => {
     promisesMovies.push(
-      API.getMovie(movieId).then(response => {
-        response.genres = response.genres.map(item => {
-          return item.id;
-        });
-        const libMovie = new Movie(response);
-        return libMovie;
-      })
+      API.getMovie(movieId)
+        .then(response => {
+          response.genres = response.genres.map(item => {
+            return item.id;
+          });
+          const libMovie = new Movie(response);
+          return libMovie;
+        })
+        .catch(result => console.log(result))
     );
-    Promise.all(promisesMovies)
-      .then(response => {
-        showMovies(response);
-      })
-      .catch(result => console.log(result));
+  });
+  Promise.all(promisesMovies).then(response => {
+    showMovies(response);
   });
 }
 
@@ -193,20 +193,4 @@ export function searchMovies(params, page = 1) {
       })
       .catch(result => console.log(result));
   }
-}
-
-function addQueue(film) {
-  // gets dataStorage.getQueue, adds film.id and then sets dataStorage.setQueue
-}
-
-function addWatched(film) {
-  // gets dataStorage.getQueue, adds film.id and then sets dataStorage.setQueue
-}
-
-function removeQueue(film) {
-  // gets dataStorage.getQueue, removes film.id and then sets dataStorage.setQueue
-}
-
-function removeWatched(film) {
-  // gets dataStorage.getQueue, removes film.id and then sets dataStorage.setQueue
 }
