@@ -55,10 +55,11 @@ export function init() {
 
 function onHomeLinkClick(event) {
   event.preventDefault();
-  refs.header.classList.remove('header-library');
-  refs.header.classList.add('header-search');
-  refs.searchInput.value = '';
-  getMovieList();
+  location.reload();
+  // refs.header.classList.remove('header-library');
+  // refs.header.classList.add('header-search');
+  // refs.searchInput.value = '';
+  // getMovieList();
 }
 
 function onLibraryLinkClick(event) {
