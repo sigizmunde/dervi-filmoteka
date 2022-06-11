@@ -10,7 +10,7 @@ export function clearMovies() {
 }
 
 export function showMovies(objectsArray) {
-  codeHTML = '';
+  let codeHTML = '';
   objectsArray.map(movie => {
     codeHTML += `
         <li class="card ${movie.watchedOrQueueClass}">
@@ -49,7 +49,7 @@ function printHTMLmarkup(codeHTML) {
 }
 
 export function showMovieInfo(movieObject) {
-  codeHTML = `
+  let codeHTML = `
       <div class="movie-picture-box">
         <img
           src="${movieObject.posterPath}"

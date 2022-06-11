@@ -10,8 +10,16 @@ import {
 import { modalInit } from './modal';
 import { clearMovies } from './markup';
 import { showLoader, hideLoader } from './loader';
+
 import { DataStorage } from './data';
 const data = new DataStorage();
+
+const SCROLL_PAGE_LEN = 6;
+let currentLibraryArr = [];
+const pageObserver = new IntersectionObserver(onScroll, {
+  rootMargin: '0px 0px 200px 0px',
+});
+
 export function init() {
   //refs, event listeners, genres request, popular movies request
   // showLoader();
@@ -30,6 +38,7 @@ export function init() {
   refs.backdrop = document.querySelector('.js-backdrop');
   refs.movieModal = document.querySelector('.movie-modal');
   refs.searchForm = document.querySelector('#movie-search');
+  refs.observeTarget = document.querySelector('.sentinel');
 
   try {
     refs.logo.addEventListener('click', onHomeLinkClick);
@@ -42,8 +51,6 @@ export function init() {
     refs.backdrop.addEventListener('click', onBackdropClick);
     refs.searchForm.addEventListener('submit', onMoviesSearch);
     refs.cardsBox.addEventListener('click', onActionMovieCard);
-
-    // refs.movieModal.addEventListener('click', onCloseClick);
   } catch (error) {
     console.log(error);
   }
@@ -53,8 +60,11 @@ export function init() {
 
 function onHomeLinkClick(event) {
   event.preventDefault();
+  // location.reload();
   refs.header.classList.remove('header-library');
   refs.header.classList.add('header-search');
+  clearMovies();
+  getMovieList();
 }
 
 function onLibraryLinkClick(event) {
@@ -69,7 +79,8 @@ function onLibraryWatchBtnClick() {
   refs.libraryWatchBtn.classList.add('accent-btn');
   refs.libraryQueBtn.classList.remove('accent-btn');
   clearMovies();
-  getAndShowLibrary(data.getWatched());
+  currentLibraryArr = data.getWatched();
+  pageObserver.observe(refs.observeTarget);
 }
 
 function onLibraryQueBtnClick() {
@@ -77,7 +88,8 @@ function onLibraryQueBtnClick() {
   refs.libraryQueBtn.classList.add('accent-btn');
   refs.libraryWatchBtn.classList.remove('accent-btn');
   clearMovies();
-  getAndShowLibrary(data.getQueue());
+  currentLibraryArr = data.getQueue();
+  pageObserver.observe(refs.observeTarget);
 }
 
 function openTeamModal() {
@@ -132,4 +144,15 @@ function onActionMovieCard(event) {
       // event.stopImmediatePropagation();
     }
   });
+}
+
+function onScroll() {
+  console.log(`i'm scrolling to the infinity`);
+  if (currentLibraryArr.length > SCROLL_PAGE_LEN) {
+    const newPage = currentLibraryArr.splice(0, SCROLL_PAGE_LEN);
+    getAndShowLibrary(newPage);
+    return;
+  }
+  pageObserver.unobserve(refs.observeTarget);
+  getAndShowLibrary(currentLibraryArr);
 }
