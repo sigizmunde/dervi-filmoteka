@@ -9,7 +9,8 @@ import {
 } from './movies';
 import { modalInit } from './modal';
 import { showLoader, hideLoader } from './loader';
-import { watchedMovieData, queueMovieData } from '../index';
+import { DataStorage } from './data';
+const data = new DataStorage();
 export function init() {
   //refs, event listeners, genres request, popular movies request
   // showLoader();
@@ -66,14 +67,14 @@ function onLibraryWatchBtnClick() {
   refs.libraryWatchBtn.classList.remove('accent-btn');
   refs.libraryWatchBtn.classList.add('accent-btn');
   refs.libraryQueBtn.classList.remove('accent-btn');
-  getAndShowLibrary(watchedMovieData);
+  getAndShowLibrary(data.getWatched());
 }
 
 function onLibraryQueBtnClick() {
   refs.libraryQueBtn.classList.remove('accent-btn');
   refs.libraryQueBtn.classList.add('accent-btn');
   refs.libraryWatchBtn.classList.remove('accent-btn');
-  getAndShowLibrary(queueMovieData);
+  getAndShowLibrary(data.getQueue());
 }
 
 function openTeamModal() {

@@ -141,32 +141,22 @@ export function getMovieList(params) {
 }
 
 export function getAndShowLibrary(localDataArray) {
-  // console.log(localDataArray);
-  let libraryArray = [];
   let promisesMovies = [];
   localDataArray.map(movieId => {
-    // console.log(movieId);
-
     promisesMovies.push(
       API.getMovie(movieId).then(response => {
-        // console.log(response.map(item => item));
         response.genres = response.genres.map(item => {
           return item.id;
         });
-        console.log('object', response.genres);
-        // console.log(promisesMovies);
         const libMovie = new Movie(response);
         return libMovie;
       })
     );
     Promise.all(promisesMovies)
       .then(response => {
-        console.log(response);
         showMovies(response);
       })
       .catch(result => console.log(result));
-
-    // console.log(libMovie);
   });
 }
 

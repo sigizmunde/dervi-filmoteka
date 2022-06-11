@@ -41,7 +41,7 @@ export function showMovies(objectsArray) {
 
 // Show elements on page
 function printHTMLmarkup(codeHTML) {
-  refs.cardsBox.innerHTML = codeHTML;
+  refs.cardsBox.innerHTML += codeHTML;
 }
 
 export function showMovieInfo(movieObject) {
