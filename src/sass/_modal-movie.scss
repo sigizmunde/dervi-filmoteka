@@ -35,9 +35,7 @@
     width: 100%;
   }
   .info-container {
-    // @media screen and(min-width: $tablet) {
-    //   margin-right: 36px;
-    // }
+    visibility: inherit; //just a placeholder
   }
   .movie-title {
     margin-bottom: 20px;
