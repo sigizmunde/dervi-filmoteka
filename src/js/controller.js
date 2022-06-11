@@ -2,15 +2,15 @@
 
 import { API_KEY, refs } from './global';
 import { getMovieList, searchMovies, getMovieInfo } from './movies';
-import { openModal } from './modal';
+import { modalInit } from './modal';
 import { showLoader, hideLoader } from './loader';
 
 export function init() {
   //refs, event listeners, genres request, popular movies request
   // showLoader();
   // hideLoader();
-  
-  
+
+  modalInit();
   refs.cardsBox = document.querySelector('.cards-box');
   refs.header = document.querySelector('.header');
   refs.homeLink = document.querySelector('#home');
@@ -34,7 +34,7 @@ export function init() {
     refs.closeModalBtn.addEventListener('click', closeTeamModal);
     refs.backdrop.addEventListener('click', onBackdropClick);
     refs.searchForm.addEventListener('submit', onMoviesSearch);
-    refs.cardsBox.addEventListener('click', openMovieModal)
+    refs.cardsBox.addEventListener('click', openMovieModal);
 
     // refs.movieModal.addEventListener('click', onCloseClick);
   } catch (error) {
@@ -42,7 +42,6 @@ export function init() {
   }
 
   getMovieList();
-  
 }
 
 function onHomeLinkClick(event) {
@@ -101,17 +100,17 @@ function onMoviesSearch(event) {
 
 function openMovieModal(event) {
   event.preventDefault();
-  
+
   event.path.map(currentMovieLink => {
-    if (currentMovieLink.nodeName === "A") {      
+    if (currentMovieLink.nodeName === 'A') {
       // Open modal
       // refs.movieModal.classList.remove('is-hidden');
-      
+
       // // Load movie detail
       // console.log(currentMovieLink.getAttribute("movie-id"));
-      getMovieInfo(currentMovieLink.getAttribute("movie-id"));
+      getMovieInfo(currentMovieLink.getAttribute('movie-id'));
 
       event.stopPropagation();
-    }     
-  })  
+    }
+  });
 }

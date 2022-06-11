@@ -3,9 +3,10 @@ const cardSection = document.querySelector('.card-section');
 
 import { API_IMG_URL, refs } from './global';
 import { parseGenresByString } from './movies';
+import { openModal, printToModal } from './modal';
 
 export function showMovies(objectsArray) {
-  codeHTML = "";
+  codeHTML = '';
   objectsArray.map(movie => {
     codeHTML += `
         <li class="card ${movie.wachedOrQueueClass}">
@@ -27,7 +28,9 @@ export function showMovies(objectsArray) {
             </div>
             <div class="card-body">
               <p class="card-title"><b>${movie.title}</b></p>
-              <p class="card-genres"><b>${movie.genresInRow(3)} | ${movie.releaseDate}</b></p>
+              <p class="card-genres"><b>${movie.genresInRow(3)} | ${
+      movie.releaseDate
+    }</b></p>
             </div>
           </a>
         </li>`;
@@ -38,18 +41,11 @@ export function showMovies(objectsArray) {
 
 // Show elements on page
 function printHTMLmarkup(codeHTML) {
-  refs.cardsBox.innerHTML = codeHTML;  
+  refs.cardsBox.innerHTML = codeHTML;
 }
 
 export function showMovieInfo(movieObject) {
   codeHTML = `
-  <div class="modal-window">
-    <button type="button" class="close-btn" data-close>
-      <svg class="close-icon">
-        <use href="./images/icons/sprite.svg#close"></use>
-      </svg>
-    </button>
-    <div class="movie-modal">
       <div class="movie-picture-box">
         <img
           src="${movieObject.posterPath}"
@@ -71,9 +67,13 @@ export function showMovieInfo(movieObject) {
           <li class="movie-items">
             <div class="property-box">
               <div class="vote-box property">
-                <p class="property-vote property-accent" id="vote">${movieObject.voteAverage}</p>
+                <p class="property-vote property-accent" id="vote">${
+                  movieObject.voteAverage
+                }</p>
                 <span class="vote-slash">/</span>
-                <p class="property-vote property-vote-alt" id="votes">${movieObject.voteCount}</p>
+                <p class="property-vote property-vote-alt" id="votes">${
+                  movieObject.voteCount
+                }</p>
               </div>
               <p class="property" id="popularity">${movieObject.popularity}</p>
               <p class="property" id="title">${movieObject.title}</p>
@@ -91,9 +91,8 @@ export function showMovieInfo(movieObject) {
           <button class="movie-button primary-btn">add to Watched</button>
           <button class="movie-button">add to queue</button>
         </div>
-      </div>
-    </div>
-  </div>`;
+      </div>`;
 
-  printHTMLmarkup(codeHTML);
+  printToModal(codeHTML);
+  openModal();
 }
