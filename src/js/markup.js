@@ -49,7 +49,7 @@ function printHTMLmarkup(codeHTML) {
 }
 
 export function showMovieInfo(movieObject) {
-  codeHTML = `
+  let codeHTML = `
       <div class="movie-picture-box">
         <img
           src="${movieObject.posterPath}"
