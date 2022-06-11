@@ -32,7 +32,6 @@ export function init() {
   refs.searchForm = document.querySelector('#movie-search');
   refs.cardsSection = document.querySelector('.cards-section');
   refs.pagination = document.querySelector('.pagination');
-  refs.cardLabelWrapper = document.querySelector('.card-label-wrapper');
 
   try {
     refs.logo.addEventListener('click', onHomeLinkClick);
@@ -66,7 +65,6 @@ function onLibraryLinkClick(event) {
   refs.header.classList.remove('header-search');
   refs.header.classList.add('header-library');
   refs.pagination.classList.add('on-empty-library');
-  refs.cardLabelWrapper;
   onLibraryWatchBtnClick();
 }
 
