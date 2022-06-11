@@ -5,6 +5,9 @@ body {
   display: grid;
   min-height: 100vh;
   grid-template: auto 1fr auto/ 1fr;
+  &.overflow-hidden {
+    overflow-y: hidden;
+  }
 }
 
 body.modal-open .backdrop {
@@ -29,4 +32,9 @@ body.modal-open .backdrop {
   @media screen and (min-width: $desktop) {
     max-width: 1024px;
   }
+}
+
+.main {
+  width: 100%;
+  position: relative;
 }
