@@ -5,12 +5,14 @@ import { getMovieList, searchMovies, getMovieInfo } from './movies';
 import { modalInit } from './modal';
 import { showLoader, hideLoader } from './loader';
 
+let currentIdArray = [];
+
 export function init() {
   //refs, event listeners, genres request, popular movies request
   // showLoader();
   // hideLoader();
 
-  modalInit();
+  // modalInit();
   refs.cardsBox = document.querySelector('.cards-box');
   refs.header = document.querySelector('.header');
   refs.homeLink = document.querySelector('#home');
@@ -23,6 +25,8 @@ export function init() {
   refs.backdrop = document.querySelector('.js-backdrop');
   refs.movieModal = document.querySelector('.movie-modal');
   refs.searchForm = document.querySelector('#movie-search');
+  refs.sentinel = document.querySelector('#sentinel');
+  refs.searchInput = document.querySelector('input');
 
   try {
     refs.logo.addEventListener('click', onHomeLinkClick);
@@ -35,12 +39,11 @@ export function init() {
     refs.backdrop.addEventListener('click', onBackdropClick);
     refs.searchForm.addEventListener('submit', onMoviesSearch);
     refs.cardsBox.addEventListener('click', openMovieModal);
-
+    createObvserver(refs.sentinel);
     // refs.movieModal.addEventListener('click', onCloseClick);
   } catch (error) {
     console.log(error);
   }
-
   getMovieList();
 }
 
@@ -48,6 +51,8 @@ function onHomeLinkClick(event) {
   event.preventDefault();
   refs.header.classList.remove('header-library');
   refs.header.classList.add('header-search');
+  refs.searchInput.value = '';
+  getMovieList();
 }
 
 function onLibraryLinkClick(event) {
@@ -106,11 +111,43 @@ function openMovieModal(event) {
       // Open modal
       // refs.movieModal.classList.remove('is-hidden');
 
-      // // Load movie detail
+      // Load movie detail
       // console.log(currentMovieLink.getAttribute("movie-id"));
       getMovieInfo(currentMovieLink.getAttribute('movie-id'));
 
       event.stopPropagation();
     }
   });
+}
+
+// копия чтобы помнить название глобальной переменной. А так она сразу под импортами.
+// let currentIdArray = [];
+
+
+/*
+1. При взоде на траничку Библеотеки вызывается Data.getWatched() и ее возврат массива id запишем в переменную ?currentIdArray? 
+2. Делаем проверку на длину полученого массива и если длина больше 12 то тогда вырезаем из массива нужные нам 12 id.
+3. Рендерим в маине (Библеотека-watched)
+4. Если во время проверки длина массива меньше 12 то тогда вырезаем все отсальные и сообщение что больше фильмов нет и отмения observe --'observer.unobserve(observeTarget)' 
+
+*/
+
+
+function createObvserver(observeTarget) {
+
+  const callback = entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        
+      }
+    });
+  };
+
+
+
+
+  const observer = new IntersectionObserver(callback, {
+    rootMargin: '0px 0px 200px 0px',
+  });
+  observer.observe(observeTarget);
 }
