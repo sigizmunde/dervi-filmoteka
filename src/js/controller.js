@@ -13,7 +13,6 @@ import { showLoader, hideLoader } from './loader';
 import { DataStorage } from './data';
 const data = new DataStorage();
 
-
 export function init() {
   //refs, event listeners, genres request, popular movies request
   // showLoader();
