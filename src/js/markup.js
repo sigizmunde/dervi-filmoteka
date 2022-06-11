@@ -14,7 +14,7 @@ export function showMovies(objectsArray) {
   objectsArray.map(movie => {
     codeHTML += `
         <li class="card ${movie.watchedOrQueueClass}">
-          <a href="" class="card-link card-button-slider" movie-id="${
+          <a href="" class="card-link card-button-slider" data-id="${
             movie.id
           }">
               <img
