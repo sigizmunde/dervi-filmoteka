@@ -3,10 +3,14 @@
 import { API_KEY, refs } from './global';
 import { getMovieList, searchMovies } from './movies';
 import { openModal } from './modal';
+import { showLoader, hideLoader } from './loader';
 
 export function init() {
   //refs, event listeners, genres request, popular movies request
-
+  showLoader();
+  // hideLoader();
+  
+  
   refs.cardsBox = document.querySelector('.cards-box');
   refs.header = document.querySelector('.header');
   refs.homeLink = document.querySelector('#home');
