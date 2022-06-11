@@ -5,6 +5,10 @@ import { API_IMG_URL, refs } from './global';
 import { parseGenresByString } from './movies';
 import { openModal, printToModal } from './modal';
 
+export function clearMovies() {
+  refs.cardsBox.innerHTML = '';
+}
+
 export function showMovies(objectsArray) {
   codeHTML = '';
   objectsArray.map(movie => {
