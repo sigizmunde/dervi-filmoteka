@@ -142,10 +142,10 @@ export function getMovieInfo(id) {
   }
 }
 
-export function searchMovies(params) {
+export function searchMovies(params, page = 1) {
   // depending on params searches films in current list
   if (params) {
-    API.searchMovie(params)
+    API.searchMovie(params, page)
       .then(responseData => {
         console.log(`Current page: ${responseData.page}, total page: ${responseData.total_pages}`); // --> for pagination
         return responseData.results;
