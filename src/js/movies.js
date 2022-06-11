@@ -24,8 +24,8 @@ import {
 import { showMovies, showMovieInfo } from './markup';
 import APIService from './movie-api';
 import * as initialGenres from './dummy-array-objs/genres.json';
-// import { DataStorage } from './data.js';
-
+import { DataStorage } from './data.js';
+import { watchedMovieData, queueMovieData } from '../index';
 class Movie {
   constructor(responseData) {
     // console.log(responseData);
@@ -36,7 +36,7 @@ class Movie {
     this.popularity = responseData.popularity;
     this.genres = responseData.genre_ids;
     this.releaseDate = responseData.release_date.substr(0, 4);
-    this.inWached = this.#getInWached();
+    this.inWatched = this.#getInWatched();
     this.inQueue = this.#getInQueue();
     this.voteAverage = responseData.vote_average;
     this.voteCount = responseData.vote_count;
@@ -58,8 +58,8 @@ class Movie {
     return this.#parseGenresByString(maxCount);
   }
 
-  get wachedOrQueueClass() {
-    return this.inWached ? 'in-watched' : this.inQueue ? 'in-queue' : '';
+  get watchedOrQueueClass() {
+    return this.inWatched ? 'in-watched' : this.inQueue ? 'in-queue' : '';
   }
 
   // Private methods
@@ -84,12 +84,12 @@ class Movie {
     return genreNames.join(', ');
   }
 
-  #getInWached() {
-    return !!watchedIdArr.find(item => item === this.id);
+  #getInWatched() {
+    return !!watchedMovieData.find(item => item === this.id);
   }
 
   #getInQueue() {
-    return !!queueIdArr.find(item => item === this.id);
+    return !!queueMovieData.find(item => item === this.id);
   }
 
   #getGenres() {
@@ -136,6 +136,26 @@ export function getMovieList(params) {
       })
       .catch(result => console.log(result));
   }
+}
+
+export function getAndShowLibrary(localDataArray) {
+  let promisesMovies = [];
+  localDataArray.map(movieId => {
+    promisesMovies.push(
+      API.getMovie(movieId).then(response => {
+        response.genres = response.genres.map(item => {
+          return item.id;
+        });
+        const libMovie = new Movie(response);
+        return libMovie;
+      })
+    );
+    Promise.all(promisesMovies)
+      .then(response => {
+        showMovies(response);
+      })
+      .catch(result => console.log(result));
+  });
 }
 
 export function getMovieInfo(id) {

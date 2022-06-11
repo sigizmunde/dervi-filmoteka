@@ -5,8 +5,12 @@ import { API_IMG_URL, refs } from './global';
 import { parseGenresByString } from './movies';
 import { openModal, printToModal } from './modal';
 
+export function clearMovies() {
+  refs.cardsBox.innerHTML = '';
+}
+
 export function showMovies(objectsArray) {
-  codeHTML = '';
+  let codeHTML = '';
   objectsArray.map(movie => {
     codeHTML += `
         <li class="card ${movie.wachedOrQueueClass}">
@@ -21,18 +25,17 @@ export function showMovies(objectsArray) {
                 <button class="card-button in-watched">watched</button>
                 <button class="card-button in-queue">queue</button>
               </div>
-            </div>
-            <div class="card-label-wrapper">
-              <div class="card-label-in-watched"></div>
-              <div class="card-label-in-queue"></div>
-            </div>
+            
+              </a>
+              <div class="card-label-wrapper">
+                <div class="card-label-in-watched"></div>
+                <div class="card-label-in-queue"></div>
+              </div>
             <div class="card-body">
               <p class="card-title"><b>${movie.title}</b></p>
               <p class="card-genres"><b>${movie.genresInRow(3)} | ${
       movie.releaseDate
     }</b></p>
-            </div>
-          </a>
         </li>`;
   });
 
@@ -41,11 +44,11 @@ export function showMovies(objectsArray) {
 
 // Show elements on page
 function printHTMLmarkup(codeHTML) {
-  refs.cardsBox.innerHTML = codeHTML;
+  refs.cardsBox.innerHTML += codeHTML;
 }
 
 export function showMovieInfo(movieObject) {
-  codeHTML = `
+  let codeHTML = `
       <div class="movie-picture-box">
         <img
           src="${movieObject.posterPath}"
