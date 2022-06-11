@@ -1,5 +1,4 @@
 import './sass/main.scss'; // draft file
-// import './js/draft'; // draft file
 import { init } from './js/controller'; // movies
 
 document.addEventListener('DOMContentLoaded', init);
@@ -10,19 +9,15 @@ const data = new DataStorage();
 const movieTempData = data.getWatched();
 console.log(movieTempData);
 
-data.addToWatched(51);
-console.log(data.getWatched());
+const temporaryWatchedList = [299536, 383498, 500664, 466282, 455980, 73021];
+const temporaryQueueList = [489931, 454283, 421792, 429300, 857, 470918];
 
-data.addToWatched(13);
-data.addToWatched(51);
-data.addToWatched(27);
+for (let i = 0; i < temporaryWatchedList.length; i += 1) {
+  data.addToWatched(temporaryWatchedList[i]);
+}
+for (let i = 0; i < temporaryQueueList.length; i += 1) {
+  data.addToQueue(temporaryQueueList[i]);
+}
 console.log(data.getWatched());
-
-data.removeFromWatched(15);
-data.removeFromWatched(13);
-data.addToWatched(18);
-data.addToWatched(26);
-data.removeFromWatched(26);
-data.addToWatched(33);
-console.log(data.getWatched());
+console.log(data.getQueue());
 //====================================================================================
