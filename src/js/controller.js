@@ -1,11 +1,17 @@
 // module for interface elements and their event listeners
 
-import { API_KEY, refs } from './global';
-import { getMovieList, searchMovies, getMovieInfo } from './movies';
+import { API_KEY, refs, watchedIdArr, queueIdArr } from './global';
+import {
+  getMovieList,
+  searchMovies,
+  getMovieInfo,
+  getAndShowLibrary,
+} from './movies';
 import { modalInit } from './modal';
 import { showLoader, hideLoader } from './loader';
+import { DataStorage } from './data';
+const data = new DataStorage();
 
-let currentIdArray = [];
 
 export function init() {
   //refs, event listeners, genres request, popular movies request
@@ -66,12 +72,14 @@ function onLibraryWatchBtnClick() {
   refs.libraryWatchBtn.classList.remove('accent-btn');
   refs.libraryWatchBtn.classList.add('accent-btn');
   refs.libraryQueBtn.classList.remove('accent-btn');
+  getAndShowLibrary(data.getWatched());
 }
 
 function onLibraryQueBtnClick() {
   refs.libraryQueBtn.classList.remove('accent-btn');
   refs.libraryQueBtn.classList.add('accent-btn');
   refs.libraryWatchBtn.classList.remove('accent-btn');
+  getAndShowLibrary(data.getQueue());
 }
 
 function openTeamModal() {
@@ -123,7 +131,6 @@ function openMovieModal(event) {
 // копия чтобы помнить название глобальной переменной. А так она сразу под импортами.
 // let currentIdArray = [];
 
-
 /*
 1. При взоде на траничку Библеотеки вызывается Data.getWatched() и ее возврат массива id запишем в переменную ?currentIdArray? 
 2. Делаем проверку на длину полученого массива и если длина больше 12 то тогда вырезаем из массива нужные нам 12 id.
@@ -132,19 +139,13 @@ function openMovieModal(event) {
 
 */
 
-
 function createObvserver(observeTarget) {
-
   const callback = entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        
       }
     });
   };
-
-
-
 
   const observer = new IntersectionObserver(callback, {
     rootMargin: '0px 0px 200px 0px',

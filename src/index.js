@@ -6,10 +6,14 @@ document.addEventListener('DOMContentLoaded', init);
 //================================= test field =======================================
 import { DataStorage } from './js/data';
 const data = new DataStorage();
-const movieTempData = data.getWatched();
-console.log(movieTempData);
+export const watchedMovieData = data.getWatched();
+export const queueMovieData = data.getQueue();
+// console.log(watchedMovieData);
+// console.log(queueMovieData);
 
-const temporaryWatchedList = [299536, 383498, 500664, 466282, 455980, 73021];
+const temporaryWatchedList = [
+  299536, 383498, 500664, 466282, 455980, 62286, 338953,
+];
 const temporaryQueueList = [489931, 454283, 421792, 429300, 857, 470918];
 
 for (let i = 0; i < temporaryWatchedList.length; i += 1) {
@@ -18,6 +22,6 @@ for (let i = 0; i < temporaryWatchedList.length; i += 1) {
 for (let i = 0; i < temporaryQueueList.length; i += 1) {
   data.addToQueue(temporaryQueueList[i]);
 }
-console.log(data.getWatched());
-console.log(data.getQueue());
+// console.log(data.getWatched());
+// console.log(data.getQueue());
 //====================================================================================
