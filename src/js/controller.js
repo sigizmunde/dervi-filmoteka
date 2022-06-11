@@ -14,7 +14,7 @@ import { showLoader, hideLoader } from './loader';
 import { DataStorage } from './data';
 const data = new DataStorage();
 
-const SCROLL_PAGE_LEN = 12;
+const SCROLL_PAGE_LEN = 6;
 let currentLibraryArr = [];
 const pageObserver = new IntersectionObserver(onScroll, {
   rootMargin: '0px 0px 200px 0px',
@@ -55,7 +55,7 @@ export function init() {
     console.log(error);
   }
 
-  // getMovieList(); //раскомментировать!
+  getMovieList();
 }
 
 function onHomeLinkClick(event) {
@@ -146,6 +146,6 @@ function onScroll() {
     getAndShowLibrary(newPage);
     return;
   }
+  pageObserver.unobserve(refs.observeTarget);
   getAndShowLibrary(currentLibraryArr);
-  pageObserver.unobserve();
 }
