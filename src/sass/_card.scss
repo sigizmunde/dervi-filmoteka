@@ -102,6 +102,8 @@
     align-items: center;
     line-height: 1.33;
     display: flex;
+    transition: color var(--transition-params),
+      background-color var(--transition-params), border var(--transition-params);
   }
   &.in-watched {
     button.card-button.in-watched {
@@ -160,6 +162,12 @@ button.card-button:focus {
   display: block;
   position: relative;
 }
+.cards-box.hide-labels {
+  .card-label-wrapper {
+    display: none;
+  }
+}
+
 .card {
   &:not(.in-watched) {
     .card-label-in-watched {
@@ -207,7 +215,7 @@ button.card-button:focus {
 
       line-height: 16px;
       background-image: url('../images/icons/card-label-queue.svg');
-      
+
       opacity: 1;
       transition: opacity var(--transition-params);
     }
