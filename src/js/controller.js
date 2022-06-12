@@ -41,6 +41,7 @@ export function init() {
   refs.movieModal = document.querySelector('.movie-modal');
   refs.searchForm = document.querySelector('#movie-search');
   refs.observeTarget = document.querySelector('.sentinel');
+  refs.searchInput = document.querySelector('.search-input');
 
   try {
     refs.logo.addEventListener('click', onHomeLinkClick);
@@ -68,6 +69,7 @@ function onHomeLinkClick(event) {
   // location.reload();
   refs.header.classList.remove('header-library');
   refs.header.classList.add('header-search');
+  refs.searchInput.value = '';
   clearMovies();
   getMovieList();
 }
