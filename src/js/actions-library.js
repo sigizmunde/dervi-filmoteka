@@ -51,7 +51,7 @@ export function onWatchedBtnCard(btn, id) {
 }
 
 // action btn in the movie modal
-export function onQueueBtnModal(id) {
+// export function onQueueBtnModal(id) {
 //   const queueBtn = document.querySelector('.queue-btn');
 //   console.log('queueBtn', queueBtn);
 //     if (movieModalBtn.contains('active-btn')) {
