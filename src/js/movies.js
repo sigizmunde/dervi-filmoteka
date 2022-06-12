@@ -72,7 +72,7 @@ class Movie {
     const genreNames = [];
 
     for (let i = 0; i < this.genres.length; i++) {
-      if (maxCount && i === maxCount && i < this.genres.length - 1) {
+      if (maxCount && i === maxCount - 1 && i < this.genres.length - 1) {
         genreNames.push('others');
         break;
       }
