@@ -58,29 +58,29 @@ export function showMovieInfo(movieObject) {
       <div class="info-container">
         <h1 class="movie-title">${movieObject.title}</h1>
         <ul class="movie-list">
-          <li class="movie-items item-right">
-            <div class="description-box">
+          <li class="movie-item">
               <p class="movie-description">Vote / Votes</p>
-              <p class="movie-description">Popularity</p>
-              <p class="movie-description">Original Title</p>
-              <p class="movie-description">Genre</p>
+              <div class="vote-box property">
+              <p class="property-vote property-accent" id="vote">${
+                movieObject.voteAverage
+              }</p>
+              <span class="vote-slash">/</span>
+              <p class="property-vote property-vote-alt" id="votes">${
+                movieObject.voteCount
+              }</p>
             </div>
           </li>
-          <li class="movie-items">
-            <div class="property-box">
-              <div class="vote-box property">
-                <p class="property-vote property-accent" id="vote">${
-                  movieObject.voteAverage
-                }</p>
-                <span class="vote-slash">/</span>
-                <p class="property-vote property-vote-alt" id="votes">${
-                  movieObject.voteCount
-                }</p>
-              </div>
+          <li class="movie-item">
+              <p class="movie-description">Popularity</p>
               <p class="property" id="popularity">${movieObject.popularity}</p>
+          </li>
+          <li class="movie-item">
+              <p class="movie-description">Original Title</p>
               <p class="property" id="title">${movieObject.title}</p>
+          </li>
+          <li class="movie-item">
+              <p class="movie-description">Genre</p>
               <p class="property" id="genre">${movieObject.genresInRow()}</p>
-            </div>
           </li>
         </ul>
         <article class="article">
