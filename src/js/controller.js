@@ -72,6 +72,8 @@ function onHomeLinkClick(event) {
   refs.header.classList.remove('header-library');
   refs.header.classList.add('header-search');
   refs.pagination.classList.remove('on-empty-library');
+  refs.cardsBox.classList.remove('hide-labels');
+
   clearMovies();
   getMovieList();
 }
