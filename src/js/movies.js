@@ -143,15 +143,19 @@ export function getMovieList(params) {
 export function getAndShowLibrary(localDataArray) {
   let promisesMovies = [];
   localDataArray.map(movieId => {
-    promisesMovies.push(
-      API.getMovie(movieId).then(response => {
-        response.genres = response.genres.map(item => {
-          return item.id;
-        });
-        const libMovie = new Movie(response);
-        return libMovie;
-      })
-    );
+    try {
+      promisesMovies.push(
+        API.getMovie(movieId).then(response => {
+          const libMovie = new Movie(response);
+          response.genres = response.genres.map(item => {
+            return item.id;
+          });
+          return libMovie;
+        })
+      );
+    } catch (err) {
+      console.log(err);
+    }
     Promise.all(promisesMovies)
       .then(response => {
         showMovies(response);

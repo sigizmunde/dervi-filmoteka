@@ -32,6 +32,9 @@ export function init() {
   refs.searchForm = document.querySelector('#movie-search');
   refs.cardsSection = document.querySelector('.cards-section');
   refs.pagination = document.querySelector('.pagination');
+  refs.cardLabel = document.querySelector('.card-label-wrapper');
+  console.log(refs);
+  console.log(refs.cardLabel);
 
   try {
     refs.logo.addEventListener('click', onHomeLinkClick);
@@ -54,7 +57,7 @@ export function init() {
 }
 
 function onHomeLinkClick(event) {
-  // event.preventDefault();
+  event.preventDefault();
   refs.header.classList.remove('header-library');
   refs.header.classList.add('header-search');
   refs.pagination.classList.remove('on-empty-library');
@@ -64,8 +67,15 @@ function onLibraryLinkClick(event) {
   event.preventDefault();
   refs.header.classList.remove('header-search');
   refs.header.classList.add('header-library');
-  refs.pagination.classList.add('on-empty-library');
-  onLibraryWatchBtnClick();
+  if (data.getWatched().length === 0) {
+    refs.cardsSection.classList.add('empty-library');
+  } else {
+    refs.pagination.classList.add('on-empty-library');
+    refs.cardsBox.classList.add('hide-labels');
+    // refs.cardLabel.classList.add('hide-label');
+
+    onLibraryWatchBtnClick();
+  }
 }
 
 function onLibraryWatchBtnClick() {
@@ -74,8 +84,7 @@ function onLibraryWatchBtnClick() {
   refs.libraryQueBtn.classList.remove('accent-btn');
   if (data.getWatched().length === 0) {
     refs.cardsSection.classList.add('empty-library');
-    refs.pagination.classList.add('on-empty-library');
-    return;
+    // refs.pagination.classList.add('on-empty-library');
   } else {
     refs.cardsSection.classList.remove('empty-library');
     clearMovies();
@@ -89,7 +98,7 @@ function onLibraryQueBtnClick() {
   refs.libraryWatchBtn.classList.remove('accent-btn');
   if (data.getQueue().length === 0) {
     refs.cardsSection.classList.add('empty-library');
-    refs.pagination.classList.add('on-empty-library');
+    // refs.pagination.classList.add('on-empty-library');
     return;
   } else {
     refs.cardsSection.classList.remove('empty-library');

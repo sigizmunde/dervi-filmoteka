@@ -150,13 +150,19 @@ button.card-button:focus {
     pointer-events: visible;
   }
 }
+// .body .nav-library:enabled + .card .card-label-wrapper {
+//   display: none;
+// }
 .card-label-wrapper {
-  display: none;
-  @media screen and (min-width: $desktop) {
-    display: block;
-    position: relative;
+  display: block;
+  position: relative;
+}
+.cards-box.hide-labels {
+  .card-label-wrapper {
+    display: none;
   }
 }
+
 .card {
   &:not(.in-watched) {
     .card-label-in-watched {

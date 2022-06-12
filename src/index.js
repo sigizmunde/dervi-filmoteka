@@ -12,9 +12,11 @@ export const queueMovieData = data.getQueue();
 // console.log(queueMovieData);
 
 const temporaryWatchedList = [
-  299536, 383498, 500664, 466282, 455980, 62286, 338953,
+  299536, 383498, 500664, 466282, 455980, 62286, 338953, 51,
 ];
+// const temporaryWatchedList = [];
 const temporaryQueueList = [489931, 454283, 421792, 429300, 857, 470918];
+// const temporaryQueueList = [];
 
 for (let i = 0; i < temporaryWatchedList.length; i += 1) {
   data.addToWatched(temporaryWatchedList[i]);
