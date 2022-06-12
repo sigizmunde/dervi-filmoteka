@@ -4,13 +4,13 @@ import { API_KEY, refs } from './global';
 import { getMovieList, searchMovies } from './movies';
 import { openModal } from './modal';
 import { showLoader, hideLoader } from './loader';
+import { showSliderMovies } from './slider';
 
 export function init() {
   //refs, event listeners, genres request, popular movies request
-  showLoader();
+  // showLoader();
   // hideLoader();
-  
-  
+
   refs.cardsBox = document.querySelector('.cards-box');
   refs.header = document.querySelector('.header');
   refs.homeLink = document.querySelector('#home');
@@ -23,6 +23,7 @@ export function init() {
   refs.backdrop = document.querySelector('.js-backdrop');
   refs.movieModal = document.querySelector('.modal');
   refs.searchForm = document.querySelector('#movie-search');
+  refs.sliderList = document.querySelector('.splide__list');
 
   try {
     refs.logo.addEventListener('click', onHomeLinkClick);
@@ -39,6 +40,8 @@ export function init() {
   } catch (error) {
     console.log(error);
   }
+
+  showSliderMovies(refs.sliderList);
 
   getMovieList();
   // searchMovies();
@@ -110,4 +113,3 @@ function onMoviesSearch(event) {
   refs.cardsBox.innerHTML = '';
   searchMovies(query);
 }
-

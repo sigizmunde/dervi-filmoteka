@@ -9,17 +9,22 @@
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.0.6/dist/css/splide.min.css"
+    />
     <title>Filmoteka</title>
   </head>
   <body>
     <include src="./partials/header.html"></include>
     <main class="main">
-      <include src="./partials/loader.html"></include>
-      <!-- <section class="container cards-section"> -->
-        <!-- <ul class="cards-box"> -->
-          <!-- <include src="./partials/movie-container.html"></include> -->
-        <!-- </ul> -->
-      <!-- </section> -->
+      <include src="./partials/slider.html"></include>
+      <!-- <include src="./partials/loader.html"></include> -->
+      <section class="container cards-section">
+        <ul class="cards-box">
+          <include src="./partials/movie-container.html"></include>
+        </ul>
+      </section>
       <!-- <include src="./partials/pagination.html"></include> -->
     </main>
 
@@ -27,6 +32,9 @@
     <include src="./partials/modal-our-team.html"></include>
     <include src="./partials/modal.html"></include>
 
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.0.6/dist/js/splide.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide-extension-auto-scroll@0.4.2/dist/js/splide-extension-auto-scroll.min.js"></script>
     <script type="module" src="./index.js"></script>
+    <!-- <script type="module" src="./js/slider.js"></script> -->
   </body>
 </html>
