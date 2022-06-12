@@ -13,6 +13,8 @@ import { showLoader, hideLoader } from './loader';
 import { showSliderMovies } from './slider';
 
 import { DataStorage } from './data';
+import { onQueueBtnCard, onWatchedBtnCard } from './actions-library';
+
 const data = new DataStorage();
 
 const SCROLL_PAGE_LEN = 6;
@@ -60,6 +62,10 @@ export function init() {
   showSliderMovies(refs.sliderList);
 
   getMovieList();
+
+  // when init page, check localStorage
+  data.getQueue();
+  data.getWatched();
 }
 
 function onHomeLinkClick(event) {
@@ -132,20 +138,27 @@ function onActionMovieCard(event) {
   let btnClicked = false;
 
   event.path.map(currentMovieLink => {
+    // check btn events on the movie card and add/delete to/from the library
     if (currentMovieLink.nodeName === 'BUTTON') {
-      if (currentMovieLink.classList.contains('in-watched')) {
-        console.log('onInWatchedBtn()'); // <----- add function
-      } else if (currentMovieLink.classList.contains('in-queue')) {
-        console.log('onInQueueBtn()'); // <----- add function
+      const currentMovieId = currentMovieLink.closest('.card-link').dataset.id;
+      const currentMovieIdNum = Number(currentMovieId);
+
+      if (currentMovieLink.classList.contains('in-queue')) {
+        onQueueBtnCard(currentMovieLink, currentMovieIdNum);
+      } else if (currentMovieLink.classList.contains('in-watched')) {
+        onWatchedBtnCard(currentMovieLink, currentMovieIdNum);
       }
       btnClicked = true;
       // event.stopImmediatePropagation();
     }
 
+    // catch a movie link and open the movie modal
     if (currentMovieLink.nodeName === 'A' && !btnClicked) {
-      getMovieInfo(currentMovieLink.dataset.id);
+      const currentMovieId = currentMovieLink.dataset.id;
+      const currentMovieIdNum = Number(currentMovieId);
+      getMovieInfo(currentMovieId);
 
-      // event.stopImmediatePropagation();
+      // event.stopPropagation();
     }
   });
 }

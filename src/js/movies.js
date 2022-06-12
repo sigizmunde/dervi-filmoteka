@@ -167,7 +167,6 @@ export function getMovieInfo(id) {
       const movie = new Movie(movieDetails);
       showMovieInfo(movie);
     });
-
     refs.movieModal.classList.remove('is-hidden');
   }
 }
