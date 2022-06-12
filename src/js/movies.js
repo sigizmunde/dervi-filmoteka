@@ -26,7 +26,8 @@ import { showMovies, showMovieInfo } from './markup';
 import APIService from './movie-api';
 import * as initialGenres from './dummy-array-objs/genres.json';
 import { DataStorage } from './data.js';
-import { watchedMovieData, queueMovieData } from '../index';
+const dataStorage = new DataStorage();
+
 class Movie {
   constructor(responseData) {
     // console.log(responseData);
@@ -86,11 +87,11 @@ class Movie {
   }
 
   #getInWatched() {
-    return !!watchedMovieData.find(item => item === this.id);
+    return !!dataStorage.getWatched().find(item => item === this.id);
   }
 
   #getInQueue() {
-    return !!queueMovieData.find(item => item === this.id);
+    return !!dataStorage.getQueue().find(item => item === this.id);
   }
 
   #getGenres() {
@@ -140,7 +141,7 @@ export function getMovieList(params) {
   }
 }
 
-export function getAndShowLibrary(localDataArray) {
+export function getAndShowLibrary(idArray) {
   let promisesMovies = [];
   localDataArray.map(movieId => {
     try {
@@ -170,7 +171,6 @@ export function getMovieInfo(id) {
       const movie = new Movie(movieDetails);
       showMovieInfo(movie);
     });
-
     refs.movieModal.classList.remove('is-hidden');
   }
 }
@@ -197,20 +197,4 @@ export function searchMovies(params, page = 1) {
       })
       .catch(result => console.log(result));
   }
-}
-
-function addQueue(film) {
-  // gets dataStorage.getQueue, adds film.id and then sets dataStorage.setQueue
-}
-
-function addWatched(film) {
-  // gets dataStorage.getQueue, adds film.id and then sets dataStorage.setQueue
-}
-
-function removeQueue(film) {
-  // gets dataStorage.getQueue, removes film.id and then sets dataStorage.setQueue
-}
-
-function removeWatched(film) {
-  // gets dataStorage.getQueue, removes film.id and then sets dataStorage.setQueue
 }

@@ -10,8 +10,18 @@ import {
 import { modalInit } from './modal';
 import { clearMovies } from './markup';
 import { showLoader, hideLoader } from './loader';
+
 import { DataStorage } from './data';
+import { onQueueBtnCard, onWatchedBtnCard } from './actions-library';
+
 const data = new DataStorage();
+
+const SCROLL_PAGE_LEN = 6;
+let currentLibraryArr = [];
+const pageObserver = new IntersectionObserver(onScroll, {
+  rootMargin: '0px 0px 200px 0px',
+});
+
 export function init() {
   //refs, event listeners, genres request, popular movies request
   // showLoader();
@@ -33,8 +43,7 @@ export function init() {
   refs.cardsSection = document.querySelector('.cards-section');
   refs.pagination = document.querySelector('.pagination');
   refs.cardLabel = document.querySelector('.card-label-wrapper');
-  console.log(refs);
-  console.log(refs.cardLabel);
+  refs.observeTarget = document.querySelector('.sentinel');
 
   try {
     refs.logo.addEventListener('click', onHomeLinkClick);
@@ -46,21 +55,26 @@ export function init() {
     refs.closeModalBtn.addEventListener('click', closeTeamModal);
     refs.backdrop.addEventListener('click', onBackdropClick);
     refs.searchForm.addEventListener('submit', onMoviesSearch);
-    refs.cardsBox.addEventListener('click', openMovieModal);
-
-    // refs.movieModal.addEventListener('click', onCloseClick);
+    refs.cardsBox.addEventListener('click', onActionMovieCard);
   } catch (error) {
     console.log(error);
   }
 
   getMovieList();
+
+  // when init page, check localStorage
+  data.getQueue();
+  data.getWatched();
 }
 
 function onHomeLinkClick(event) {
   event.preventDefault();
+  // location.reload();
   refs.header.classList.remove('header-library');
   refs.header.classList.add('header-search');
   refs.pagination.classList.remove('on-empty-library');
+  clearMovies();
+  getMovieList();
 }
 
 function onLibraryLinkClick(event) {
@@ -89,6 +103,9 @@ function onLibraryWatchBtnClick() {
     refs.cardsSection.classList.remove('empty-library');
     clearMovies();
     getAndShowLibrary(data.getWatched());
+    // clearMovies();
+    currentLibraryArr = data.getWatched();
+    pageObserver.observe(refs.observeTarget);
   }
 }
 
@@ -104,6 +121,9 @@ function onLibraryQueBtnClick() {
     refs.cardsSection.classList.remove('empty-library');
     clearMovies();
     getAndShowLibrary(data.getQueue());
+    // clearMovies();
+    currentLibraryArr = data.getQueue();
+    pageObserver.observe(refs.observeTarget);
   }
 }
 
@@ -137,19 +157,44 @@ function onMoviesSearch(event) {
   searchMovies(query);
 }
 
-function openMovieModal(event) {
+function onActionMovieCard(event) {
   event.preventDefault();
 
+  let btnClicked = false;
+
   event.path.map(currentMovieLink => {
-    if (currentMovieLink.nodeName === 'A') {
-      // Open modal
-      // refs.movieModal.classList.remove('is-hidden');
+    // check btn events on the movie card and add/delete to/from the library
+    if (currentMovieLink.nodeName === 'BUTTON') {
+      const currentMovieId = currentMovieLink.closest('.card-link').dataset.id;
+      const currentMovieIdNum = Number(currentMovieId);
 
-      // // Load movie detail
-      // console.log(currentMovieLink.getAttribute("movie-id"));
-      getMovieInfo(currentMovieLink.getAttribute('movie-id'));
+      if (currentMovieLink.classList.contains('in-queue')) {
+        onQueueBtnCard(currentMovieLink, currentMovieIdNum);
+      } else if (currentMovieLink.classList.contains('in-watched')) {
+        onWatchedBtnCard(currentMovieLink, currentMovieIdNum);
+      }
+      btnClicked = true;
+      // event.stopImmediatePropagation();
+    }
 
-      event.stopPropagation();
+    // catch a movie link and open the movie modal
+    if (currentMovieLink.nodeName === 'A' && !btnClicked) {
+      const currentMovieId = currentMovieLink.dataset.id;
+      const currentMovieIdNum = Number(currentMovieId);
+      getMovieInfo(currentMovieId);
+
+      // event.stopPropagation();
     }
   });
+}
+
+function onScroll() {
+  console.log(`i'm scrolling to the infinity`);
+  if (currentLibraryArr.length > SCROLL_PAGE_LEN) {
+    const newPage = currentLibraryArr.splice(0, SCROLL_PAGE_LEN);
+    getAndShowLibrary(newPage);
+    return;
+  }
+  pageObserver.unobserve(refs.observeTarget);
+  getAndShowLibrary(currentLibraryArr);
 }
