@@ -148,85 +148,188 @@
   &:not(:last-child) {
     margin-bottom: 8px;
   }
-  .movie-button {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 110px;
-    height: 44px;
-    line-height: calc(16 / 12);
-    text-transform: uppercase;
-    font-weight: 500;
-    border-radius: 5px;
-    border: 1px solid var(--secondary-text-color);
-    color: var(--secondary-text-color);
-    background-color: transparent;
-    cursor: pointer;
-    overflow: hidden;
-
-    transition: color var(--transition-params),
-      background-color var(--transition-params), border var(--transition-params);
-
-    &:hover,
-    &:focus {
-      background-color: var(--accent-color);
-      color: var(--main-text-color);
-      border: 1px solid transparent;
-    }
-
-    @media screen and (min-width: $tablet) {
-      width: 125px;
-    }
-
-    @media screen and (min-width: $desktop) {
-      width: 136px;
-      margin-left: 8px;
-      &:last-child {
-        margin-left: 15px;
-      }
+  &#genre {
+    text-transform: unset;
+    #genre::first-letter {
+      text-transform: uppercase;
     }
   }
-  .watched-btn {
-    &::before {
-      content: 'add to watched';
-      position: absolute;
-    }
-    &::after {
-      top: 0;
+}
+.vote-box {
+  display: flex;
+}
+.property-vote {
+  width: 36px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: var(--secondary-text-color);
+  background-color: var(--secondary-bg-color);
+  border-radius: 5px;
+  line-height: calc(14 / 12);
+  text-transform: uppercase;
+  margin-right: 2px;
+  &:last-child {
+    margin-left: 3px;
+    margin-right: 0;
+  }
+}
+.vote-slash {
+  color: var(--helpers-text-color);
+}
+
+.property-accent {
+  background-color: var(--accent-color);
+  color: var(--main-bg-color);
+}
+.article {
+  margin-bottom: 20px;
+}
+.article-caption {
+  margin-bottom: 8px;
+  line-height: calc(16 / 12);
+  text-transform: uppercase;
+  color: var(--secondary-text-color);
+}
+
+.article-text {
+  line-height: calc(20 / 12);
+
+  color: var(--secondary-text-color);
+  @media screen and (min-width: $tablet) {
+    overflow: auto;
+    max-height: 236px;
+  }
+
+  @media screen and (min-width: $desktop) {
+    max-height: 160px;
+  }
+}
+
+.button-box {
+  display: flex;
+  justify-content: space-between;
+  @media screen and (min-width: $desktop) {
+    justify-content: unset;
+  }
+}
+.movie-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 110px;
+  height: 44px;
+  line-height: calc(16 / 12);
+  text-transform: uppercase;
+  font-weight: 500;
+  border-radius: 5px;
+  border: 1px solid var(--secondary-text-color);
+  color: var(--secondary-text-color);
+  background-color: transparent;
+  @media screen and (min-width: $tablet) {
+    width: 125px;
+  }
+
+  @media screen and (min-width: $desktop) {
+    width: 136px;
+    margin-left: 8px;
+    &:last-child {
+      margin-left: 15px;
     }
   }
-  .queue-btn {
-    &::before {
-      content: 'add to queue';
-      position: absolute;
-    }
-    &::after {
-      top: 0;
-    }
+  &:hover,
+  &:focus {
+    background-color: var(--accent-color);
+    color: var(--main-text-color);
+    box-shadow: var(--btn-shadow);
+    border: 1px solid transparent;
   }
-  .active-btn {
-    position: relative;
+}
+.primary-btn {
+  background-color: var(--accent-color);
+  color: var(--main-text-color);
+  border: none;
+}
+.movie-button {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 110px;
+  height: 44px;
+  line-height: calc(16 / 12);
+  text-transform: uppercase;
+  font-weight: 500;
+  border-radius: 5px;
+  border: 1px solid var(--secondary-text-color);
+  color: var(--secondary-text-color);
+  background-color: transparent;
+  cursor: pointer;
+  overflow: hidden;
+
+  transition: color var(--transition-params),
+    background-color var(--transition-params), border var(--transition-params);
+
+  &:hover,
+  &:focus {
     background-color: var(--accent-color);
     color: var(--main-text-color);
     border: 1px solid transparent;
+  }
 
-    &.watched-btn::after {
-      content: 'delete from watched';
-      position: absolute;
-      top: 7px;
+  @media screen and (min-width: $tablet) {
+    width: 125px;
+  }
+
+  @media screen and (min-width: $desktop) {
+    width: 136px;
+    margin-left: 8px;
+    &:last-child {
+      margin-left: 15px;
     }
-    &.queue-btn::after {
-      content: 'delete from queue';
-      position: absolute;
-      top: 7px;
-      @media screen and (min-width: $tablet) {
-        top: 14px;
-      }
+  }
+}
+.watched-btn {
+  &::before {
+    content: 'add to watched';
+    position: absolute;
+  }
+  &::after {
+    top: 0;
+  }
+}
+.queue-btn {
+  &::before {
+    content: 'add to queue';
+    position: absolute;
+  }
+  &::after {
+    top: 0;
+  }
+}
+.active-btn {
+  position: relative;
+  background-color: var(--accent-color);
+  color: var(--main-text-color);
+  border: 1px solid transparent;
+
+  &.watched-btn::after {
+    content: 'delete from watched';
+    position: absolute;
+    top: 7px;
+  }
+  &.queue-btn::after {
+    content: 'delete from queue';
+    position: absolute;
+    top: 7px;
+    @media screen and (min-width: $tablet) {
+      top: 14px;
     }
-    &.watched-btn::before,
-    &.queue-btn::before {
-      top: -20px;
-    }
+  }
+  &.watched-btn::before,
+  &.queue-btn::before {
+    top: -20px;
   }
 }

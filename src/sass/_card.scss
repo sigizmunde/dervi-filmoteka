@@ -102,6 +102,8 @@
     align-items: center;
     line-height: 1.33;
     display: flex;
+    transition: color var(--transition-params),
+      background-color var(--transition-params), border var(--transition-params);
   }
   &.in-watched {
     button.card-button.in-watched {

@@ -29,12 +29,12 @@ const temporaryQueueList = [
 ];
 // const temporaryQueueList = [];
 
-// for (let i = 0; i < temporaryWatchedList.length; i += 1) {
-//   data.addToWatched(temporaryWatchedList[i]);
-// }
-// for (let i = 0; i < temporaryQueueList.length; i += 1) {
-//   data.addToQueue(temporaryQueueList[i]);
-// }
+for (let i = 0; i < temporaryWatchedList.length; i += 1) {
+  data.addToWatched(temporaryWatchedList[i]);
+}
+for (let i = 0; i < temporaryQueueList.length; i += 1) {
+  data.addToQueue(temporaryQueueList[i]);
+}
 // console.log(data.getWatched());
 // console.log(data.getQueue());
 //====================================================================================

@@ -42,7 +42,6 @@ export function init() {
   refs.searchForm = document.querySelector('#movie-search');
   refs.cardsSection = document.querySelector('.cards-section');
   refs.pagination = document.querySelector('.pagination');
-  refs.cardLabel = document.querySelector('.card-label-wrapper');
   refs.observeTarget = document.querySelector('.sentinel');
 
   try {

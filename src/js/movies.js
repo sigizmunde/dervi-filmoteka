@@ -143,7 +143,7 @@ export function getMovieList(params) {
 
 export function getAndShowLibrary(idArray) {
   let promisesMovies = [];
-  localDataArray.map(movieId => {
+  idArray.map(movieId => {
     try {
       promisesMovies.push(
         API.getMovie(movieId).then(response => {
