@@ -33,6 +33,7 @@
   }
   .movie-picture {
     width: 100%;
+    object-fit: cover;
   }
   .info-container {
     visibility: inherit; //just a placeholder
@@ -199,7 +200,6 @@
     &::before {
       content: 'add to watched';
       position: absolute;
-      transition: top var(--transition-params);
     }
     &::after{
       top: 0;
@@ -209,7 +209,6 @@
     &::before {
       content: 'add to queue';
       position: absolute;
-      transition: top var(--transition-params);
     }
     &::after {
       top: 0;

@@ -13,9 +13,8 @@ export function showMovies(objectsArray) {
   let codeHTML = '';
   objectsArray.map(movie => {
     codeHTML += `
-        <li class="card ${movie.wachedOrQueueClass}">
-          <a href="" class="card-link" data-movie-id="${movie.id}">
-            <div class="card-button-slider">
+        <li class="card ${movie.watchedOrQueueClass}">
+          <a href="" class="card-link card-button-slider" data-id="${movie.id}">
               <img
                 src="${movie.posterPath}"
                 class="card-image"

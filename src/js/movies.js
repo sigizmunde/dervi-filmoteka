@@ -20,12 +20,14 @@ import {
   watchedIdArr,
   queueIdArr,
 } from './global';
+
 // import { fetchMovie, fetchMovies, getGenres } from 'movie-api';
 import { showMovies, showMovieInfo } from './markup';
 import APIService from './movie-api';
 import * as initialGenres from './dummy-array-objs/genres.json';
 import { DataStorage } from './data.js';
-import { watchedMovieData, queueMovieData } from '../index';
+const dataStorage = new DataStorage();
+
 class Movie {
   constructor(responseData) {
     // console.log(responseData);
@@ -85,11 +87,11 @@ class Movie {
   }
 
   #getInWatched() {
-    return !!watchedMovieData.find(item => item === this.id);
+    return !!dataStorage.getWatched().find(item => item === this.id);
   }
 
   #getInQueue() {
-    return !!queueMovieData.find(item => item === this.id);
+    return !!dataStorage.getQueue().find(item => item === this.id);
   }
 
   #getGenres() {
@@ -109,6 +111,7 @@ class Movie {
   }
 }
 
+// const dataStorage = new DataStorage(API_KEY);
 const API = new APIService();
 
 // let currentMovieList = [{ film1 }, { film2 }, { film3 }];
@@ -138,23 +141,23 @@ export function getMovieList(params) {
   }
 }
 
-export function getAndShowLibrary(localDataArray) {
+export function getAndShowLibrary(idArray) {
   let promisesMovies = [];
-  localDataArray.map(movieId => {
+  idArray.forEach(movieId => {
     promisesMovies.push(
-      API.getMovie(movieId).then(response => {
-        response.genres = response.genres.map(item => {
-          return item.id;
-        });
-        const libMovie = new Movie(response);
-        return libMovie;
-      })
+      API.getMovie(movieId)
+        .then(response => {
+          response.genres = response.genres.map(item => {
+            return item.id;
+          });
+          const libMovie = new Movie(response);
+          return libMovie;
+        })
+        .catch(result => console.log(result))
     );
-    Promise.all(promisesMovies)
-      .then(response => {
-        showMovies(response);
-      })
-      .catch(result => console.log(result));
+  });
+  Promise.all(promisesMovies).then(response => {
+    showMovies(response);
   });
 }
 
@@ -164,7 +167,6 @@ export function getMovieInfo(id) {
       const movie = new Movie(movieDetails);
       showMovieInfo(movie);
     });
-
     refs.movieModal.classList.remove('is-hidden');
   }
 }

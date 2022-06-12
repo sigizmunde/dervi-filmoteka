@@ -11,6 +11,8 @@ import { modalInit } from './modal';
 import { clearMovies } from './markup';
 import { showLoader, hideLoader } from './loader';
 import { DataStorage } from './data';
+import { onQueueBtnCard, onWatchedBtnCard } from './actions-library';
+
 const data = new DataStorage();
 export function init() {
   //refs, event listeners, genres request, popular movies request
@@ -30,8 +32,6 @@ export function init() {
   refs.backdrop = document.querySelector('.js-backdrop');
   refs.movieModal = document.querySelector('.movie-modal');
   refs.searchForm = document.querySelector('#movie-search');
-  refs.btnQueue = document.querySelector('.btn-queue');
-  refs.btnWatched = document.querySelector('.btn-watched');
 
   try {
     refs.logo.addEventListener('click', onHomeLinkClick);
@@ -51,6 +51,10 @@ export function init() {
   }
 
   getMovieList();
+
+  // when init page, check localStorage
+  data.getQueue();
+  data.getWatched();
 }
 
 function onHomeLinkClick(event) {
@@ -115,24 +119,30 @@ function onMoviesSearch(event) {
 function onActionMovieCard(event) {
   event.preventDefault();
 
+  let btnClicked = false;
+
   event.path.map(currentMovieLink => {
+    // check btn events on the movie card and add/delete to/from the library
     if (currentMovieLink.nodeName === 'BUTTON') {
-      if (currentMovieLink.classList.contains('in-watched')) {
-        console.log('click in watched');
-      } else if (currentMovieLink.classList.contains('in-queue')) {
-        console.log('click in queue');
+      const currentMovieId = currentMovieLink.closest('.card-link').dataset.id;
+      const currentMovieIdNum = Number(currentMovieId);
+
+      if (currentMovieLink.classList.contains('in-queue')) {
+        onQueueBtnCard(currentMovieLink, currentMovieIdNum);
+      } else if (currentMovieLink.classList.contains('in-watched')) {
+        onWatchedBtnCard(currentMovieLink, currentMovieIdNum);
       }
-      event.stopPropagation();
+      btnClicked = true;
+      // event.stopImmediatePropagation();
     }
 
-    if (currentMovieLink.nodeName === 'A') {
-      getMovieInfo(currentMovieLink.getAttribute('data-movie-id'));
+    // catch a movie link and open the movie modal
+    if (currentMovieLink.nodeName === 'A' && !btnClicked) {
+      const currentMovieId = currentMovieLink.dataset.id;
+      const currentMovieIdNum = Number(currentMovieId);
+      getMovieInfo(currentMovieId);
 
-      event.stopPropagation();
+      // event.stopPropagation();
     }
   });
 }
-
-function onBtnToQueueCard(event) {}
-
-function onBtnToWatchedCard(movieId) {}
