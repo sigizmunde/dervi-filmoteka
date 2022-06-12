@@ -43,6 +43,7 @@ export function init() {
   refs.observeTarget = document.querySelector('.sentinel');
   refs.cardsSection = document.querySelector('.cards-section');
   refs.pagination = document.querySelector('.pagination');
+  refs.searchInput = document.querySelector('.search-input');
 
   try {
     refs.logo.addEventListener('click', onHomeLinkClick);
@@ -58,7 +59,6 @@ export function init() {
   } catch (error) {
     console.log(error);
   }
-
   getMovieList();
 
   // when init page, check localStorage
@@ -74,6 +74,7 @@ function onHomeLinkClick(event) {
   refs.pagination.classList.remove('on-empty-library');
   refs.cardsBox.classList.remove('hide-labels');
 
+  refs.searchInput.value = '';
   clearMovies();
   getMovieList();
 }
