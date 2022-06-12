@@ -7,9 +7,22 @@ export function showSliderMovies(selector) {
     .then(res => res.results)
     .then(data => {
       sliderCardsTpl(data, selector);
-      slider();
+      splide.mount(window.splide.Extensions);
     });
 }
+
+export const splide = new Splide('.splide', {
+  type: 'loop',
+  drag: 'free',
+  focus: 'center',
+  gap: '20px',
+  width: '100vw',
+  pagination: false,
+  perPage: 3,
+  autoScroll: {
+    speed: 1,
+  },
+});
 
 const api = new APIService();
 const genres = api.getGenres().reduce((acc, genre) => {
@@ -36,7 +49,7 @@ function sliderCardsTpl(objectsArray, selector) {
     const gendersList = getGenresForSlider(movie.genre_ids, genres);
     selector.innerHTML += `
         <li class="card splide__slide">
-          <a href="" class="card-link" movie-id="${movie.id}">
+          <a href="" class="card-link" data-id="${movie.id}">
             <div class="splide__img-container">
               <img
                 src="${API_IMG_URL}${movie.poster_path}"
@@ -55,21 +68,4 @@ function sliderCardsTpl(objectsArray, selector) {
           </a>
         </li>`;
   });
-}
-
-function slider() {
-  const splide = new Splide('.splide', {
-    type: 'loop',
-    drag: 'free',
-    focus: 'center',
-    gap: '20px',
-    width: '100vw',
-    pagination: false,
-    perPage: 3,
-    autoScroll: {
-      speed: 1,
-    },
-  });
-
-  splide.mount(window.splide.Extensions);
 }

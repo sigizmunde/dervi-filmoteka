@@ -10,7 +10,7 @@ import {
 import { modalInit } from './modal';
 import { clearMovies } from './markup';
 import { showLoader, hideLoader } from './loader';
-import { showSliderMovies } from './slider';
+import { showSliderMovies, splide } from './slider';
 
 import { DataStorage } from './data';
 import { onQueueBtnCard, onWatchedBtnCard } from './actions-library';
@@ -55,6 +55,7 @@ export function init() {
     refs.backdrop.addEventListener('click', onBackdropClick);
     refs.searchForm.addEventListener('submit', onMoviesSearch);
     refs.cardsBox.addEventListener('click', onActionMovieCard);
+    refs.sliderList.addEventListener('click', onSliderClick);
   } catch (error) {
     console.log(error);
   }
@@ -121,6 +122,7 @@ function checkKeyPress(event) {
 function onBackdropClick(event) {
   if (event.currentTarget === event.target) {
     closeTeamModal();
+    // splide.Components.AutoScroll.play();
   }
 }
 
@@ -172,4 +174,13 @@ function onScroll() {
   }
   pageObserver.unobserve(refs.observeTarget);
   getAndShowLibrary(currentLibraryArr);
+}
+
+function onSliderClick(evt) {
+  evt.preventDefault();
+  const id = evt.target.closest('.card-link').dataset.id;
+  getMovieInfo(id);
+  if (!refs.movieModal.classList.contains('is-hidden')) {
+    splide.Components.AutoScroll.pause();
+  }
 }

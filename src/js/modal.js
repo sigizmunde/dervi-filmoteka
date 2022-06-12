@@ -1,4 +1,5 @@
 // draft file
+import { splide } from './slider';
 const movieModal = document.querySelector('.movie-modal');
 const backdrop = document.querySelector('.backdrop');
 
@@ -17,6 +18,7 @@ export function closeModal() {
   movieModal.classList.remove('open');
   movieModal.classList.add('is-hidden');
   document.body.classList.remove('modal-open');
+  splide.Components.AutoScroll.play();
 }
 
 function onCloseClick(event) {

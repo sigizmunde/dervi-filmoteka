@@ -75,7 +75,9 @@
     height: calc(100% - 80px);
     padding: 20px;
     background-image: linear-gradient(rgba(47, 48, 58, 0.2), rgba(47, 48, 58, 0.2)), url('../images/team-bg.jpg');
-
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 
     @media screen and (min-width: $tablet) {
         grid-template-columns: repeat(4, 22%);
