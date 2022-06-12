@@ -27,7 +27,7 @@ export function init() {
   // showLoader();
   // hideLoader();
 
-  // modalInit();
+  modalInit();
   refs.cardsBox = document.querySelector('.cards-box');
   refs.header = document.querySelector('.header');
   refs.homeLink = document.querySelector('#home');
