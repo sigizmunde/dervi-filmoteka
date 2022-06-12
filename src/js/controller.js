@@ -14,6 +14,8 @@ import { showLoader, hideLoader } from './loader';
 import { DataStorage } from './data';
 import { onQueueBtnCard, onWatchedBtnCard } from './actions-library';
 
+import { onClickScrollTop } from './scroll-to-top';
+
 const data = new DataStorage();
 
 const SCROLL_PAGE_LEN = 6;
@@ -41,6 +43,8 @@ export function init() {
   refs.movieModal = document.querySelector('.movie-modal');
   refs.searchForm = document.querySelector('#movie-search');
   refs.observeTarget = document.querySelector('.sentinel');
+  refs.scrollTop = document.querySelector('.scroll-top');
+  refs.body = document.querySelector('body');
   refs.cardsSection = document.querySelector('.cards-section');
   refs.pagination = document.querySelector('.pagination');
   refs.searchInput = document.querySelector('.search-input');
@@ -56,6 +60,7 @@ export function init() {
     refs.backdrop.addEventListener('click', onBackdropClick);
     refs.searchForm.addEventListener('submit', onMoviesSearch);
     refs.cardsBox.addEventListener('click', onActionMovieCard);
+    refs.scrollTop.addEventListener('click', onClickScrollTop);
   } catch (error) {
     console.log(error);
   }
