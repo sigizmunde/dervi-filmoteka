@@ -1,16 +1,32 @@
 // module for interface elements and their event listeners
 
-import { API_KEY, refs } from './global';
-import { getMovieList, searchMovies } from './movies';
-import { openModal } from './modal';
+import { API_KEY, refs, watchedIdArr, queueIdArr } from './global';
+import {
+  getMovieList,
+  searchMovies,
+  getMovieInfo,
+  getAndShowLibrary,
+} from './movies';
+import { modalInit } from './modal';
+import { clearMovies } from './markup';
 import { showLoader, hideLoader } from './loader';
 import { showSliderMovies } from './slider';
+
+import { DataStorage } from './data';
+const data = new DataStorage();
+
+const SCROLL_PAGE_LEN = 6;
+let currentLibraryArr = [];
+const pageObserver = new IntersectionObserver(onScroll, {
+  rootMargin: '0px 0px 200px 0px',
+});
 
 export function init() {
   //refs, event listeners, genres request, popular movies request
   // showLoader();
   // hideLoader();
 
+  modalInit();
   refs.cardsBox = document.querySelector('.cards-box');
   refs.header = document.querySelector('.header');
   refs.homeLink = document.querySelector('#home');
@@ -21,9 +37,10 @@ export function init() {
   refs.ourTeamLink = document.querySelector('#our-team');
   refs.closeModalBtn = document.querySelector('[data-action="close-modal"]');
   refs.backdrop = document.querySelector('.js-backdrop');
-  refs.movieModal = document.querySelector('.modal');
+  refs.movieModal = document.querySelector('.movie-modal');
   refs.searchForm = document.querySelector('#movie-search');
   refs.sliderList = document.querySelector('.splide__list');
+  refs.observeTarget = document.querySelector('.sentinel');
 
   try {
     refs.logo.addEventListener('click', onHomeLinkClick);
@@ -35,8 +52,7 @@ export function init() {
     refs.closeModalBtn.addEventListener('click', closeTeamModal);
     refs.backdrop.addEventListener('click', onBackdropClick);
     refs.searchForm.addEventListener('submit', onMoviesSearch);
-
-    // refs.movieModal.addEventListener('click', onCloseClick);
+    refs.cardsBox.addEventListener('click', onActionMovieCard);
   } catch (error) {
     console.log(error);
   }
@@ -44,26 +60,15 @@ export function init() {
   showSliderMovies(refs.sliderList);
 
   getMovieList();
-  // searchMovies();
-
-  // before getMovieList()
-  // refs.cardLinks = document.querySelectorAll('.card-link');
-
-  // console.log(refs.cardLinks)
-
-  // refs.cardLinks.forEach(cardLink => {
-  //   console.log(cardLink);
-  //   cardLink.addEventListener('click', () => {
-  //     event.preventDefault();
-  //     console.log(refs.cardLink)
-  //   });
-  // });
 }
 
 function onHomeLinkClick(event) {
   event.preventDefault();
+  // location.reload();
   refs.header.classList.remove('header-library');
   refs.header.classList.add('header-search');
+  clearMovies();
+  getMovieList();
 }
 
 function onLibraryLinkClick(event) {
@@ -77,12 +82,18 @@ function onLibraryWatchBtnClick() {
   refs.libraryWatchBtn.classList.remove('accent-btn');
   refs.libraryWatchBtn.classList.add('accent-btn');
   refs.libraryQueBtn.classList.remove('accent-btn');
+  clearMovies();
+  currentLibraryArr = data.getWatched();
+  pageObserver.observe(refs.observeTarget);
 }
 
 function onLibraryQueBtnClick() {
   refs.libraryQueBtn.classList.remove('accent-btn');
   refs.libraryQueBtn.classList.add('accent-btn');
   refs.libraryWatchBtn.classList.remove('accent-btn');
+  clearMovies();
+  currentLibraryArr = data.getQueue();
+  pageObserver.observe(refs.observeTarget);
 }
 
 function openTeamModal() {
@@ -111,5 +122,41 @@ function onMoviesSearch(event) {
   event.preventDefault();
   const query = event.target.elements.query.value;
   refs.cardsBox.innerHTML = '';
+  clearMovies();
   searchMovies(query);
+}
+
+function onActionMovieCard(event) {
+  event.preventDefault();
+
+  let btnClicked = false;
+
+  event.path.map(currentMovieLink => {
+    if (currentMovieLink.nodeName === 'BUTTON') {
+      if (currentMovieLink.classList.contains('in-watched')) {
+        console.log('onInWatchedBtn()'); // <----- add function
+      } else if (currentMovieLink.classList.contains('in-queue')) {
+        console.log('onInQueueBtn()'); // <----- add function
+      }
+      btnClicked = true;
+      // event.stopImmediatePropagation();
+    }
+
+    if (currentMovieLink.nodeName === 'A' && !btnClicked) {
+      getMovieInfo(currentMovieLink.dataset.id);
+
+      // event.stopImmediatePropagation();
+    }
+  });
+}
+
+function onScroll() {
+  console.log(`i'm scrolling to the infinity`);
+  if (currentLibraryArr.length > SCROLL_PAGE_LEN) {
+    const newPage = currentLibraryArr.splice(0, SCROLL_PAGE_LEN);
+    getAndShowLibrary(newPage);
+    return;
+  }
+  pageObserver.unobserve(refs.observeTarget);
+  getAndShowLibrary(currentLibraryArr);
 }

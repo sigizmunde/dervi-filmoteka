@@ -53,3 +53,59 @@
   background: var(--accent-color);
   border: 1px solid transparent;
 }
+// ---------------------- cards content sorting -----------------//
+.empty-library {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+
+  background-image: url(../images/Movie-camera-and-film-clipart-3-resize.png);
+  background-position: 50% 100%;
+  background-size: 70%;
+  background-repeat: no-repeat;
+  // text-align: center;
+  @media screen and(min-width: $tablet) {
+    background-size: 50%;
+  }
+  @media screen and(min-width: $desktop) {
+    background-size: 38%;
+  }
+  & .cards-box {
+    display: none;
+  }
+}
+
+.empty-library::before {
+  content: 'Oops, there are no movies.\A Press START to choose movie';
+  white-space: pre;
+  // display: flex;
+  // align-items: center;
+  // background-image: url(../images/pngwing.png);
+  // background-size: contain;
+  // background-repeat: no-repeat;
+  // width: 280px;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.33;
+  @media screen and(min-width: $tablet) {
+    font-size: 25px;
+  }
+
+  // position: absolute;
+  // top: 50%;
+  // left: 50%;
+  // transform: translate(-50%, -50%);
+}
+.container:not(.empty-library) {
+  .empty-library-btn {
+    display: none;
+  }
+}
+.empty-library-btn:first-child {
+  margin-top: 20px;
+  margin-right: 0;
+}
+.pagination.on-empty-library {
+  display: none;
+}

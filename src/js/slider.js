@@ -1,16 +1,6 @@
 import APIService from './movie-api';
 import { API_IMG_URL } from './global';
 
-const api = new APIService();
-
-const genres = api.getGenres().map(genre => {
-  return {
-    [genre.id]: genre.name,
-  };
-});
-
-console.log(genres);
-
 export function showSliderMovies(selector) {
   api
     .getTrending()
@@ -21,8 +11,29 @@ export function showSliderMovies(selector) {
     });
 }
 
+const api = new APIService();
+const genres = api.getGenres().reduce((acc, genre) => {
+  return { ...acc, [genre.id]: genre.name };
+}, {});
+
+function getGenresForSlider(genreArr, genres) {
+  const showedGenres = [];
+  let index = 0;
+  for (item of genreArr) {
+    index++;
+    if (index > 2) {
+      showedGenres.push('others');
+      break;
+    }
+    showedGenres.push(genres[item]);
+  }
+
+  return showedGenres.join(', ');
+}
+
 function sliderCardsTpl(objectsArray, selector) {
   objectsArray.map(movie => {
+    const gendersList = getGenresForSlider(movie.genre_ids, genres);
     selector.innerHTML += `
         <li class="card splide__slide">
           <a href="" class="card-link" movie-id="${movie.id}">
@@ -35,7 +46,11 @@ function sliderCardsTpl(objectsArray, selector) {
             </div>
             <div class="splide__card-body">
               <p class="splide__card-title"><b>${movie.title}</b></p>
-              <p class="splide__card-genres"><b>${movie.genre_ids} | ${movie.release_date}</b></p>
+              <p class="splide__card-genres"><b>${gendersList} | ${movie.release_date.slice(
+      0,
+      4
+    )}</b>
+              </p>
             </div>
           </a>
         </li>`;

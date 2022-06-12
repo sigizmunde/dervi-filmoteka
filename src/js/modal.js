@@ -1,22 +1,32 @@
 // draft file
+const movieModal = document.querySelector('.movie-modal');
+const backdrop = document.querySelector('.backdrop');
 
-// const movieModal = document.querySelector('.modal');
+export function modalInit() {
+  movieModal.addEventListener('click', onCloseClick);
+  backdrop.addEventListener('click', onCloseClick);
+}
 
-// export function openModal() {
-//   movieModal.classList.remove('is-hidden');
-//   movieModal.classList.add('open');
-// }
+export function openModal() {
+  movieModal.classList.remove('is-hidden');
+  movieModal.classList.add('open');
+  document.body.classList.add('modal-open');
+}
 
-// function closeModal() {
-//   movieModal.classList.remove('open');
-//   movieModal.classList.add('is-hidden');
-// }
+export function closeModal() {
+  movieModal.classList.remove('open');
+  movieModal.classList.add('is-hidden');
+  document.body.classList.remove('modal-open');
+}
 
-// movieModal.addEventListener('click', onCloseClick);
+function onCloseClick(event) {
+  if (event.target.nodeName === 'BUTTON') {
+    return;
+  }
+  closeModal();
+}
 
-// function onCloseClick(event) {
-//   if (event.target.nodeName !== 'BUTTON') {
-//     return;
-//   }
-//   closeModal();
-// }
+export function printToModal(HTMLString) {
+  const modalContent = document.querySelector('.modal-content');
+  modalContent.innerHTML = HTMLString;
+}

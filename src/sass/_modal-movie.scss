@@ -1,50 +1,189 @@
-.modal-window {
-}
-.close-btn {
-}
-.movie-modal {
-}
-.close-icon {
-}
-.movie-picture-box {
-}
-.info-container {
-}
-.movie-picture {
-}
-.movie-title {
-}
-.movie-list {
-}
-.article {
-}
-.button-box {
-}
-.movie-items.item-right {
-}
-.movie-items {
-}
-.article-caption {
-}
-.article-text {
-}
-.movie-button.primary-btn {
-}
-.movie-button {
-}
-.description-box {
-}
-.property-box {
-}
-.movie-description {
-}
-.vote-box.property {
-}
-.property {
-}
-.property-vote.property-accent {
-}
-.vote-slash {
-}
-.property-vote.property-vote-alt {
-}
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    padding: 48px 20px 40px 20px;
+    @media screen and (min-width: $tablet) {
+      flex-direction: unset;
+  
+      padding: 40px 72px 40px 36px;
+    }
+    @media screen and (min-width: $desktop) {
+      padding: 40px 16px;
+    }
+  }
+  
+  .movie-picture-box {
+    display: flex;
+    min-width: 240px;
+    height: 357px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    overflow: hidden;
+    @media screen and(min-width:$tablet) {
+      min-width: 264px;
+      height: 373px;
+      margin-right: 68px;
+      margin-bottom: 0;
+    }
+    @media screen and(min-width:$desktop) {
+      min-width: 375px;
+      height: 478px;
+      margin-right: 16px;
+    }
+  }
+  .movie-picture {
+    width: 100%;
+  }
+  .info-container {
+    visibility: inherit; //just a placeholder
+  }
+  .movie-title {
+    margin-bottom: 20px;
+    color: #000000;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: calc(23 / 20);
+    @media screen and (min-width: $desktop) {
+      font-size: 30px;
+    }
+  }
+  
+  .movie-items.item-right {
+    width: 118px;
+  
+    @media screen and (min-width: $desktop) {
+      width: 152px;
+    }
+  }
+  .movie-list {
+    display: flex;
+    margin-bottom: 20px;
+  }
+  .description-box {
+    @media screen and (min-width: $desktop) {
+      // display: flex;
+      // flex-direction: column;
+    }
+  }
+  .movie-description {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: calc(16 / 12);
+    color: var(--helpers-text-color);
+  
+    &:not(:last-child) {
+      margin-bottom: 8px;
+    }
+  }
+  
+  .property-box {
+    @media screen and (min-width: $desktop) {
+      // display: flex;
+      // flex-direction: column;
+    }
+  }
+  .property {
+    line-height: calc(16 / 12);
+    text-transform: uppercase;
+  
+    color: var(--secondary-text-color);
+    &:not(:last-child) {
+      margin-bottom: 8px;
+    }
+    &#genre {
+      text-transform: unset;
+      #genre::first-letter {
+        text-transform: uppercase;
+      }
+    }
+  }
+  .vote-box {
+    display: flex;
+  }
+  .property-vote {
+    width: 36px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    color: var(--secondary-text-color);
+    background-color: var(--secondary-bg-color);
+    border-radius: 5px;
+    line-height: calc(14 / 12);
+    text-transform: uppercase;
+    margin-right: 2px;
+    &:last-child {
+      margin-left: 3px;
+      margin-right: 0;
+    }
+  }
+  .vote-slash {
+    color: var(--helpers-text-color);
+  }
+  
+  .property-accent {
+    background-color: var(--accent-color);
+    color: var(--main-bg-color);
+  }
+  .article {
+    margin-bottom: 20px;
+  }
+  .article-caption {
+    margin-bottom: 8px;
+    line-height: calc(16 / 12);
+    text-transform: uppercase;
+    color: var(--secondary-text-color);
+  }
+  
+  .article-text {
+    line-height: calc(20 / 12);
+  
+    color: var(--secondary-text-color);
+    @media screen and (min-width: $tablet) {
+      overflow: auto;
+      max-height: 236px;
+    }
+  
+    @media screen and (min-width: $desktop) {
+      max-height: 160px;
+    }
+  }
+  
+  .button-box {
+    display: flex;
+    justify-content: space-between;
+    @media screen and (min-width: $desktop) {
+      justify-content: unset;
+    }
+  }
+  .movie-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 110px;
+    height: 44px;
+    line-height: calc(16 / 12);
+    text-transform: uppercase;
+    font-weight: 500;
+    border-radius: 5px;
+    border: 1px solid var(--secondary-text-color);
+    color: var(--secondary-text-color);
+    background-color: transparent;
+    @media screen and (min-width: $tablet) {
+      width: 125px;
+    }
+  
+    @media screen and (min-width: $desktop) {
+      width: 136px;
+      margin-left: 8px;
+      &:last-child {
+        margin-left: 15px;
+      }
+    }
+  }
+  .primary-btn {
+    background-color: var(--accent-color);
+    color: var(--main-text-color);
+    border: none;
+  }
