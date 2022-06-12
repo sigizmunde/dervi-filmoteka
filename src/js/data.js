@@ -49,7 +49,7 @@ export class DataStorage {
     if (watchedArr.includes(id)) {
       return;
     }
-    watchedArr.push(id);
+    watchedArr.unshift(id);
     this.#setWatched(watchedArr);
   }
 
@@ -68,7 +68,7 @@ export class DataStorage {
     if (queueArr.includes(id)) {
       return;
     }
-    queueArr.push(id);
+    queueArr.unshift(id);
     this.#setQueue(queueArr);
   }
 
