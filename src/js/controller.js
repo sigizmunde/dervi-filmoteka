@@ -10,8 +10,17 @@ import {
 import { modalInit } from './modal';
 import { clearMovies } from './markup';
 import { showLoader, hideLoader } from './loader';
+
 import { DataStorage } from './data';
+import { onQueueBtnCard, onWatchedBtnCard } from './actions-library';
+
 const data = new DataStorage();
+
+const SCROLL_PAGE_LEN = 6;
+let currentLibraryArr = [];
+const pageObserver = new IntersectionObserver(onScroll, {
+  rootMargin: '0px 0px 200px 0px',
+});
 
 export function init() {
   //refs, event listeners, genres request, popular movies request
@@ -31,8 +40,7 @@ export function init() {
   refs.backdrop = document.querySelector('.js-backdrop');
   refs.movieModal = document.querySelector('.movie-modal');
   refs.searchForm = document.querySelector('#movie-search');
-  refs.sentinel = document.querySelector('#sentinel');
-  refs.searchInput = document.querySelector('input');
+  refs.observeTarget = document.querySelector('.sentinel');
 
   try {
     refs.logo.addEventListener('click', onHomeLinkClick);
@@ -44,22 +52,24 @@ export function init() {
     refs.closeModalBtn.addEventListener('click', closeTeamModal);
     refs.backdrop.addEventListener('click', onBackdropClick);
     refs.searchForm.addEventListener('submit', onMoviesSearch);
-    refs.cardsBox.addEventListener('click', openMovieModal);
-    createObvserver(refs.sentinel);
-    // refs.movieModal.addEventListener('click', onCloseClick);
+    refs.cardsBox.addEventListener('click', onActionMovieCard);
   } catch (error) {
     console.log(error);
   }
   getMovieList();
+
+  // when init page, check localStorage
+  data.getQueue();
+  data.getWatched();
 }
 
 function onHomeLinkClick(event) {
   event.preventDefault();
-  location.reload();
-  // refs.header.classList.remove('header-library');
-  // refs.header.classList.add('header-search');
-  // refs.searchInput.value = '';
-  // getMovieList();
+  // location.reload();
+  refs.header.classList.remove('header-library');
+  refs.header.classList.add('header-search');
+  clearMovies();
+  getMovieList();
 }
 
 function onLibraryLinkClick(event) {
@@ -74,7 +84,8 @@ function onLibraryWatchBtnClick() {
   refs.libraryWatchBtn.classList.add('accent-btn');
   refs.libraryQueBtn.classList.remove('accent-btn');
   clearMovies();
-  getAndShowLibrary(data.getWatched());
+  currentLibraryArr = data.getWatched();
+  pageObserver.observe(refs.observeTarget);
 }
 
 function onLibraryQueBtnClick() {
@@ -82,7 +93,8 @@ function onLibraryQueBtnClick() {
   refs.libraryQueBtn.classList.add('accent-btn');
   refs.libraryWatchBtn.classList.remove('accent-btn');
   clearMovies();
-  getAndShowLibrary(data.getQueue());
+  currentLibraryArr = data.getQueue();
+  pageObserver.observe(refs.observeTarget);
 }
 
 function openTeamModal() {
@@ -115,44 +127,44 @@ function onMoviesSearch(event) {
   searchMovies(query);
 }
 
-function openMovieModal(event) {
+function onActionMovieCard(event) {
   event.preventDefault();
 
+  let btnClicked = false;
+
   event.path.map(currentMovieLink => {
-    if (currentMovieLink.nodeName === 'A') {
-      // Open modal
-      // refs.movieModal.classList.remove('is-hidden');
+    // check btn events on the movie card and add/delete to/from the library
+    if (currentMovieLink.nodeName === 'BUTTON') {
+      const currentMovieId = currentMovieLink.closest('.card-link').dataset.id;
+      const currentMovieIdNum = Number(currentMovieId);
 
-      // Load movie detail
-      // console.log(currentMovieLink.getAttribute("movie-id"));
-      getMovieInfo(currentMovieLink.getAttribute('movie-id'));
+      if (currentMovieLink.classList.contains('in-queue')) {
+        onQueueBtnCard(currentMovieLink, currentMovieIdNum);
+      } else if (currentMovieLink.classList.contains('in-watched')) {
+        onWatchedBtnCard(currentMovieLink, currentMovieIdNum);
+      }
+      btnClicked = true;
+      // event.stopImmediatePropagation();
+    }
 
-      event.stopPropagation();
+    // catch a movie link and open the movie modal
+    if (currentMovieLink.nodeName === 'A' && !btnClicked) {
+      const currentMovieId = currentMovieLink.dataset.id;
+      const currentMovieIdNum = Number(currentMovieId);
+      getMovieInfo(currentMovieId);
+
+      // event.stopPropagation();
     }
   });
 }
 
-// копия чтобы помнить название глобальной переменной. А так она сразу под импортами.
-// let currentIdArray = [];
-
-/*
-1. При взоде на траничку Библеотеки вызывается Data.getWatched() и ее возврат массива id запишем в переменную ?currentIdArray? 
-2. Делаем проверку на длину полученого массива и если длина больше 12 то тогда вырезаем из массива нужные нам 12 id.
-3. Рендерим в маине (Библеотека-watched)
-4. Если во время проверки длина массива меньше 12 то тогда вырезаем все отсальные и сообщение что больше фильмов нет и отмения observe --'observer.unobserve(observeTarget)' 
-
-*/
-
-function createObvserver(observeTarget) {
-  const callback = entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-      }
-    });
-  };
-
-  const observer = new IntersectionObserver(callback, {
-    rootMargin: '0px 0px 200px 0px',
-  });
-  observer.observe(observeTarget);
+function onScroll() {
+  console.log(`i'm scrolling to the infinity`);
+  if (currentLibraryArr.length > SCROLL_PAGE_LEN) {
+    const newPage = currentLibraryArr.splice(0, SCROLL_PAGE_LEN);
+    getAndShowLibrary(newPage);
+    return;
+  }
+  pageObserver.unobserve(refs.observeTarget);
+  getAndShowLibrary(currentLibraryArr);
 }

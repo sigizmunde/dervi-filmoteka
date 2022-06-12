@@ -33,6 +33,7 @@
   }
   .movie-picture {
     width: 100%;
+    object-fit: cover;
   }
   .info-container {
     visibility: inherit; //just a placeholder
@@ -158,6 +159,7 @@
     }
   }
   .movie-button {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -170,6 +172,18 @@
     border: 1px solid var(--secondary-text-color);
     color: var(--secondary-text-color);
     background-color: transparent;
+    cursor: pointer;
+    overflow: hidden;
+
+    transition: color var(--transition-params), background-color var(--transition-params), border var(--transition-params);
+
+    &:hover,
+    &:focus {
+      background-color: var(--accent-color);
+      color: var(--main-text-color);
+      border: 1px solid transparent;
+    }
+
     @media screen and (min-width: $tablet) {
       width: 125px;
     }
@@ -182,8 +196,46 @@
       }
     }
   }
-  .primary-btn {
+  .watched-btn{
+    &::before {
+      content: 'add to watched';
+      position: absolute;
+    }
+    &::after{
+      top: 0;
+    }
+  }
+  .queue-btn{
+    &::before {
+      content: 'add to queue';
+      position: absolute;
+    }
+    &::after {
+      top: 0;
+    }
+  }
+  .active-btn {
+    position: relative;
     background-color: var(--accent-color);
     color: var(--main-text-color);
-    border: none;
+    border: 1px solid transparent;
+
+    &.watched-btn::after {
+      content: 'delete from watched';
+      position: absolute;
+      top: 7px;
+    }
+    &.queue-btn::after {
+      content: 'delete from queue';
+      position: absolute;
+      top: 7px;
+      @media screen and (min-width: $tablet) {
+          top:14px;
+        }
+    }
+    &.watched-btn::before,
+    &.queue-btn::before{
+      top: -20px;
+    }
   }
+

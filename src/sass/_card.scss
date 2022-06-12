@@ -17,6 +17,7 @@
   @media screen and (min-width: $tablet) {
     flex-direction: unset;
     flex-wrap: wrap;
+    align-items: baseline;
     margin-bottom: 60px;
     margin: -16px;
   }
@@ -37,13 +38,12 @@
 .card-image {
   width: 280px;
   height: 402px;
-  margin-bottom: 10px;
+  margin-bottom: 0;
   border-radius: 5px;
 
   @media screen and (min-width: $tablet) {
     width: 336px;
     height: 455px;
-    margin-bottom: 8px;
   }
   @media screen and (min-width: $desktop) {
     width: 309px;
@@ -52,6 +52,11 @@
   }
 }
 .card-body {
+  padding-right: 42px;
+  padding-top: 10px;
+  @media screen and (min-width: $tablet) {
+    padding-top: 8px;
+  }
   @media screen and (min-width: $desktop) {
     padding-top: 8px;
   }
@@ -151,21 +156,19 @@ button.card-button:focus {
   }
 }
 .card-label-wrapper {
-  display: none;
-  @media screen and (min-width: $desktop) {
-    display: block;
-    position: relative;
-  }
+  // display: none;
+  display: block;
+  position: relative;
 }
 .card {
   &:not(.in-watched) {
     .card-label-in-watched {
-      display: none;
+      opacity: 0;
     }
   }
   &:not(.in-queue) {
     .card-label-in-queue {
-      display: none;
+      opacity: 0;
     }
   }
 
@@ -178,12 +181,15 @@ button.card-button:focus {
       padding: 7px 9px 11px 9px;
       width: 29px;
       height: 34px;
-      left: 270px;
+      right: 8px;
       color: #fff;
       font-family: 'Roboto';
 
       line-height: 16px;
       background-image: url('../images/icons/card-label-watched.svg');
+
+      opacity: 1;
+      transition: opacity var(--transition-params);
     }
   }
   &.in-queue {
@@ -195,12 +201,15 @@ button.card-button:focus {
       padding: 7px 9px 11px 9px;
       width: 29px;
       height: 34px;
-      left: 270px;
+      right: 8px;
       color: #fff;
       font-family: 'Roboto';
 
       line-height: 16px;
       background-image: url('../images/icons/card-label-queue.svg');
+      
+      opacity: 1;
+      transition: opacity var(--transition-params);
     }
   }
 }
