@@ -80,12 +80,12 @@ function onLibraryLinkClick(event) {
   event.preventDefault();
   refs.header.classList.remove('header-search');
   refs.header.classList.add('header-library');
+  refs.cardsBox.classList.add('hide-labels');
   if (data.getWatched().length === 0) {
     refs.cardsSection.classList.add('empty-library');
+    refs.pagination.classList.add('on-empty-library');
   } else {
     refs.pagination.classList.add('on-empty-library');
-    refs.cardsBox.classList.add('hide-labels');
-    // refs.cardLabel.classList.add('hide-label');
 
     onLibraryWatchBtnClick();
   }
@@ -97,7 +97,6 @@ function onLibraryWatchBtnClick() {
   refs.libraryQueBtn.classList.remove('accent-btn');
   if (data.getWatched().length === 0) {
     refs.cardsSection.classList.add('empty-library');
-    // refs.pagination.classList.add('on-empty-library');
   } else {
     refs.cardsSection.classList.remove('empty-library');
     clearMovies();
