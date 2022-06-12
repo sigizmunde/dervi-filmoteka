@@ -1,3 +1,7 @@
+.container-position {
+    position: relative;
+}
+
 // ----------------------------- Dark and Light theme
 .dark-theme {
     background: var(--bg-dark-theme);
@@ -14,11 +18,20 @@
 
 // ------------------------------Dark theme box
 .dark-theme-box {
-    position: absolute;
-    bottom: 10px;
-    right: 24px;
     display: flex;
     justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    @media screen and (min-width: $tablet) {
+        position: absolute;
+        bottom: 10px;
+        right: 32px;
+    }
+    @media screen and (min-width: $desktop) {
+        position: absolute;
+        bottom: 10px;
+        right: 32px;
+    }
 }
 
 .dark-theme-box input {
