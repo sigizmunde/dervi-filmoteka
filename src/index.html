@@ -1,35 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <title>Filmoteka</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet" />
-  <title>Filmoteka</title>
-</head>
+  <body>
+    <include src="./partials/header.html"></include>
+    <main class="main">
+      <!-- <include src="./partials/loader.html"></include> -->
+      <section class="container cards-section">
+        <!-- empty-library -->
+        <a href="" class="library-btn empty-library-btn accent-btn"> start </a>
+        <ul class="cards-box">
+          <include src="./partials/movie-container.html"></include>
+        </ul>
+        <div class="sentinel"></div>
+      </section>
 
-<body>
-  <include src="./partials/header.html"></include>
-  <main class="main">
-    <!-- <include src="./partials/loader.html"></include> -->
-    <section class="container cards-section">
-      <!-- empty-library -->
-      <a href="" class="library-btn empty-library-btn accent-btn"> start </a>
-      <ul class="cards-box">
-        <include src="./partials/movie-container.html"></include>
-      </ul>
-      <div class="sentinel"></div>
-    </section>
-    <include src="./partials/pagination.html"></include>
-  </main>
+      <include src="./partials/pagination.html"></include>
+      <include src="./partials/scroll-to-top.html"></include>
 
-  <include src="./partials/footer.html"></include>
-  <include src="./partials/modal-our-team.html"></include>
-  <include src="./partials/modal.html"></include>
+    </main>
 
-  <script type="module" src="./index.js"></script>
-</body>
+    <include src="./partials/footer.html"></include>
+    <include src="./partials/modal-our-team.html"></include>
+    <include src="./partials/modal.html"></include>
 
+    <script type="module" src="./index.js"></script>
+  </body>
 </html>

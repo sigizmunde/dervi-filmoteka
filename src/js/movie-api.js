@@ -1,4 +1,5 @@
 // module for working with API
+// to repeat last search with new page get function in this.repeatLastSearch;
 import { API_BASE_URL, API_KEY } from './global';
 import * as initialGenres from './dummy-array-objs/genres.json';
 
@@ -11,6 +12,7 @@ export default class APIService {
 
     this.searchQuery = '';
     this.genres = initialGenres.genres;
+    this.repeatLastSearch = null;
 
     this.#loadGenres();
   }
@@ -44,6 +46,7 @@ export default class APIService {
       page: pageNum,
     });
 
+    this.RepeatLastSearch = (page = 1) => this.getTrending(page, isDay); //function assigns itself with only page parameter
     return this.#fetchQuery(pathParams.split, searchParams);
   }
 
@@ -66,6 +69,7 @@ export default class APIService {
       query,
     });
 
+    this.RepeatLastSearch = (page = 1) => this.searchMovie(query, page); //function assigns itself with only page parameter
     return this.#fetchQuery(pathParams.split, searchParams);
   }
 

@@ -49,28 +49,24 @@
     }
   }
   
-  .movie-items.item-right {
-    width: 118px;
-  
-    @media screen and (min-width: $desktop) {
-      width: 152px;
-    }
-  }
   .movie-list {
-    display: flex;
     margin-bottom: 20px;
   }
-  .description-box {
-    @media screen and (min-width: $desktop) {
-      // display: flex;
-      // flex-direction: column;
-    }
+
+  .movie-item {
+    display: flex;
   }
+
   .movie-description {
+    display:block;
+    width: 118px;
     font-weight: 500;
     font-size: 12px;
     line-height: calc(16 / 12);
     color: var(--helpers-text-color);
+    @media screen and (min-width: $desktop) {
+      width: 152px;
+    }
   
     &:not(:last-child) {
       margin-bottom: 8px;

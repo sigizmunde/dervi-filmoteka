@@ -45,6 +45,7 @@ class Movie {
     this.voteCount = responseData.vote_count;
     this.popularity = responseData.popularity;
     this.overview = responseData.overview;
+    this.video = null;
 
     // В API метод getMovie возвращает жанры в свойстве "genres", значением которого есть массив объектов
     // Поэтому, если не удалось получить список жанров - получаем из метода "genres"
@@ -72,7 +73,7 @@ class Movie {
     const genreNames = [];
 
     for (let i = 0; i < this.genres.length; i++) {
-      if (maxCount && i === maxCount && i < this.genres.length - 1) {
+      if (maxCount && i === maxCount - 1 && i < this.genres.length - 1) {
         genreNames.push('others');
         break;
       }
@@ -145,22 +146,26 @@ export function getMovieList(params) {
 
 export function getAndShowLibrary(idArray) {
   let promisesMovies = [];
-  idArray.forEach(movieId => {
-    promisesMovies.push(
-      API.getMovie(movieId)
-        .then(response => {
+  idArray.map(movieId => {
+    try {
+      promisesMovies.push(
+        API.getMovie(movieId).then(response => {
+          const libMovie = new Movie(response);
           response.genres = response.genres.map(item => {
             return item.id;
           });
-          const libMovie = new Movie(response);
           return libMovie;
         })
-        .catch(result => console.log(result))
-    );
+      );
+    } catch (err) {
+      console.log(err);
+    }
   });
-  Promise.all(promisesMovies).then(response => {
-    showMovies(response);
-  });
+  Promise.all(promisesMovies)
+    .then(response => {
+      showMovies(response);
+    })
+    .catch(result => console.log(result));
 }
 
 export function getMovieInfo(id) {
