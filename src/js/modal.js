@@ -4,8 +4,8 @@ const data = new DataStorage();
 let movieModal = document.querySelector('.movie-modal');
 let backdrop = document.querySelector('.backdrop');
 let closeBtn = movieModal.querySelector('[data-close]');
-export let queueBtnModal;
-export let watchedBtnModal;
+let queueBtnModal;
+let watchedBtnModal;
 
 export function modalInit() {
   movieModal = document.querySelector('.movie-modal');
@@ -40,7 +40,7 @@ export function printToModal(HTMLString) {
   // get modal action buttons
   queueBtnModal = modalContent.querySelector('[data-queue-btn]');
   watchedBtnModal = modalContent.querySelector('[data-watched-btn]');
-  movieId = Number(queueBtnModal.dataset.movieId);
+  const movieId = Number(queueBtnModal.dataset.movieId);
 
   if (data.getQueue().includes(movieId)) {
     queueBtnModal.classList.add('active-btn');
@@ -60,17 +60,19 @@ function onQueueBtnModal(event) {
 
   if (
     data.getWatched().includes(currentMovieIdNum) &&
-    watchedBtnModal.classList.remove('active-btn')
+    !queueBtnModal.classList.contains('active-btn')
   ) {
     data.removeFromWatched(currentMovieIdNum);
     watchedBtnModal.classList.remove('active-btn');
   }
 
-  event.target.classList.toggle('active-btn');
-
-  event.target.classList.contains('active-btn')
-    ? data.removeFromQueue(currentMovieIdNum)
-    : data.addToQueue(currentMovieIdNum);
+  if (event.target.classList.contains('active-btn')) {
+    data.removeFromQueue(currentMovieIdNum);
+    event.target.classList.remove('active-btn');
+  } else {
+    data.addToQueue(currentMovieIdNum);
+    event.target.classList.add('active-btn');
+  }
   // add notify
 }
 
@@ -80,16 +82,18 @@ function onWatchedBtnModal(event) {
 
   if (
     data.getQueue().includes(currentMovieIdNum) &&
-    queueBtnModal.classList.remove('active-btn')
+    !watchedBtnModal.classList.contains('active-btn')
   ) {
     data.removeFromQueue(currentMovieIdNum);
     queueBtnModal.classList.remove('active-btn');
   }
 
-  event.target.classList.toggle('active-btn');
-
-  event.target.classList.contains('active-btn')
-    ? data.removeFromWatched(currentMovieIdNum)
-    : data.addToWatched(currentMovieIdNum);
+  if (event.target.classList.contains('active-btn')) {
+    data.removeFromWatched(currentMovieIdNum);
+    event.target.classList.remove('active-btn');
+  } else {
+    data.addToWatched(currentMovieIdNum);
+    event.target.classList.add('active-btn');
+  }
   // add notify
 }
