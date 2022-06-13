@@ -2,12 +2,18 @@ import { refs } from './global';
 import { onQueueBtnModal, onWatchedBtnModal } from './actions-library';
 
 // draft file
-const movieModal = document.querySelector('.movie-modal');
-const backdrop = document.querySelector('.backdrop');
+let movieModal = document.querySelector('.movie-modal');
+let backdrop = document.querySelector('.backdrop');
+let closeBtn = movieModal.querySelector('[data-close]');
 
 export function modalInit() {
-  movieModal.addEventListener('click', onCloseClick);
+  movieModal = document.querySelector('.movie-modal');
+  backdrop = document.querySelector('.backdrop');
+  closeBtn = movieModal.querySelector('[data-close]');
+
+  //movieModal.addEventListener('click', onCloseClick);
   backdrop.addEventListener('click', onCloseClick);
+  closeBtn.addEventListener('click', onCloseClick);
 }
 
 export function openModal() {
@@ -23,9 +29,6 @@ export function closeModal() {
 }
 
 function onCloseClick(event) {
-  if (event.target.nodeName === 'BUTTON') {
-    return;
-  }
   closeModal();
 }
 
@@ -34,11 +37,26 @@ export function printToModal(HTMLString) {
   modalContent.innerHTML = HTMLString;
 
   // get modal action buttons
-  const queueBtnModal = modalContent.querySelector('.queue-btn');
-  const watchedBtnModal = modalContent.querySelector('.watched-btn');
+  const queueBtnModal = modalContent.querySelector('[data-queue-btn]');
+  const watchedBtnModal = modalContent.querySelector('[data-watched-btn]');
 
   queueBtnModal.addEventListener('click', console.log(queueBtnModal));
   watchedBtnModal.addEventListener('click', console.log(watchedBtnModal));
   //   queueBtnModal.addEventListener('click', onQueueBtnModal);
   //   watchedBtnModal.addEventListener('click', onWatchedBtnModal);
 }
+
+// {
+//   const modalWatchedBtn = modalContent.querySelector('[data-watched-btn]');
+//   const modalQueueBtn = modalContent.querySelector('[data-queue-btn]');
+//   modalWatchedBtn.addEventListener('click', onModalWatchedBtnClick);
+//   modalQueueBtn.addEventListener('click', onModalQueueBtnClick);
+// }
+
+// function onModalWatchedBtnClick(event) {
+//   //write here
+// }
+
+// function onModalQueueBtnClick(event) {
+//   //write here
+// }
