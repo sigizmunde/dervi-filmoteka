@@ -229,7 +229,7 @@ export function getMovieInfo(id) {
         showMovieInfo(movie);
       });
     });
-    refs.movieModal.classList.remove('is-hidden');
+    // refs.movieModal.classList.remove('is-hidden');
   }
 }
 
