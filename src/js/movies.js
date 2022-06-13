@@ -26,6 +26,7 @@ import { showMovies, showMovieInfo } from './markup';
 import APIService from './movie-api';
 import * as initialGenres from './dummy-array-objs/genres.json';
 import { DataStorage } from './data.js';
+import { showPagination } from './pagination';
 const dataStorage = new DataStorage();
 
 class Movie {
@@ -124,6 +125,7 @@ export function getMovieList(params) {
         console.log(
           `Current page: ${responseData.page}, total page: ${responseData.total_pages}`
         ); // --> for pagination
+        showPagination(responseData.total_pages, responseData.page);
         return responseData.results;
       })
       .then(movieList => {

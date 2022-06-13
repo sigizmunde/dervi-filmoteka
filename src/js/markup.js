@@ -4,7 +4,6 @@ const cardSection = document.querySelector('.card-section');
 import { API_IMG_URL, refs } from './global';
 import { parseGenresByString } from './movies';
 import { openModal, printToModal } from './modal';
-import { showPagination } from './pagination';
 
 export function clearMovies() {
   refs.cardsBox.innerHTML = '';
@@ -40,7 +39,6 @@ export function showMovies(objectsArray) {
   });
 
   printHTMLmarkup(codeHTML);
-  showPagination(totalPages, currentPage);
 }
 
 // Show elements on page
