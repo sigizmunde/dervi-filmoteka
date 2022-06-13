@@ -21,12 +21,11 @@ import {
   queueIdArr,
 } from './global';
 
-// import { fetchMovie, fetchMovies, getGenres } from 'movie-api';
 import { showMovies, showMovieInfo, clearMovies } from './markup';
+import { showLoader, hideLoader } from './loader';
 import APIService from './movie-api';
-import * as initialGenres from './dummy-array-objs/genres.json';
 import { DataStorage } from './data.js';
-import { showPagination } from './pagination';
+import { showPagination, hidePagination } from './pagination';
 const dataStorage = new DataStorage();
 
 class Movie {
@@ -138,6 +137,9 @@ const API = new APIService();
 // let currentMovieList = [{ film1 }, { film2 }, { film3 }];
 
 export function getMovieList(params, page = 1, mode = '') {
+  showLoader();
+  hidePagination();
+
   // depending on params choses API function
   console.log('getMovies with params ', params, page, mode);
   let queryFunction;
@@ -173,6 +175,7 @@ export function getMovieList(params, page = 1, mode = '') {
 
       clearMovies();
       showMovies(objectsArray);
+      hideLoader();
     })
     .catch(result => console.log(result));
   return;
