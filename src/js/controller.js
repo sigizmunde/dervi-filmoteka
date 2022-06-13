@@ -3,9 +3,9 @@
 import { API_KEY, refs, watchedIdArr, queueIdArr } from './global';
 import {
   getMovieList,
-  searchMovies,
   getMovieInfo,
   getAndShowLibrary,
+  getPremiers,
 } from './movies';
 import { modalInit } from './modal';
 import { clearMovies } from './markup';
@@ -80,6 +80,8 @@ function onHomeLinkClick(event) {
   refs.pagination.classList.remove('on-empty-library');
   refs.cardsSection.classList.remove('empty-library');
   refs.cardsBox.classList.remove('hide-labels');
+
+  pageObserver.unobserve(refs.observeTarget);
 
   refs.searchInput.value = '';
   clearMovies();
@@ -160,7 +162,7 @@ function onMoviesSearch(event) {
   const query = event.target.elements.query.value;
   refs.cardsBox.innerHTML = '';
   clearMovies();
-  searchMovies(query);
+  getMovieList(query);
 }
 
 function onActionMovieCard(event) {
