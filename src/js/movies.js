@@ -110,24 +110,14 @@ class Movie {
   }
 
   #getPosterPath(poster_path) {
-    const fullPosterPatch = `${API_IMG_URL}${poster_path}`;
-    return fullPosterPatch;
-    // return NOPOSTER_IMG_URL;
-
-    // const poster = new Image();
-    // poster.src = fullPosterPatch;
-    //
-    // poster.onload = () => fullPosterPatch;
-    // poster.onerror = () => alert("NoImage");
+    if (poster_path || poster_path.length > 0) {
+      return `${API_IMG_URL}${poster_path}`;
+    }     
+    
+    return NOPOSTER_IMG_URL;
   }
 
   getVideos(number = 0) {
-    // API.getVideos(this.id)
-    //   .then(video => {
-    //     console.log(video.results);
-    //     this.video = `https://www.youtube.com/watch?v=${video.results[number].key}`;
-    //   })
-
     return API.getVideos(this.id);
   }
 }
