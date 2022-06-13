@@ -1,10 +1,11 @@
-import { refs } from './global';
-import { onQueueBtnModal, onWatchedBtnModal } from './actions-library';
+import { DataStorage } from './data';
 
-// draft file
+const data = new DataStorage();
 let movieModal = document.querySelector('.movie-modal');
 let backdrop = document.querySelector('.backdrop');
 let closeBtn = movieModal.querySelector('[data-close]');
+export let queueBtnModal;
+export let watchedBtnModal;
 
 export function modalInit() {
   movieModal = document.querySelector('.movie-modal');
@@ -37,26 +38,58 @@ export function printToModal(HTMLString) {
   modalContent.innerHTML = HTMLString;
 
   // get modal action buttons
-  const queueBtnModal = modalContent.querySelector('[data-queue-btn]');
-  const watchedBtnModal = modalContent.querySelector('[data-watched-btn]');
+  queueBtnModal = modalContent.querySelector('[data-queue-btn]');
+  watchedBtnModal = modalContent.querySelector('[data-watched-btn]');
+  movieId = Number(queueBtnModal.dataset.movieId);
 
-  queueBtnModal.addEventListener('click', console.log(queueBtnModal));
-  watchedBtnModal.addEventListener('click', console.log(watchedBtnModal));
-  //   queueBtnModal.addEventListener('click', onQueueBtnModal);
-  //   watchedBtnModal.addEventListener('click', onWatchedBtnModal);
+  if (data.getQueue().includes(movieId)) {
+    queueBtnModal.classList.add('active-btn');
+  }
+  if (data.getWatched().includes(movieId)) {
+    watchedBtnModal.classList.add('active-btn');
+  }
+
+  queueBtnModal.addEventListener('click', onQueueBtnModal);
+  watchedBtnModal.addEventListener('click', onWatchedBtnModal);
 }
 
-// {
-//   const modalWatchedBtn = modalContent.querySelector('[data-watched-btn]');
-//   const modalQueueBtn = modalContent.querySelector('[data-queue-btn]');
-//   modalWatchedBtn.addEventListener('click', onModalWatchedBtnClick);
-//   modalQueueBtn.addEventListener('click', onModalQueueBtnClick);
-// }
+// action btn in the movie modal
+function onQueueBtnModal(event) {
+  const currentMovieId = event.target.dataset.movieId;
+  const currentMovieIdNum = Number(currentMovieId);
 
-// function onModalWatchedBtnClick(event) {
-//   //write here
-// }
+  if (
+    data.getWatched().includes(currentMovieIdNum) &&
+    watchedBtnModal.classList.remove('active-btn')
+  ) {
+    data.removeFromWatched(currentMovieIdNum);
+    watchedBtnModal.classList.remove('active-btn');
+  }
 
-// function onModalQueueBtnClick(event) {
-//   //write here
-// }
+  event.target.classList.toggle('active-btn');
+
+  event.target.classList.contains('active-btn')
+    ? data.removeFromQueue(currentMovieIdNum)
+    : data.addToQueue(currentMovieIdNum);
+  // add notify
+}
+
+function onWatchedBtnModal(event) {
+  const currentMovieId = event.target.dataset.movieId;
+  const currentMovieIdNum = Number(currentMovieId);
+
+  if (
+    data.getQueue().includes(currentMovieIdNum) &&
+    queueBtnModal.classList.remove('active-btn')
+  ) {
+    data.removeFromQueue(currentMovieIdNum);
+    queueBtnModal.classList.remove('active-btn');
+  }
+
+  event.target.classList.toggle('active-btn');
+
+  event.target.classList.contains('active-btn')
+    ? data.removeFromWatched(currentMovieIdNum)
+    : data.addToWatched(currentMovieIdNum);
+  // add notify
+}
