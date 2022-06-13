@@ -1,10 +1,16 @@
 // draft file
-const movieModal = document.querySelector('.movie-modal');
-const backdrop = document.querySelector('.backdrop');
+let movieModal = document.querySelector('.movie-modal');
+let backdrop = document.querySelector('.backdrop');
+let closeBtn = movieModal.querySelector('[data-close]');
 
 export function modalInit() {
-  movieModal.addEventListener('click', onCloseClick);
+  movieModal = document.querySelector('.movie-modal');
+  backdrop = document.querySelector('.backdrop');
+  const closeBtn = movieModal.querySelector('[data-close]');
+
+  // movieModal.addEventListener('click', onCloseClick);
   backdrop.addEventListener('click', onCloseClick);
+  closeBtn.addEventListener('click', onCloseClick);
 }
 
 export function openModal() {
