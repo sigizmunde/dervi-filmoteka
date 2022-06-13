@@ -1,3 +1,6 @@
+import { refs } from './global';
+import { onQueueBtnModal, onWatchedBtnModal } from './actions-library';
+
 // draft file
 const movieModal = document.querySelector('.movie-modal');
 const backdrop = document.querySelector('.backdrop');
@@ -29,4 +32,13 @@ function onCloseClick(event) {
 export function printToModal(HTMLString) {
   const modalContent = document.querySelector('.modal-content');
   modalContent.innerHTML = HTMLString;
+
+  // get modal action buttons
+  const queueBtnModal = modalContent.querySelector('.queue-btn');
+  const watchedBtnModal = modalContent.querySelector('.watched-btn');
+
+  queueBtnModal.addEventListener('click', console.log(queueBtnModal));
+  watchedBtnModal.addEventListener('click', console.log(watchedBtnModal));
+  //   queueBtnModal.addEventListener('click', onQueueBtnModal);
+  //   watchedBtnModal.addEventListener('click', onWatchedBtnModal);
 }
