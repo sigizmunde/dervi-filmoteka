@@ -60,18 +60,18 @@ function generatePagList(array, currentPage) {
           getMovieList('repeat', array[i], 'repeat');
         });
       } else {
-          if (i === 1) {
-              link.addEventListener('click', event => {
-                  event.preventDefault;
-                  getMovieList('repeat', array[i + 1] - 1, 'repeat');
-              })
-          } else {
-              link.addEventListener('click', event => {
-                  event.preventDefault;
-                  getMovieList('repeat', array[i - 1] + 1, 'repeat');
-              })
-          }
+        if (i === 1) {
+          link.addEventListener('click', event => {
+            event.preventDefault;
+            getMovieList('repeat', array[i + 1] - 1, 'repeat');
+          });
+        } else {
+          link.addEventListener('click', event => {
+            event.preventDefault;
+            getMovieList('repeat', array[i - 1] + 1, 'repeat');
+          });
         }
+      }
 
       item.append(link);
       list.append(item);
@@ -110,21 +110,22 @@ export function showPagination(totalPages, currentPage) {
       );
       // return;
     } else {
-    generatePagList(
-      [
-        1,
-        '...',
-        currentPage - 1,
-        currentPage,
-        currentPage + 1,
-        '...',
-        totalPages,
-      ],
-      currentPage
-    );
+      generatePagList(
+        [
+          1,
+          '...',
+          currentPage - 1,
+          currentPage,
+          currentPage + 1,
+          '...',
+          totalPages,
+        ],
+        currentPage
+      );
+    }
+    // pagination.append(markup);
+    // return;
   }
-  // pagination.append(markup);
-  // return;
 }
 // showPagination(5, 1);
 // console.log(typeof currentPage);
