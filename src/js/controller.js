@@ -7,12 +7,12 @@ import {
   getAndShowLibrary,
   getPremiers,
 } from './movies';
-import { modalInit } from './modal';
+import { modalInit, queueBtnModal, watchedBtnModal } from './modal';
 import { clearMovies } from './markup';
 import { showLoader, hideLoader } from './loader';
 
 import { DataStorage } from './data';
-import { onQueueBtnCard, onWatchedBtnCard } from './actions-library';
+import { onQueueBtnCard, onWatchedBtnCard } from './action-card-btn';
 
 import { onClickScrollTop } from './scroll-to-top';
 
@@ -190,7 +190,6 @@ function onActionMovieCard(event) {
     // catch a movie link and open the movie modal
     if (currentMovieLink.nodeName === 'A' && !btnClicked) {
       const currentMovieId = currentMovieLink.dataset.id;
-      const currentMovieIdNum = Number(currentMovieId);
       getMovieInfo(currentMovieId);
 
       // event.stopPropagation();
