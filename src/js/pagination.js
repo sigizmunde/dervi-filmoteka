@@ -89,11 +89,14 @@ export function showPagination(totalPages, currentPage) {
   }
   const lastPages = totalPages - 3;
   if (totalPages === 1) {
-    // make buttons invisible or make the class = "invisible" for
-    // div.pagination
+    // make buttons invisible or make the class = "invisible" for div.pagination
+    // generatePagList([1], currentPage);
   } else if (totalPages <= 7) {
     const curArray = [];
-    generatePagList([1, 2, 3, 4, 5, 6, 7], currentPage);
+    for (let i = 1; i <= totalPages; i++){
+      curArray.push(i);
+    }
+    generatePagList(curArray, currentPage);
   } else if (totalPages > 7) {
     if (currentPage <= 3) {
       generatePagList([1, 2, 3, 4, 5, '...', totalPages], currentPage);
@@ -132,7 +135,6 @@ export function showPagination(totalPages, currentPage) {
   }
 }
 // showPagination(5, 1);
-// console.log(typeof currentPage);
 // generatePagList([1, '...', 12, 13, 14, 15, 16, '...', 20], 14);
 
 export function hidePagination() {
