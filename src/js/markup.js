@@ -96,8 +96,12 @@ export function showMovieInfo(movieObject) {
           </p>
         </article>
         <div class="button-box">
-          <button class="movie-button watched-btn"></button>
-          <button class="movie-button queue-btn"></button>
+          <button class="movie-button watched-btn" data-watched-btn data-movie-id=${
+            movieObject.id
+          }></button>
+          <button class="movie-button queue-btn" data-queue-btn data-movie-id=${
+            movieObject.id
+          }></button>
         </div>
       </div>`;
 
