@@ -166,9 +166,9 @@ export function getAndShowLibrary(idArray) {
   });
   Promise.all(promisesMovies)
     .then(response => {
-      console.log('Promise.all response is ', response);
+      // console.log('Promise.all response is ', response);
       const clearMovieArray = response.filter(item => item != 0);
-      console.log('Filtered array is ', clearMovieArray);
+      // console.log('Filtered array is ', clearMovieArray);
       showMovies(clearMovieArray);
     })
     .catch(result => console.log(result));
