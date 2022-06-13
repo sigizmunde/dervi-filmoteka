@@ -90,6 +90,9 @@ function onLibraryLinkClick(event) {
   refs.header.classList.remove('header-search');
   refs.header.classList.add('header-library');
   refs.cardsBox.classList.add('hide-labels');
+  refs.libraryWatchBtn.classList.add('accent-btn');
+  refs.libraryQueBtn.classList.remove('accent-btn');
+
   refs.pagination.classList.add('on-empty-library');
   if (data.getWatched().length === 0) {
     refs.cardsSection.classList.add('empty-library');
