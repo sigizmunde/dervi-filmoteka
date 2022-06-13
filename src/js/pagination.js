@@ -92,7 +92,7 @@ export function showPagination(totalPages, currentPage) {
     generatePagList([1, 2, 3, 4, 5, 6, 7], currentPage);
   } else if (totalPages > 7) {
     if (currentPage <= 3) {
-      generatePagList([1, 2, 3, 4, 5, '...', `${totalPages - 1}`], currentPage);
+      generatePagList([1, 2, 3, 4, 5, '...', totalPages], currentPage);
 
       // return;
     } else if (currentPage >= lastPages) {
