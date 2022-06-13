@@ -10,6 +10,7 @@ import {
 import { modalInit } from './modal';
 import { clearMovies } from './markup';
 import { showLoader, hideLoader } from './loader';
+import notiflix from './notifications';
 
 import { DataStorage } from './data';
 import { onQueueBtnCard, onWatchedBtnCard } from './actions-library';
@@ -92,6 +93,7 @@ function onLibraryLinkClick(event) {
   refs.cardsBox.classList.add('hide-labels');
   refs.libraryWatchBtn.classList.add('accent-btn');
   refs.libraryQueBtn.classList.remove('accent-btn');
+  refs.libraryLink.addEventListener('click', notiflix);
 
   refs.pagination.classList.add('on-empty-library');
   if (data.getWatched().length === 0) {
