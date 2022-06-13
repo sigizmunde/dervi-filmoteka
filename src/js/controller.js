@@ -81,6 +81,8 @@ function onHomeLinkClick(event) {
   refs.cardsSection.classList.remove('empty-library');
   refs.cardsBox.classList.remove('hide-labels');
 
+  pageObserver.unobserve(refs.observeTarget);
+
   refs.searchInput.value = '';
   clearMovies();
   getMovieList();
