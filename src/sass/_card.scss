@@ -17,6 +17,7 @@
   @media screen and (min-width: $tablet) {
     flex-direction: unset;
     flex-wrap: wrap;
+    align-items: baseline;
     margin-bottom: 60px;
     margin: -16px;
   }
@@ -31,18 +32,18 @@
 
   @media screen and (min-width: $desktop) {
     margin: 8px;
+    position: relative;
   }
 }
 .card-image {
   width: 280px;
   height: 402px;
-  margin-bottom: 10px;
+  margin-bottom: 0;
   border-radius: 5px;
 
   @media screen and (min-width: $tablet) {
     width: 336px;
     height: 455px;
-    margin-bottom: 8px;
   }
   @media screen and (min-width: $desktop) {
     width: 309px;
@@ -51,6 +52,11 @@
   }
 }
 .card-body {
+  padding-right: 42px;
+  padding-top: 10px;
+  @media screen and (min-width: $tablet) {
+    padding-top: 8px;
+  }
   @media screen and (min-width: $desktop) {
     padding-top: 8px;
   }
@@ -83,32 +89,32 @@
   overflow: hidden;
 }
 .card {
-  &:not(.in-watched or .in-queue) {
-    .card-button {
-      width: 112px;
-      height: 38px;
-      color: #fff;
-      cursor: pointer;
-      text-transform: uppercase;
-      background: none;
-      border: 1px solid #fff;
-      border-radius: 5px;
-      justify-content: center;
-      align-items: center;
-      line-height: 1.33;
-      display: flex;
-    }
+  & .card-button {
+    width: 112px;
+    height: 38px;
+    color: #fff;
+    cursor: pointer;
+    text-transform: uppercase;
+    background: none;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    justify-content: center;
+    align-items: center;
+    line-height: 1.33;
+    display: flex;
+    transition: color var(--transition-params),
+      background-color var(--transition-params), border var(--transition-params);
   }
   &.in-watched {
     button.card-button.in-watched {
-      background: #ff6b01;
-      border: none;
+      background: var(--accent-color);
+      border: 1px solid transparent;
     }
   }
   &.in-queue {
     button.card-button.in-queue {
-      background: #ff6b01;
-      border: none;
+      background: var(--accent-color);
+      border: 1px solid transparent;
     }
   }
 }
@@ -116,9 +122,15 @@
   margin-left: 17px;
 }
 
+button.card-button:hover,
+button.card-button:focus {
+  background-color: var(--accent-color);
+  box-shadow: var(--btn-shadow);
+  border: 1px solid transparent;
+}
 @media screen and (min-width: $desktop) {
-  .card-link:hover .card-button-background,
-  .card-link:focus-within .card-button-background {
+  .card-button-slider:hover .card-button-background,
+  .card-button-slider:focus-within .card-button-background {
     transform: translateY(0);
     transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
 
@@ -128,6 +140,7 @@
 
 .card-button-background {
   display: none;
+  pointer-events: none;
 
   @media screen and (min-width: $desktop) {
     display: flex;
@@ -141,25 +154,29 @@
     border-radius: 0px 0px 4px 4px;
     transform: translateY(100%);
     transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
-    pointer-events: none;
+    pointer-events: visible;
   }
 }
 .card-label-wrapper {
-  display: none;
-  @media screen and (min-width: $desktop) {
-    display: block;
-    position: relative;
+  // display: none;
+  display: block;
+  position: relative;
+}
+.cards-box.hide-labels {
+  .card-label-wrapper {
+    display: none;
   }
 }
+
 .card {
   &:not(.in-watched) {
     .card-label-in-watched {
-      display: none;
+      opacity: 0;
     }
   }
   &:not(.in-queue) {
     .card-label-in-queue {
-      display: none;
+      opacity: 0;
     }
   }
 
@@ -172,12 +189,15 @@
       padding: 7px 9px 11px 9px;
       width: 29px;
       height: 34px;
-      left: 270px;
+      right: 8px;
       color: #fff;
       font-family: 'Roboto';
 
       line-height: 16px;
       background-image: url('../images/icons/card-label-watched.svg');
+
+      opacity: 1;
+      transition: opacity var(--transition-params);
     }
   }
   &.in-queue {
@@ -189,12 +209,15 @@
       padding: 7px 9px 11px 9px;
       width: 29px;
       height: 34px;
-      left: 270px;
+      right: 8px;
       color: #fff;
       font-family: 'Roboto';
 
       line-height: 16px;
       background-image: url('../images/icons/card-label-queue.svg');
+
+      opacity: 1;
+      transition: opacity var(--transition-params);
     }
   }
 }
