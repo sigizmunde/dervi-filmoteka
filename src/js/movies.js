@@ -162,6 +162,11 @@ export function getMovieList(params, page = 1, mode = '') {
         `Current page: ${responseData.page}, total pages: ${responseData.total_pages}`
       ); // --> for pagination
       showPagination(responseData.total_pages, responseData.page);
+      if (responseData.total_pages === 0) {
+        refs.cardsSection.classList.add('empty-main-library');
+      } else {
+        refs.cardsSection.classList.remove('empty-main-library');
+      }
       return responseData.results;
     })
     .then(movieList => {
@@ -229,7 +234,7 @@ export function getMovieInfo(id) {
         showMovieInfo(movie);
       });
     });
-    refs.movieModal.classList.remove('is-hidden');
+    // refs.movieModal.classList.remove('is-hidden');
   }
 }
 

@@ -98,6 +98,7 @@ function onLibraryLinkClick(event) {
   refs.libraryWatchBtn.classList.add('accent-btn');
   refs.libraryQueBtn.classList.remove('accent-btn');
   refs.libraryLink.addEventListener('click', notiflix('failure', 'iajghbap'));
+  refs.cardsSection.classList.remove('empty-main-library');
 
   refs.pagination.classList.add('on-empty-library');
   if (data.getWatched().length === 0) {
