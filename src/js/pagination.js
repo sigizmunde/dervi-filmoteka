@@ -3,6 +3,8 @@
 // const pageList = document.querySelector(".pagination-list");
 // const pageLink = document.querySelector(".pagination-link");
 
+import { getMovieList } from './movies';
+
 function generatePagList(array, currentPage) {
   // const prevLink = document.createElement("a");
   // prevLink.classList.add("pagination-button");
@@ -52,9 +54,28 @@ function generatePagList(array, currentPage) {
         item.classList.add('current');
       }
 
+      if (typeof array[i] === 'number') {
+        link.addEventListener('click', event => {
+          event.preventDefault;
+          getMovieList('repeat', array[i], 'repeat');
+        });
+      } else {
+          if (i === 1) {
+              link.addEventListener('click', event => {
+                  event.preventDefault;
+                  getMovieList('repeat', array[i + 1] - 1, 'repeat');
+              })
+          } else {
+              link.addEventListener('click', event => {
+                  event.preventDefault;
+                  getMovieList('repeat', array[i - 1] + 1, 'repeat');
+              })
+          }
+        }
+
       item.append(link);
       list.append(item);
-      pagination.append(list);
+      pagination.replaceChildren(list);
     }
 
     return pagination;
@@ -63,38 +84,33 @@ function generatePagList(array, currentPage) {
 
 export function showPagination(totalPages, currentPage) {
   const lastPages = totalPages - 3;
-  let markup;
   if (totalPages === 1) {
     // make buttons invisible or make the class = "invisible" for
     // div.pagination
   } else if (totalPages <= 7) {
     const curArray = [];
-    for (let i = 1; i <= totalPages; i += 1) {
-      curArray.push(i);
-    }
-    markup = generatePagList(curArray, currentPage);
+    generatePagList([1, 2, 3, 4, 5, 6, 7], currentPage);
   } else if (totalPages > 7) {
     if (currentPage <= 3) {
-      markup = generatePagList(
-        [1, 2, 3, 4, 5, '...', `${totalPages}`],
-        currentPage
-      );
+      generatePagList([1, 2, 3, 4, 5, '...', `${totalPages - 1}`], currentPage);
 
       // return;
     } else if (currentPage >= lastPages) {
-      markup = generatePagList([
-        1,
-        '...',
-        totalPages - 4,
-        totalPages - 3,
-        totalPages - 2,
-        totalPages - 1,
-        totalPages,
-      ]);
+      generatePagList(
+        [
+          1,
+          '...',
+          totalPages - 4,
+          totalPages - 3,
+          totalPages - 2,
+          totalPages - 1,
+          totalPages,
+        ],
+        currentPage
+      );
       // return;
-    }
-  } else {
-    markup = generatePagList(
+    } else {
+    generatePagList(
       [
         1,
         '...',

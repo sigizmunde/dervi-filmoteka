@@ -3,7 +3,6 @@
 import { API_KEY, refs, watchedIdArr, queueIdArr } from './global';
 import {
   getMovieList,
-  searchMovies,
   getMovieInfo,
   getAndShowLibrary,
   getPremiers,
@@ -161,7 +160,7 @@ function onMoviesSearch(event) {
   const query = event.target.elements.query.value;
   refs.cardsBox.innerHTML = '';
   clearMovies();
-  searchMovies(query);
+  getMovieList(query);
 }
 
 function onActionMovieCard(event) {
