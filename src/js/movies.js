@@ -44,7 +44,8 @@ class Movie {
     this.voteCount = responseData.vote_count;
     this.popularity = responseData.popularity;
     this.overview = responseData.overview;
-    this.video = null;
+    // this.video = null; 
+    this.videos = [];   
 
     // В API метод getMovie возвращает жанры в свойстве "genres", значением которого есть массив объектов
     // Поэтому, если не удалось получить список жанров - получаем из метода "genres"
@@ -63,6 +64,14 @@ class Movie {
 
   get watchedOrQueueClass() {
     return this.inWatched ? 'in-watched' : this.inQueue ? 'in-queue' : '';
+  }
+
+  get video() {
+    if (this.videos.length > 0) {
+      return this.videos[0]; // TEMP - getting only first video
+    }
+
+    return "";
   }
 
   // Private methods
@@ -109,6 +118,17 @@ class Movie {
     //
     // poster.onload = () => fullPosterPatch;
     // poster.onerror = () => alert("NoImage");
+  }
+
+  
+  getVideos(number = 0) {
+    // API.getVideos(this.id)
+    //   .then(video => {
+    //     console.log(video.results);
+    //     this.video = `https://www.youtube.com/watch?v=${video.results[number].key}`;
+    //   })    
+
+    return API.getVideos(this.id);
   }
 }
 
@@ -175,12 +195,21 @@ export function getAndShowLibrary(idArray) {
 }
 
 export function getMovieInfo(id) {
-  if (id) {
-    API.getMovie(id).then(movieDetails => {
+  if (id) {    
+    API.getMovie(id).then(movieDetails => {         // Get movie info
       const movie = new Movie(movieDetails);
-      showMovieInfo(movie);
+      movie.getVideos().then(videos => {             // Get movie video
+        videos.results.map(video => {
+          if (video.type === "Trailer") {
+            movie.videos.push(`https://www.youtube.com/watch?v=${video.key}`);
+          }
+        });
+        console.log(movie.videos);
+        showMovieInfo(movie);
+      })      
     });
     refs.movieModal.classList.remove('is-hidden');
+    
   }
 }
 
@@ -206,4 +235,52 @@ export function searchMovies(params, page = 1) {
       })
       .catch(result => console.log(result));
   }
+}
+
+export function getPremiers() {
+  // depending on params requests API or data
+  API.getPremiers()
+    .then(responseData => {
+      console.log(
+        `Current page: ${responseData.page}, total page: ${responseData.total_pages}`
+      ); // --> for pagination
+      return responseData.results;
+    })
+    .then(movieList => {
+      const objectsArray = [];
+
+      movieList.map(movieItem => {
+        const movie = new Movie(movieItem); // class instance
+
+        objectsArray.push(movie);
+      });
+
+      /* ------------------
+
+      В это место можно добавить обработчик вывода трендов
+      Переменная "objectsArray" содержит массив объектов фильмов (массив карточек)
+      Структура объекта:
+      {
+        id:             [ Идентификатор фильма ]
+        inQueue:        [ Фильм находиться в очереди на просмотр ]
+        inWatched:      [ Фильм находиться в просмотренных ]
+        originalTitle:  [ Оригинальное название фильма ]
+        overview:       [ Описание фильма ]
+        popularity:     [ Популярность фильма ]
+        posterPath:     [ Ссылка на постер фильма ]
+        releaseDate:    [ Год фильма ]
+        title:          [ Название фильма ]
+        voteAverage:    [ Рейтинг фильма ]
+        voteCount:      [ Количество проголосовавших ]
+      }
+
+      Пример: 
+        showMovies(objectsArray) - вывод списка на лгавную страницу
+
+      ------------------ */
+      
+      console.log(objectsArray);     
+    })
+    .catch(result => console.log(result));
+  
 }
