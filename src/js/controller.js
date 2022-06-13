@@ -6,6 +6,7 @@ import {
   searchMovies,
   getMovieInfo,
   getAndShowLibrary,
+  getPremiers,
 } from './movies';
 import { modalInit } from './modal';
 import { clearMovies } from './markup';

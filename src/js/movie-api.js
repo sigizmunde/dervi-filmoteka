@@ -93,6 +93,48 @@ export default class APIService {
     return this.#fetchQuery(pathParams.split, searchParams);
   }
 
+  // MOVIE VIDEOS
+  getVideos(movieId) {
+    // Path params
+    const pathParams = {
+      resource: 'movie',
+      id: movieId,
+      mediaType: 'videos',
+
+      get split() {
+        return `${this.resource}/${this.id}/${this.mediaType}`;
+      },
+    };
+
+    // Search params
+    const searchParams = new URLSearchParams({
+      api_key: API_KEY,
+    });
+
+    return this.#fetchQuery(pathParams.split, searchParams);
+  }
+
+  // PREMIERS
+  getPremiers() {
+    // Path params
+    const pathParams = {
+      resource: 'movie',
+      mediaType: 'upcoming',
+
+      get split() {
+        return `${this.resource}/${this.mediaType}`;
+      },
+    };
+
+
+    // Search params
+    const searchParams = new URLSearchParams({
+      api_key: API_KEY,
+    });
+
+    return this.#fetchQuery(pathParams.split, searchParams);  
+  }
+
   // GENRES
   #loadGenres() {
     // return genres.genres;
@@ -120,4 +162,7 @@ export default class APIService {
   getGenres() {
     return this.genres;
   }
+
+  
+
 }

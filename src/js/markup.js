@@ -93,6 +93,7 @@ export function showMovieInfo(movieObject) {
           <button class="movie-button watched-btn"></button>
           <button class="movie-button queue-btn"></button>
         </div>
+        <a href=${movieObject.video} target="_blank">Video</a>
       </div>`;
 
   printToModal(codeHTML);
