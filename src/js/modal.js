@@ -29,4 +29,6 @@ function onCloseClick(event) {
 export function printToModal(HTMLString) {
   const modalContent = document.querySelector('.modal-content');
   modalContent.innerHTML = HTMLString;
+  //слушатель на трейлер
+  //создать функцию 
 }
