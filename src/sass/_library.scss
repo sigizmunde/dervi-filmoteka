@@ -50,7 +50,8 @@
 }
 
 // ---------------------- cards content sorting -----------------//
-.empty-library {
+.empty-library,
+.empty-main-library {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -68,6 +69,19 @@
     }
     & .cards-box {
         display: none;
+    }
+}
+
+.empty-main-library::before {
+    content: 'Oops, something going wrong.\A Change your request. \AOr refresh page.';
+    white-space: pre;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.33;
+    max-width: 320px;
+    @media screen and(min-width: $tablet) {
+        content: 'Oops, something going wrong.\A Change your request or refresh page.';
+        font-size: 25px;
     }
 }
 
