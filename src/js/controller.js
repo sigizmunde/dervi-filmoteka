@@ -155,19 +155,12 @@ function onBackdropClick(event) {
     }
 }
 
-function onMoviesSearch(event) { <<
-    << << < HEAD
+function onMoviesSearch(event) {
     event.preventDefault();
     const query = event.target.elements.query.value;
     refs.cardsBox.innerHTML = '';
+    clearMovies();
     searchMovies(query);
-} ===
-=== =
-event.preventDefault();
-const query = event.target.elements.query.value;
-refs.cardsBox.innerHTML = '';
-clearMovies();
-searchMovies(query);
 }
 
 function onActionMovieCard(event) {
@@ -210,5 +203,4 @@ function onScroll() {
     }
     pageObserver.unobserve(refs.observeTarget);
     getAndShowLibrary(currentLibraryArr);
-} >>>
->>> > main
+}
