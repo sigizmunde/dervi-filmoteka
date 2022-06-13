@@ -178,6 +178,7 @@ export function getMovieInfo(id) {
   }
 }
 
+//this must be a part of getMovieList function, not a separate one
 export function searchMovies(params, page = 1) {
   // depending on params searches films in current list
   if (params) {
@@ -186,6 +187,7 @@ export function searchMovies(params, page = 1) {
         console.log(
           `Current page: ${responseData.page}, total page: ${responseData.total_pages}`
         ); // --> for pagination
+        showPagination(responseData.total_pages, responseData.page);
         return responseData.results;
       })
       .then(movieList => {
