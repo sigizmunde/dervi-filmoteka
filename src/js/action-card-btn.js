@@ -5,33 +5,37 @@ const data = new DataStorage();
 export function onQueueBtnCard(btn, id) {
   const movieCard = btn.closest('.card');
 
+  if (movieCard.classList.contains('in-queue')) {
+    data.removeFromQueue(id);
+    movieCard.classList.remove('in-queue');
+    return;
+  }
+
   if (movieCard.classList.contains('in-watched')) {
     data.removeFromWatched(id);
     movieCard.classList.remove('in-watched');
   }
 
-  movieCard.classList.toggle('in-queue');
-
-  movieCard.classList.contains('in-queue')
-    ? data.removeFromQueue(id)
-    : data.addToQueue(id);
-
+  movieCard.classList.add('in-queue');
+  data.addToQueue(id);
   // add notify
 }
 
 export function onWatchedBtnCard(btn, id) {
   const movieCard = btn.closest('.card');
 
+  if (movieCard.classList.contains('in-watched')) {
+    data.removeFromWatched(id);
+    movieCard.classList.remove('in-watched');
+    return;
+  }
+
   if (movieCard.classList.contains('in-queue')) {
     data.removeFromQueue(id);
     movieCard.classList.remove('in-queue');
   }
 
-  movieCard.classList.toggle('in-watched');
-
-  movieCard.classList.contains('in-watched')
-    ? data.removeFromWatched(id)
-    : data.addToWatched(id);
-
+  movieCard.classList.add('in-watched');
+  data.addToWatched(id);
   // add notify
 }
