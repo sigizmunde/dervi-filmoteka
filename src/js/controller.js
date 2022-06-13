@@ -41,6 +41,7 @@ export function init() {
   refs.ourTeamLink = document.querySelector('#our-team');
   refs.closeModalBtn = document.querySelector('[data-action="close-modal"]');
   refs.backdrop = document.querySelector('.js-backdrop');
+  refs.teamModal = document.querySelector('.js-team-modal');
   refs.movieModal = document.querySelector('.movie-modal');
   refs.searchForm = document.querySelector('#movie-search');
   refs.observeTarget = document.querySelector('.sentinel');
@@ -137,11 +138,13 @@ function onLibraryQueBtnClick() {
 
 function openTeamModal() {
   window.addEventListener('keydown', checkKeyPress);
+  refs.teamModal.classList.remove('is-hidden');
   document.body.classList.add('modal-open');
 }
 
 function closeTeamModal() {
   window.removeEventListener('keydown', checkKeyPress);
+  refs.teamModal.classList.add('is-hidden');
   document.body.classList.remove('modal-open');
 }
 

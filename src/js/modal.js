@@ -1,10 +1,16 @@
 // draft file
-const movieModal = document.querySelector('.movie-modal');
-const backdrop = document.querySelector('.backdrop');
+let movieModal = document.querySelector('.movie-modal');
+let backdrop = document.querySelector('.backdrop');
+let closeBtn = movieModal.querySelector('[data-close]');
 
 export function modalInit() {
-  movieModal.addEventListener('click', onCloseClick);
+  movieModal = document.querySelector('.movie-modal');
+  backdrop = document.querySelector('.backdrop');
+  closeBtn = movieModal.querySelector('[data-close]');
+
+  //movieModal.addEventListener('click', onCloseClick);
   backdrop.addEventListener('click', onCloseClick);
+  closeBtn.addEventListener('click', onCloseClick);
 }
 
 export function openModal() {
@@ -20,13 +26,22 @@ export function closeModal() {
 }
 
 function onCloseClick(event) {
-  if (event.target.nodeName === 'BUTTON') {
-    return;
-  }
   closeModal();
 }
 
 export function printToModal(HTMLString) {
   const modalContent = document.querySelector('.modal-content');
   modalContent.innerHTML = HTMLString;
+  const modalWatchedBtn = modalContent.querySelector('[data-watched-btn]');
+  const modalQueueBtn = modalContent.querySelector('[data-queue-btn]');
+  modalWatchedBtn.addEventListener('click', onModalWatchedBtnClick);
+  modalQueueBtn.addEventListener('click', onModalQueueBtnClick);
+}
+
+function onModalWatchedBtnClick(event) {
+  //write here
+}
+
+function onModalQueueBtnClick(event) {
+  //write here
 }
