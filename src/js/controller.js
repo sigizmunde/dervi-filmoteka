@@ -30,6 +30,7 @@ export function init() {
   // hideLoader();
 
   modalInit();
+  refs.loader = document.querySelector('.lds-ripple');
   refs.cardsBox = document.querySelector('.cards-box');
   refs.header = document.querySelector('.header');
   refs.homeLink = document.querySelector('#home');
