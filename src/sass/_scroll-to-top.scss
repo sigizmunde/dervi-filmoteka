@@ -1,0 +1,22 @@
+html {
+    scroll-behavior: smooth;
+}
+
+.scroll-top {
+    @media screen and (min-width: $desktop) {
+        position: fixed;
+        right: 45px;
+        bottom: 100px;
+        width: 40px;
+        height: 40px;
+        transition: 0.4s;
+        opacity: 0;
+    }
+}
+
+.isShowScrollTop {
+    @media screen and (min-width: $desktop) {
+        opacity: 1;
+        cursor: pointer;
+    }
+}

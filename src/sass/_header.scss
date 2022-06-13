@@ -40,7 +40,7 @@
 .header-bgc {
   @media screen and (min-width: $desktop) {
     background-color: var(--helpers-bg-color);
-    width: 100vw;
+    width: 100%;
   }
 }
 

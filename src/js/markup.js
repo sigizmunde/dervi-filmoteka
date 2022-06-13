@@ -5,13 +5,16 @@ import { API_IMG_URL, refs } from './global';
 import { parseGenresByString } from './movies';
 import { openModal, printToModal } from './modal';
 
+export function clearMovies() {
+  refs.cardsBox.innerHTML = '';
+}
+
 export function showMovies(objectsArray) {
-  codeHTML = '';
+  let codeHTML = '';
   objectsArray.map(movie => {
     codeHTML += `
-        <li class="card ${movie.wachedOrQueueClass}">
-          <a href="" class="card-link" movie-id="${movie.id}">
-            <div class="card-button-slider">
+        <li class="card ${movie.watchedOrQueueClass}">
+          <a href="" class="card-link card-button-slider" data-id="${movie.id}">
               <img
                 src="${movie.posterPath}"
                 class="card-image"
@@ -21,18 +24,17 @@ export function showMovies(objectsArray) {
                 <button class="card-button in-watched">watched</button>
                 <button class="card-button in-queue">queue</button>
               </div>
-            </div>
-            <div class="card-label-wrapper">
-              <div class="card-label-in-watched"></div>
-              <div class="card-label-in-queue"></div>
-            </div>
+            
+              </a>
+              <div class="card-label-wrapper">
+                <div class="card-label-in-watched"></div>
+                <div class="card-label-in-queue"></div>
+              </div>
             <div class="card-body">
               <p class="card-title"><b>${movie.title}</b></p>
               <p class="card-genres"><b>${movie.genresInRow(3)} | ${
       movie.releaseDate
     }</b></p>
-            </div>
-          </a>
         </li>`;
   });
 
@@ -41,11 +43,11 @@ export function showMovies(objectsArray) {
 
 // Show elements on page
 function printHTMLmarkup(codeHTML) {
-  refs.cardsBox.innerHTML = codeHTML;
+  refs.cardsBox.innerHTML += codeHTML;
 }
 
 export function showMovieInfo(movieObject) {
-  codeHTML = `
+  let codeHTML = `
       <div class="movie-picture-box">
         <img
           src="${movieObject.posterPath}"
@@ -56,29 +58,35 @@ export function showMovieInfo(movieObject) {
       <div class="info-container">
         <h1 class="movie-title">${movieObject.title}</h1>
         <ul class="movie-list">
-          <li class="movie-items item-right">
-            <div class="description-box">
+          <li class="movie-item">
               <p class="movie-description">Vote / Votes</p>
-              <p class="movie-description">Popularity</p>
-              <p class="movie-description">Original Title</p>
-              <p class="movie-description">Genre</p>
+              <div class="vote-box property">
+              <p class="property-vote property-accent" id="vote">${
+                movieObject.voteAverage
+              }</p>
+              <span class="vote-slash">/</span>
+              <p class="property-vote property-vote-alt" id="votes">${
+                movieObject.voteCount
+              }</p>
             </div>
           </li>
-          <li class="movie-items">
-            <div class="property-box">
-              <div class="vote-box property">
-                <p class="property-vote property-accent" id="vote">${
-                  movieObject.voteAverage
-                }</p>
-                <span class="vote-slash">/</span>
-                <p class="property-vote property-vote-alt" id="votes">${
-                  movieObject.voteCount
-                }</p>
-              </div>
+          <li class="movie-item">
+              <p class="movie-description">Popularity</p>
               <p class="property" id="popularity">${movieObject.popularity}</p>
+          </li>
+          <li class="movie-item">
+              <p class="movie-description">Original Title</p>
               <p class="property" id="title">${movieObject.title}</p>
+          </li>
+          <li class="movie-item">
+              <p class="movie-description">Genre</p>
               <p class="property" id="genre">${movieObject.genresInRow()}</p>
-            </div>
+          </li>
+          <li class="movie-item">
+          <p class="movie-description">Trailer</p>
+              <a href=${
+                movieObject.video
+              } target="_blank" class="property">▶ Play</a>
           </li>
         </ul>
         <article class="article">
@@ -88,8 +96,12 @@ export function showMovieInfo(movieObject) {
           </p>
         </article>
         <div class="button-box">
-          <button class="movie-button primary-btn">add to Watched</button>
-          <button class="movie-button">add to queue</button>
+          <button class="movie-button watched-btn" data-watched-btn data-movie-id=${
+            movieObject.id
+          }></button>
+          <button class="movie-button queue-btn" data-queue-btn data-movie-id=${
+            movieObject.id
+          }></button>
         </div>
       </div>`;
 
