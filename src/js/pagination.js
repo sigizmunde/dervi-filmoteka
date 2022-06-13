@@ -91,13 +91,16 @@ export function showPagination(totalPages, currentPage) {
   if (totalPages === 1) {
     // make buttons invisible or make the class = "invisible" for div.pagination
     // generatePagList([1], currentPage);
+    hidePagination();
   } else if (totalPages <= 7) {
     const curArray = [];
-    for (let i = 1; i <= totalPages; i++){
+    for (let i = 1; i <= totalPages; i += 1) {
       curArray.push(i);
     }
+    console.log(curArray);
     generatePagList(curArray, currentPage);
-  } else if (totalPages > 7) {
+  }
+  if (totalPages > 7) {
     if (currentPage <= 3) {
       generatePagList([1, 2, 3, 4, 5, '...', totalPages], currentPage);
 
