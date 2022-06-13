@@ -34,7 +34,7 @@ class Movie {
     this.voteCount = responseData.vote_count;
     this.popularity = responseData.popularity;
     this.overview = responseData.overview;
-
+    // this.video = responseData.getMovieInfo();
     // В API метод getMovie возвращает жанры в свойстве "genres", значением которого есть массив объектов
     // Поэтому, если не удалось получить список жанров - получаем из метода "genres"
     if (!this.genres) {
