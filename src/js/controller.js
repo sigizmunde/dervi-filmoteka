@@ -96,6 +96,7 @@ function onLibraryLinkClick(event) {
   refs.cardsBox.classList.add('hide-labels');
   refs.libraryWatchBtn.classList.add('accent-btn');
   refs.libraryQueBtn.classList.remove('accent-btn');
+  refs.cardsSection.classList.remove('empty-main-library');
 
   refs.pagination.classList.add('on-empty-library');
   if (data.getWatched().length === 0) {
