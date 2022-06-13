@@ -46,7 +46,7 @@ export default class APIService {
       page: pageNum,
     });
 
-    this.RepeatLastSearch = (page = 1) => this.getTrending(page, isDay); //function assigns itself with only page parameter
+    this.repeatLastSearch = (page = 1) => this.getTrending(page, isDay); //function assigns itself with only page parameter
     return this.#fetchQuery(pathParams.split, searchParams);
   }
 
@@ -69,7 +69,7 @@ export default class APIService {
       query,
     });
 
-    this.RepeatLastSearch = (page = 1) => this.searchMovie(query, page); //function assigns itself with only page parameter
+    this.repeatLastSearch = (page = 1) => this.searchMovie(query, page); //function assigns itself with only page parameter
     return this.#fetchQuery(pathParams.split, searchParams);
   }
 
@@ -126,13 +126,12 @@ export default class APIService {
       },
     };
 
-
     // Search params
     const searchParams = new URLSearchParams({
       api_key: API_KEY,
     });
 
-    return this.#fetchQuery(pathParams.split, searchParams);  
+    return this.#fetchQuery(pathParams.split, searchParams);
   }
 
   // GENRES
@@ -162,7 +161,4 @@ export default class APIService {
   getGenres() {
     return this.genres;
   }
-
-  
-
 }

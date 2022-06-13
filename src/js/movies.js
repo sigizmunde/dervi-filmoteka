@@ -22,10 +22,11 @@ import {
 } from './global';
 
 // import { fetchMovie, fetchMovies, getGenres } from 'movie-api';
-import { showMovies, showMovieInfo } from './markup';
+import { showMovies, showMovieInfo, clearMovies } from './markup';
 import APIService from './movie-api';
 import * as initialGenres from './dummy-array-objs/genres.json';
 import { DataStorage } from './data.js';
+import { showPagination } from './pagination';
 const dataStorage = new DataStorage();
 
 class Movie {
@@ -44,8 +45,8 @@ class Movie {
     this.voteCount = responseData.vote_count;
     this.popularity = responseData.popularity;
     this.overview = responseData.overview;
-    // this.video = null; 
-    this.videos = [];   
+    // this.video = null;
+    this.videos = [];
 
     // В API метод getMovie возвращает жанры в свойстве "genres", значением которого есть массив объектов
     // Поэтому, если не удалось получить список жанров - получаем из метода "genres"
@@ -71,7 +72,7 @@ class Movie {
       return this.videos[0]; // TEMP - getting only first video
     }
 
-    return "";
+    return '';
   }
 
   // Private methods
@@ -120,13 +121,12 @@ class Movie {
     // poster.onerror = () => alert("NoImage");
   }
 
-  
   getVideos(number = 0) {
     // API.getVideos(this.id)
     //   .then(video => {
     //     console.log(video.results);
     //     this.video = `https://www.youtube.com/watch?v=${video.results[number].key}`;
-    //   })    
+    //   })
 
     return API.getVideos(this.id);
   }
@@ -137,29 +137,45 @@ const API = new APIService();
 
 // let currentMovieList = [{ film1 }, { film2 }, { film3 }];
 
-export function getMovieList(params) {
-  // depending on params requests API or data
+export function getMovieList(params, page = 1, mode = '') {
+  // depending on params choses API function
+  console.log('getMovies with params ', params, page, mode);
+  let queryFunction;
   if (!params) {
-    API.getTrending()
-      .then(responseData => {
-        console.log(
-          `Current page: ${responseData.page}, total page: ${responseData.total_pages}`
-        ); // --> for pagination
-        return responseData.results;
-      })
-      .then(movieList => {
-        const objectsArray = [];
-
-        movieList.map(movieItem => {
-          const movie = new Movie(movieItem); // class instance
-
-          objectsArray.push(movie);
-        });
-
-        showMovies(objectsArray);
-      })
-      .catch(result => console.log(result));
+    queryFunction = () => API.getTrending();
   }
+  if (params && !mode) {
+    queryFunction = () => API.searchMovie(params, page);
+  }
+  if (params && mode === 'repeat') {
+    queryFunction = () => API.repeatLastSearch(page);
+  }
+  if (params && mode === 'premiers') {
+    queryFunction = () => API.getPremiers();
+  }
+
+  queryFunction()
+    .then(responseData => {
+      console.log(
+        `Current page: ${responseData.page}, total pages: ${responseData.total_pages}`
+      ); // --> for pagination
+      showPagination(responseData.total_pages, responseData.page);
+      return responseData.results;
+    })
+    .then(movieList => {
+      const objectsArray = [];
+
+      movieList.map(movieItem => {
+        const movie = new Movie(movieItem); // class instance
+
+        objectsArray.push(movie);
+      });
+
+      clearMovies();
+      showMovies(objectsArray);
+    })
+    .catch(result => console.log(result));
+  return;
 }
 
 export function getAndShowLibrary(idArray) {
@@ -195,67 +211,30 @@ export function getAndShowLibrary(idArray) {
 }
 
 export function getMovieInfo(id) {
-  if (id) {    
-    API.getMovie(id).then(movieDetails => {         // Get movie info
+  if (id) {
+    API.getMovie(id).then(movieDetails => {
+      // Get movie info
       const movie = new Movie(movieDetails);
-      movie.getVideos().then(videos => {             // Get movie video
+      movie.getVideos().then(videos => {
+        // Get movie video
         videos.results.map(video => {
-          if (video.type === "Trailer") {
+          if (video.type === 'Trailer') {
             movie.videos.push(`https://www.youtube.com/watch?v=${video.key}`);
           }
         });
         console.log(movie.videos);
         showMovieInfo(movie);
-      })      
+      });
     });
     refs.movieModal.classList.remove('is-hidden');
-    
-  }
-}
-
-export function searchMovies(params, page = 1) {
-  // depending on params searches films in current list
-  if (params) {
-    API.searchMovie(params, page)
-      .then(responseData => {
-        console.log(
-          `Current page: ${responseData.page}, total page: ${responseData.total_pages}`
-        ); // --> for pagination
-        return responseData.results;
-      })
-      .then(movieList => {
-        const objectsArray = [];
-        movieList.map(movieItem => {
-          const movie = new Movie(movieItem); // class instance
-
-          objectsArray.push(movie);
-        });
-
-        showMovies(objectsArray);
-      })
-      .catch(result => console.log(result));
   }
 }
 
 export function getPremiers() {
   // depending on params requests API or data
-  API.getPremiers()
-    .then(responseData => {
-      console.log(
-        `Current page: ${responseData.page}, total page: ${responseData.total_pages}`
-      ); // --> for pagination
-      return responseData.results;
-    })
-    .then(movieList => {
-      const objectsArray = [];
+  getMovieList('premiers', 1, 'premiers');
 
-      movieList.map(movieItem => {
-        const movie = new Movie(movieItem); // class instance
-
-        objectsArray.push(movie);
-      });
-
-      /* ------------------
+  /* ------------------
 
       В это место можно добавить обработчик вывода трендов
       Переменная "objectsArray" содержит массив объектов фильмов (массив карточек)
@@ -278,9 +257,4 @@ export function getPremiers() {
         showMovies(objectsArray) - вывод списка на лгавную страницу
 
       ------------------ */
-      
-      console.log(objectsArray);     
-    })
-    .catch(result => console.log(result));
-  
 }
