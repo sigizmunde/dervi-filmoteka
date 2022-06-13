@@ -82,6 +82,9 @@ export function showMovieInfo(movieObject) {
               <p class="movie-description">Genre</p>
               <p class="property" id="genre">${movieObject.genresInRow()}</p>
           </li>
+          <li class="movie-item">
+              <a href=${movieObject.video} target="_blank" class="property">Video</a>
+          </li>
         </ul>
         <article class="article">
           <p class="article-caption">About</p>
@@ -93,7 +96,6 @@ export function showMovieInfo(movieObject) {
           <button class="movie-button watched-btn"></button>
           <button class="movie-button queue-btn"></button>
         </div>
-        <a href=${movieObject.video} target="_blank">Video</a>
       </div>`;
 
   printToModal(codeHTML);
