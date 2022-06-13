@@ -1,38 +1,66 @@
-<div class="buttons__container">
-  <ul class="filter__list">
+<div class="filter__box filter__dropdown">
+  <div class="filter__btn">
+    <p class="filter__btn-title">Add Filter</p>
+    <div class="filter__icon">
+      <svg class="filter__btn-icon" width="16" height="16">
+        <use href="./images/icons/sprite.svg#filter-icon"></use>
+      </svg>
+    </div>
+  </div>
+
+  <ul class="filter">
+    <li class="filter__item js-filter-box">
+      <p class="filter__item-box filter__title lng-genre">Genre</p>
+      <ul class="value value--genres"></ul>
+    </li>
+
     <li class="filter__item">
-      <button type="button" data-set="trending" class="filter__button">
-        Trending
-      </button>
+      <p class="filter__item-box filter__title lng-genre">Year</p>
+      <!-- <form class="filter__item-box value__item value__form" role="search">
+        <input
+          class="value__form-input"
+          class="value__form-input"
+          type="number"
+          name="year"
+          min="1878"
+          max="2022"
+          placeholder="Year"
+          autocomplete="off"
+        />
+        <button type="submit" class="value__form-btn">
+          <svg class="value__form-search-icon" width="12" height="12">
+            <use href="./images/icons/sprite.svg#search"></use>
+          </svg>
+        </button> -->
+      </form>
     </li>
     <li class="filter__item">
-      <button
-        type="button"
-        data-set="latest"
-        class="filter__button filter__button-latest"
-      >
-        Latest
-      </button>
+      <p class="filter__item-box">Top Rated</p>
     </li>
     <li class="filter__item">
-      <button type="button" data-set="now_playing" class="filter__button">
-        Now Playing
-      </button>
+      <p class="filter__item-box">Latest</p>
     </li>
-    <li class="filter__item">
-      <button type="button" data-set="popular" class="filter__button">
-        Popular
-      </button>
-    </li>
-    <li class="filter__item">
-      <button type="button" data-set="top_rated" class="filter__button">
-        Top Rated
-      </button>
-    </li>
-    <!-- <li class="filter__item">
-      <button type="button" data-set="upcoming" class="filter__button">
-        Upcoming
-      </button>
-    </li> -->
   </ul>
 </div>
+<!-- <li class="filter__item">
+  <button type="button" data-set="genres" class="filter__button">Genres</button>
+</li>
+<li class="filter__item">
+  <button
+    type="button"
+    data-set="latest"
+    class="filter__button filter__button-latest"
+  >
+    Latest
+  </button>
+</li>
+<li class="filter__item">
+  <button type="button" data-set="top_rated" class="filter__button">
+    Top Rated
+  </button>
+</li>
+<li class="filter__item">
+  <button type="button" data-set="popular" class="filter__button">
+    Popular
+  </button>
+</li> -->
