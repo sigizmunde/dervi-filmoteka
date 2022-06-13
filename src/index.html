@@ -13,13 +13,19 @@
 <body>
     <include src="./partials/header.html"></include>
     <main class="main">
-        <include src="./partials/loader.html"></include>
-        <!-- <section class="container cards-section"> -->
-        <!-- <ul class="cards-box"> -->
-        <!-- <include src="./partials/movie-container.html"></include> -->
-        <!-- </ul> -->
-        <!-- </section> -->
-        <!-- <include src="./partials/pagination.html"></include> -->
+        <!-- <include src="./partials/loader.html"></include> -->
+        <section class="container cards-section">
+            <!-- empty-library -->
+            <a href="" class="library-btn empty-library-btn accent-btn"> start </a>
+            <ul class="cards-box">
+                <!-- <include src="./partials/movie-container.html"></include> -->
+            </ul>
+            <div class="sentinel"></div>
+        </section>
+
+        <include src="./partials/pagination.html"></include>
+        <include src="./partials/scroll-to-top.html"></include>
+
     </main>
 
     <include src="./partials/footer.html"></include>
