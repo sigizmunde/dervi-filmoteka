@@ -12,7 +12,7 @@ import { clearMovies } from './markup';
 import { showLoader, hideLoader } from './loader';
 
 import { DataStorage } from './data';
-import { onQueueBtnCard, onWatchedBtnCard } from './actions-library';
+import { onQueueBtnCard, onWatchedBtnCard, timerID } from './actions-library';
 
 import { onClickScrollTop } from './scroll-to-top';
 
@@ -48,6 +48,7 @@ export function init() {
   refs.cardsSection = document.querySelector('.cards-section');
   refs.pagination = document.querySelector('.pagination');
   refs.searchInput = document.querySelector('.search-input');
+  refs.undoBtn = document.querySelector('#undo');
 
   try {
     refs.logo.addEventListener('click', onHomeLinkClick);
@@ -61,6 +62,9 @@ export function init() {
     refs.searchForm.addEventListener('submit', onMoviesSearch);
     refs.cardsBox.addEventListener('click', onActionMovieCard);
     refs.scrollTop.addEventListener('click', onClickScrollTop);
+    refs.undoBtn.addEventListener('click', () => {
+      onUndoBtnClick(timerID);
+    });
   } catch (error) {
     console.log(error);
   }
@@ -203,4 +207,9 @@ function onScroll() {
   }
   pageObserver.unobserve(refs.observeTarget);
   getAndShowLibrary(currentLibraryArr);
+}
+
+function onUndoBtnClick(timerID) {
+  clearTimeout(timerID);
+  refs.undoBtn.classList.add('is-hidden');
 }
