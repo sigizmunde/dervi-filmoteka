@@ -1,13 +1,13 @@
 // module for interface elements and their event listeners
 
-import { API_KEY, refs, watchedIdArr, queueIdArr } from './global';
+import { API_KEY, refs, watchedIdArr, queueIdArr, moviesCashe } from './global';
 import {
   getMovieList,
   getMovieInfo,
   getAndShowLibrary,
   getPremiers,
 } from './movies';
-import { modalInit, queueBtnModal, watchedBtnModal } from './modal';
+import { modalInit } from './modal';
 import { clearMovies } from './markup';
 import { showLoader, hideLoader } from './loader';
 import { notiflix } from './notifications';
@@ -52,6 +52,7 @@ export function init() {
   refs.cardsSection = document.querySelector('.cards-section');
   refs.pagination = document.querySelector('.pagination');
   refs.searchInput = document.querySelector('.search-input');
+  refs.currentMovieLi;
 
   try {
     refs.logo.addEventListener('click', onHomeLinkClick);
@@ -112,13 +113,14 @@ function onLibraryWatchBtnClick() {
   refs.libraryWatchBtn.classList.remove('accent-btn');
   refs.libraryWatchBtn.classList.add('accent-btn');
   refs.libraryQueBtn.classList.remove('accent-btn');
-  if (data.getWatched().length === 0) {
+  currentLibraryArr = data.getWatched();
+  moviesCashe = currentLibraryArr.filter(() => true);
+  if (currentLibraryArr.length === 0) {
     refs.cardsSection.classList.add('empty-library');
   } else {
     refs.cardsSection.classList.remove('empty-library');
     clearMovies();
     // getAndShowLibrary(currentLibraryArr);
-    currentLibraryArr = data.getWatched();
     pageObserver.observe(refs.observeTarget);
   }
   // clearMovies();
@@ -128,12 +130,13 @@ function onLibraryQueBtnClick() {
   refs.libraryQueBtn.classList.remove('accent-btn');
   refs.libraryQueBtn.classList.add('accent-btn');
   refs.libraryWatchBtn.classList.remove('accent-btn');
-  if (data.getQueue().length === 0) {
+  currentLibraryArr = data.getQueue();
+  moviesCashe = currentLibraryArr.filter(() => true);
+  if (currentLibraryArr.length === 0) {
     refs.cardsSection.classList.add('empty-library');
   } else {
     refs.cardsSection.classList.remove('empty-library');
     clearMovies();
-    currentLibraryArr = data.getQueue();
     pageObserver.observe(refs.observeTarget);
   }
 }
@@ -175,7 +178,7 @@ function onActionMovieCard(event) {
 
   let btnClicked = false;
 
-  event.path.map(currentMovieLink => {
+  event.composedPath().map(currentMovieLink => {
     // check btn events on the movie card and add/delete to/from the library
     if (currentMovieLink.nodeName === 'BUTTON') {
       const currentMovieId = currentMovieLink.closest('.card-link').dataset.id;
@@ -193,6 +196,8 @@ function onActionMovieCard(event) {
     // catch a movie link and open the movie modal
     if (currentMovieLink.nodeName === 'A' && !btnClicked) {
       const currentMovieId = currentMovieLink.dataset.id;
+      refs.currentMovieLi = currentMovieLink.closest('.card');
+
       getMovieInfo(currentMovieId);
 
       // event.stopPropagation();
