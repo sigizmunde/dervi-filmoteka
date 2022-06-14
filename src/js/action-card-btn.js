@@ -14,6 +14,7 @@ export function onQueueBtnCard(btn, id) {
 
     timerID = setTimeout(() => {
       refs.cancelBtn.classList.add('is-hidden');
+      refs.cancelBtn.classList.remove('cancel-animation');
       data.removeFromQueue(id);
       movieCard.classList.remove('in-queue');
       movieCard.remove();
@@ -42,11 +43,11 @@ export function onWatchedBtnCard(btn, id) {
   const movieCard = btn.closest('.card');
 
   if (data.getWatched().find(item => item.id === id)) {
-
     cancelBtnApperingAndPlacement(movieCard);
 
     timerID = setTimeout(() => {
       refs.cancelBtn.classList.add('is-hidden');
+      refs.cancelBtn.classList.remove('cancel-animation');
       data.removeFromWatched(id);
       movieCard.classList.remove('in-watched');
       movieCard.remove();
