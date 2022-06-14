@@ -42,8 +42,6 @@ export function onWatchedBtnCard(btn, id) {
   const movieCard = btn.closest('.card');
 
   if (data.getWatched().find(item => item.id === id)) {
-    // data.removeFromWatched(id);
-    // movieCard.classList.remove('in-watched');
 
     cancelBtnApperingAndPlacement(movieCard);
 
