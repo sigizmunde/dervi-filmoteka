@@ -7,7 +7,7 @@ import {
   getAndShowLibrary,
   getPremiers,
 } from './movies';
-import { modalInit } from './modal';
+import { modalInit, queueBtnModal, watchedBtnModal } from './modal';
 import { clearMovies } from './markup';
 import { showLoader, hideLoader } from './loader';
 
@@ -30,6 +30,7 @@ export function init() {
   // hideLoader();
 
   modalInit();
+  refs.loader = document.querySelector('.lds-ripple');
   refs.cardsBox = document.querySelector('.cards-box');
   refs.header = document.querySelector('.header');
   refs.homeLink = document.querySelector('#home');
@@ -40,6 +41,7 @@ export function init() {
   refs.ourTeamLink = document.querySelector('#our-team');
   refs.closeModalBtn = document.querySelector('[data-action="close-modal"]');
   refs.backdrop = document.querySelector('.js-backdrop');
+  refs.teamModal = document.querySelector('.js-team-modal');
   refs.movieModal = document.querySelector('.movie-modal');
   refs.searchForm = document.querySelector('#movie-search');
   refs.observeTarget = document.querySelector('.sentinel');
@@ -98,6 +100,7 @@ function onLibraryLinkClick(event) {
   refs.cardsBox.classList.add('hide-labels');
   refs.libraryWatchBtn.classList.add('accent-btn');
   refs.libraryQueBtn.classList.remove('accent-btn');
+  refs.cardsSection.classList.remove('empty-main-library');
 
   refs.pagination.classList.add('on-empty-library');
   if (data.getWatched().length === 0) {
@@ -139,11 +142,13 @@ function onLibraryQueBtnClick() {
 
 function openTeamModal() {
   window.addEventListener('keydown', checkKeyPress);
+  refs.teamModal.classList.remove('is-hidden');
   document.body.classList.add('modal-open');
 }
 
 function closeTeamModal() {
   window.removeEventListener('keydown', checkKeyPress);
+  refs.teamModal.classList.add('is-hidden');
   document.body.classList.remove('modal-open');
 }
 
@@ -190,7 +195,6 @@ function onActionMovieCard(event) {
     // catch a movie link and open the movie modal
     if (currentMovieLink.nodeName === 'A' && !btnClicked) {
       const currentMovieId = currentMovieLink.dataset.id;
-      const currentMovieIdNum = Number(currentMovieId);
       getMovieInfo(currentMovieId);
 
       // event.stopPropagation();

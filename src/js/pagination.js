@@ -36,61 +36,73 @@ function generatePagList(array, currentPage) {
   // svgNext.append(useNext);
   // nextLink.append(svgNext);
 
-  const pagination = document.querySelector('.pagination');
+  const paginationArr = document.querySelectorAll('.pagination');
 
-  if (pagination) {
-    const list = document.createElement('ul');
-    list.classList.add('pagination-list');
+  if (paginationArr.length > 0) {
+    paginationArr.forEach(pagination => {
+      const list = document.createElement('ul');
+      list.classList.add('pagination-list');
 
-    for (let i = 0; i < array.length; i += 1) {
-      const item = document.createElement('li');
-      item.classList.add('pagination-item');
-      const link = document.createElement('a');
-      link.classList.add('pagination-link');
-      link.innerText = array[i];
+      for (let i = 0; i < array.length; i += 1) {
+        const item = document.createElement('li');
+        item.classList.add('pagination-item');
+        const link = document.createElement('a');
+        link.classList.add('pagination-link');
+        link.innerText = array[i];
 
-      // link.innerText.array[i] = currentPage;
-      if (array[i] === currentPage) {
-        item.classList.add('current');
-      }
+        // link.innerText.array[i] = currentPage;
+        if (array[i] === currentPage) {
+          item.classList.add('current');
+        }
 
-      if (typeof array[i] === 'number') {
-        link.addEventListener('click', event => {
-          event.preventDefault;
-          getMovieList('repeat', array[i], 'repeat');
-        });
-      } else {
-        if (i === 1) {
+        if (typeof array[i] === 'number') {
           link.addEventListener('click', event => {
             event.preventDefault;
-            getMovieList('repeat', array[i + 1] - 1, 'repeat');
+            getMovieList('repeat', array[i], 'repeat');
           });
         } else {
-          link.addEventListener('click', event => {
-            event.preventDefault;
-            getMovieList('repeat', array[i - 1] + 1, 'repeat');
-          });
+          if (i === 1) {
+            link.addEventListener('click', event => {
+              event.preventDefault;
+              getMovieList('repeat', array[i + 1] - 1, 'repeat');
+            });
+          } else {
+            link.addEventListener('click', event => {
+              event.preventDefault;
+              getMovieList('repeat', array[i - 1] + 1, 'repeat');
+            });
+          }
         }
+
+        item.append(link);
+        list.append(item);
+        pagination.replaceChildren(list);
       }
 
-      item.append(link);
-      list.append(item);
-      pagination.replaceChildren(list);
-    }
-
-    return pagination;
+      return pagination;
+    });
   }
 }
 
 export function showPagination(totalPages, currentPage) {
+  if (totalPages === 0) {
+    hidePagination();
+    return;
+  }
   const lastPages = totalPages - 3;
   if (totalPages === 1) {
-    // make buttons invisible or make the class = "invisible" for
-    // div.pagination
+    // make buttons invisible or make the class = "invisible" for div.pagination
+    // generatePagList([1], currentPage);
+    hidePagination();
   } else if (totalPages <= 7) {
     const curArray = [];
-    generatePagList([1, 2, 3, 4, 5, 6, 7], currentPage);
-  } else if (totalPages > 7) {
+    for (let i = 1; i <= totalPages; i += 1) {
+      curArray.push(i);
+    }
+    console.log(curArray);
+    generatePagList(curArray, currentPage);
+  }
+  if (totalPages > 7) {
     if (currentPage <= 3) {
       generatePagList([1, 2, 3, 4, 5, '...', totalPages], currentPage);
 
@@ -128,5 +140,12 @@ export function showPagination(totalPages, currentPage) {
   }
 }
 // showPagination(5, 1);
-// console.log(typeof currentPage);
 // generatePagList([1, '...', 12, 13, 14, 15, 16, '...', 20], 14);
+
+export function hidePagination() {
+  const paginationArr = document.querySelectorAll('.pagination');
+
+  if (paginationArr.length > 0) {
+    paginationArr.forEach(pagination => (pagination.innerHTML = ''));
+  }
+}
