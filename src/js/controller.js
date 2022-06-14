@@ -7,7 +7,7 @@ import {
   getAndShowLibrary,
   getPremiers,
 } from './movies';
-import { modalInit, checkMovieCardLabel } from './modal';
+import { modalInit } from './modal';
 import { clearMovies } from './markup';
 import { showLoader, hideLoader } from './loader';
 
@@ -197,7 +197,6 @@ function onActionMovieCard(event) {
       refs.currentMovieLi = currentMovieLink.closest('.card');
 
       getMovieInfo(currentMovieId);
-      // checkMovieCardLabel(movieLi);
 
       // event.stopPropagation();
     }
