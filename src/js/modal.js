@@ -80,7 +80,7 @@ function onQueueBtnModal(event) {
   }
 
   if (!movie) {
-    movie = moviesCashe.find(item => item.id === currentMovieIdNum);
+    movie = moviesCashe.state.find(item => item.id === currentMovieIdNum);
   }
   data.addToQueue(movie);
   event.target.classList.add('active-btn');
@@ -90,7 +90,7 @@ function onQueueBtnModal(event) {
 }
 
 function onWatchedBtnModal(event) {
-  console.log('cashe is ', moviesCashe);
+  console.log('cashe is ', moviesCashe.state);
   const currentMovieId = event.target.dataset.movieId;
   const currentMovieIdNum = Number(currentMovieId);
 
@@ -114,7 +114,7 @@ function onWatchedBtnModal(event) {
   }
 
   if (!movie) {
-    movie = moviesCashe.find(item => item.id === currentMovieIdNum);
+    movie = moviesCashe.state.find(item => item.id === currentMovieIdNum);
   }
   data.addToWatched(movie);
   event.target.classList.add('active-btn');
