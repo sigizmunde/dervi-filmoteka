@@ -6,7 +6,8 @@
   width: 100%;
   height: 100%;
   background-color: var(--overlay-color);
-  transition: opacity var(--transition-params), visibility var(--transition-params);
+  transition: opacity var(--transition-params),
+    visibility var(--transition-params);
 
   opacity: 0;
   visibility: hidden;
@@ -47,7 +48,7 @@ body.modal-open {
 }
 
 .modal-window {
-  position: absolute;
+  position: fixed;
   top: 20px;
   left: 50%;
   bottom: 0px;
@@ -96,5 +97,3 @@ body.modal-open {
   width: 14px;
   height: 14px;
 }
-
-
