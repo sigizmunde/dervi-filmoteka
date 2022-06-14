@@ -7,7 +7,7 @@ import {
   getAndShowLibrary,
   getPremiers,
 } from './movies';
-import { modalInit, queueBtnModal, watchedBtnModal } from './modal';
+import { modalInit, checkMovieCardLabel } from './modal';
 import { clearMovies } from './markup';
 import { showLoader, hideLoader } from './loader';
 
@@ -51,6 +51,7 @@ export function init() {
   refs.cardsSection = document.querySelector('.cards-section');
   refs.pagination = document.querySelector('.pagination');
   refs.searchInput = document.querySelector('.search-input');
+  refs.currentMovieLi;
 
   try {
     refs.logo.addEventListener('click', onHomeLinkClick);
@@ -173,7 +174,7 @@ function onActionMovieCard(event) {
 
   let btnClicked = false;
 
-  event.path.map(currentMovieLink => {
+  event.composedPath().map(currentMovieLink => {
     // check btn events on the movie card and add/delete to/from the library
     if (currentMovieLink.nodeName === 'BUTTON') {
       const currentMovieId = currentMovieLink.closest('.card-link').dataset.id;
@@ -191,7 +192,10 @@ function onActionMovieCard(event) {
     // catch a movie link and open the movie modal
     if (currentMovieLink.nodeName === 'A' && !btnClicked) {
       const currentMovieId = currentMovieLink.dataset.id;
+      refs.currentMovieLi = currentMovieLink.closest('.card');
+
       getMovieInfo(currentMovieId);
+      // checkMovieCardLabel(movieLi);
 
       // event.stopPropagation();
     }

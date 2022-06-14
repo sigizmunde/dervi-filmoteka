@@ -1,4 +1,5 @@
 import { DataStorage } from './data';
+import { refs } from './global';
 
 const data = new DataStorage();
 let movieModal = document.querySelector('.movie-modal');
@@ -64,14 +65,17 @@ function onQueueBtnModal(event) {
   ) {
     data.removeFromWatched(currentMovieIdNum);
     watchedBtnModal.classList.remove('active-btn');
+    refs.currentMovieLi.classList.remove('in-watched');
   }
 
   if (event.target.classList.contains('active-btn')) {
     data.removeFromQueue(currentMovieIdNum);
     event.target.classList.remove('active-btn');
+    refs.currentMovieLi.classList.remove('in-queue');
   } else {
     data.addToQueue(currentMovieIdNum);
     event.target.classList.add('active-btn');
+    refs.currentMovieLi.classList.add('in-queue');
   }
   // add notify
 }
@@ -86,14 +90,21 @@ function onWatchedBtnModal(event) {
   ) {
     data.removeFromQueue(currentMovieIdNum);
     queueBtnModal.classList.remove('active-btn');
+    refs.currentMovieLi.classList.remove('in-queue');
   }
 
   if (event.target.classList.contains('active-btn')) {
     data.removeFromWatched(currentMovieIdNum);
     event.target.classList.remove('active-btn');
+    refs.currentMovieLi.classList.remove('in-watched');
   } else {
     data.addToWatched(currentMovieIdNum);
     event.target.classList.add('active-btn');
+    refs.currentMovieLi.classList.add('in-watched');
   }
   // add notify
+}
+
+export function checkMovieCardLabel(movieCardLi) {
+  movieCardLi.classList.contains('in-queue');
 }
