@@ -13,7 +13,7 @@ export class DataStorage {
       const serializedData = localStorage.getItem('watched');
       return serializedData === null ? [] : JSON.parse(serializedData);
     } catch (err) {
-      console.error('Get state error: ', err);
+      console.error('Get library error: ', err);
     }
     return [];
   }
@@ -23,7 +23,7 @@ export class DataStorage {
       const serializedData = localStorage.getItem('queue');
       return serializedData === null ? [] : JSON.parse(serializedData);
     } catch (err) {
-      console.error('Get state error: ', err);
+      console.error('Get library error: ', err);
     }
     return [];
   }
@@ -44,41 +44,33 @@ export class DataStorage {
     }
   }
 
-  addToWatched(id) {
+  addToWatched(movie) {
     const watchedArr = this.getWatched();
-    if (watchedArr.includes(id)) {
+    if (watchedArr.find(item => item.id === movie.id)) {
       return;
     }
-    watchedArr.unshift(id);
+    watchedArr.unshift(movie);
     this.#setWatched(watchedArr);
   }
 
-  removeFromWatched(id) {
+  removeFromWatched(movie) {
     const watchedArr = this.getWatched();
-    const index = watchedArr.indexOf(id);
-    if (index < 0) {
-      return;
-    }
-    watchedArr.splice(index, 1);
-    this.#setWatched(watchedArr);
+    const newWatchedArr = watchedArr.filter(item => item.id !== movie.id);
+    this.#setWatched(newWatchedArr);
   }
 
-  addToQueue(id) {
+  addToQueue(movie) {
     const queueArr = this.getQueue();
-    if (queueArr.includes(id)) {
+    if (queueArr.find(item => item.id === movie.id)) {
       return;
     }
-    queueArr.unshift(id);
+    queueArr.unshift(movie);
     this.#setQueue(queueArr);
   }
 
-  removeFromQueue(id) {
+  removeFromQueue(movie) {
     const queueArr = this.getQueue();
-    const index = queueArr.indexOf(id);
-    if (index < 0) {
-      return;
-    }
-    queueArr.splice(index, 1);
-    this.#setQueue(queueArr);
+    const newQueueArr = queueArr.filter(item => item.id !== movie.id);
+    this.#setQueue(newQueueArr);
   }
 }
