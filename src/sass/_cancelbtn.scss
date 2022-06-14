@@ -7,16 +7,15 @@
   font-weight: 700;
   cursor: pointer;
   text-transform: uppercase;
-  opacity: 0.8;
+  opacity: 0.3;
   border: 1px solid transparent;
   border-radius: 5px;
   justify-content: center;
   align-items: center;
   line-height: 1.33;
   display: flex;
-  transform: scale(0.1);
 }
 .cancel-animation {
-  transform: scale(1);
-  transition: transform var(--transition-params);
+  opacity: 0.8;
+  transition: opacity 450ms ease-out;
 }
