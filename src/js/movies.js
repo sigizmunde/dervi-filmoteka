@@ -17,6 +17,7 @@ import {
   API_IMG_URL,
   NOPOSTER_IMG_URL,
   refs,
+  moviesCashe,
   watchedIdArr,
   queueIdArr,
 } from './global';
@@ -34,9 +35,11 @@ class Movie {
     this.posterPath = this.#getPosterPath(responseData.poster_path);
     this.title = responseData.title;
     this.originalTitle = responseData.original_title;
-    this.popularity = responseData.popularity;    
-    this.genres = responseData.genre_ids;    
-    this.releaseDate = responseData.release_date ? responseData.release_date.substr(0, 4) : '';
+    this.popularity = responseData.popularity;
+    this.genres = responseData.genre_ids;
+    this.releaseDate = responseData.release_date
+      ? responseData.release_date.substr(0, 4)
+      : '';
     this.inWatched = this.#getInWatched();
     this.inQueue = this.#getInQueue();
     this.voteAverage = responseData.vote_average;
@@ -45,10 +48,10 @@ class Movie {
     this.overview = responseData.overview;
     // this.video = null;
     this.videos = [];
-    
+
     // В API метод getMovie возвращает жанры в свойстве "genres", значением которого есть массив объектов
     // Поэтому, если не удалось получить список жанров - получаем из метода "genres"
-    
+
     if (!this.genres && responseData.genres) {
       this.genres = [];
       responseData.genres.map(item => {
@@ -111,11 +114,11 @@ class Movie {
   #getPosterPath(poster_path) {
     if (poster_path) {
       return `${API_IMG_URL}${poster_path}`;
-    }   
+    }
     return NOPOSTER_IMG_URL;
   }
 
-  getVideos(number = 0) {    
+  getVideos(number = 0) {
     return API.getVideos(this.id);
   }
 }
@@ -163,50 +166,55 @@ export function getMovieList(params, page = 1, mode = '') {
 
       movieList.map(movieItem => {
         const movie = new Movie(movieItem); // class instance
-        
+
         objectsArray.push(movie);
       });
-      
+
+      moviesCashe = [...objectsArray];
+
       clearMovies();
       showMovies(objectsArray);
       hideLoader();
     })
     .catch(result => {
-      console.log(result)
+      console.log(result);
     });
   return;
 }
 
-export function getAndShowLibrary(idArray) {
-  let promisesMovies = [];
-  idArray.map(movieId => {
-    // try {
-    promisesMovies.push(
-      API.getMovie(movieId)
-        .then(response => {
-          const libMovie = new Movie(response);
-          
-          response.genres = response.genres.map(item => {
-            return item.id;
-          });
-          return libMovie;
-        })
-        .catch(err => {
-          console.log(err);
-          return 0;
-        })
-    );
-    
-  });
-  Promise.all(promisesMovies)
-    .then(response => {
-      // console.log('Promise.all response is ', response);
-      const clearMovieArray = response.filter(item => item != 0);
-      // console.log('Filtered array is ', clearMovieArray);
-      showMovies(clearMovieArray);
-    })
-    .catch(result => console.log(result));
+export function getAndShowLibrary(moviesArray) {
+  moviesCashe = [...moviesArray];
+  showMovies(moviesArray);
 }
+
+// export function getAndShowLibrary(idArray) {
+//   let promisesMovies = [];
+//   idArray.map(movieId => {
+//     // try {
+//     promisesMovies.push(
+//       API.getMovie(movieId)
+//         .then(response => {
+//           const libMovie = new Movie(response);
+//           response.genres = response.genres.map(item => {
+//             return item.id;
+//           });
+//           return libMovie;
+//         })
+//         .catch(err => {
+//           console.log(err);
+//           return 0;
+//         })
+//     );
+//   });
+//   Promise.all(promisesMovies)
+//     .then(response => {
+//       // console.log('Promise.all response is ', response);
+//       const clearMovieArray = response.filter(item => item != 0);
+//       // console.log('Filtered array is ', clearMovieArray);
+//       showMovies(clearMovieArray);
+//     })
+//     .catch(result => console.log(result));
+// }
 
 export function getMovieInfo(id) {
   if (id) {
@@ -228,7 +236,6 @@ export function getMovieInfo(id) {
 }
 
 export function getPremiers() {
-  // depending on params requests API or data
   getMovieList('premiers', 1, 'premiers');
 
   /* ------------------
