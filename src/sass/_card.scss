@@ -124,9 +124,9 @@
 
 button.card-button:hover,
 button.card-button:focus {
-  background-color: var(--accent-color);
+  // background-color: var(--accent-color);
   box-shadow: var(--btn-shadow);
-  border: 1px solid transparent;
+  border: 3px solid var(--main-text-color);
 }
 @media screen and (min-width: $desktop) {
   .card-button-slider:hover .card-button-background,

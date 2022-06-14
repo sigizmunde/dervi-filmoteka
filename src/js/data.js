@@ -11,9 +11,11 @@ export class DataStorage {
   getWatched() {
     try {
       const serializedData = localStorage.getItem('watched');
-      return serializedData === null ? [] : JSON.parse(serializedData);
+      const movieArr =
+        serializedData === null ? [] : JSON.parse(serializedData);
+      return movieArr.filter(item => item.hasOwnProperty('id'));
     } catch (err) {
-      console.error('Get state error: ', err);
+      console.error('Get library error: ', err);
     }
     return [];
   }
@@ -21,9 +23,11 @@ export class DataStorage {
   getQueue() {
     try {
       const serializedData = localStorage.getItem('queue');
-      return serializedData === null ? [] : JSON.parse(serializedData);
+      const movieArr =
+        serializedData === null ? [] : JSON.parse(serializedData);
+      return movieArr.filter(item => item.hasOwnProperty('id'));
     } catch (err) {
-      console.error('Get state error: ', err);
+      console.error('Get library error: ', err);
     }
     return [];
   }
@@ -44,41 +48,55 @@ export class DataStorage {
     }
   }
 
-  addToWatched(id) {
+  addToWatched(movie) {
     const watchedArr = this.getWatched();
-    if (watchedArr.includes(id)) {
+    let check = false;
+    try {
+      check = watchedArr.find(item => item.id === movie.id);
+    } catch (err) {
+      console.log(err);
+    }
+    if (check) {
       return;
     }
-    watchedArr.unshift(id);
+    watchedArr.unshift(movie);
     this.#setWatched(watchedArr);
   }
 
-  removeFromWatched(id) {
+  removeFromWatched(movie) {
+    let id = 0;
+    if (typeof movie === 'number') {
+      id = movie;
+      console.log('number!');
+    } else {
+      id = movie.id;
+      console.log('not a number!');
+    }
     const watchedArr = this.getWatched();
-    const index = watchedArr.indexOf(id);
-    if (index < 0) {
-      return;
-    }
-    watchedArr.splice(index, 1);
-    this.#setWatched(watchedArr);
+    const newWatchedArr = watchedArr.filter(item => item.id !== id);
+    this.#setWatched(newWatchedArr);
   }
 
-  addToQueue(id) {
+  addToQueue(movie) {
     const queueArr = this.getQueue();
-    if (queueArr.includes(id)) {
+    if (queueArr.find(item => item.id === movie.id)) {
       return;
     }
-    queueArr.unshift(id);
+    queueArr.unshift(movie);
     this.#setQueue(queueArr);
   }
 
-  removeFromQueue(id) {
-    const queueArr = this.getQueue();
-    const index = queueArr.indexOf(id);
-    if (index < 0) {
-      return;
+  removeFromQueue(movie) {
+    let id = 0;
+    if (typeof movie === 'number') {
+      id = movie;
+      console.log('number!');
+    } else {
+      id = movie.id;
+      console.log('not a number!');
     }
-    queueArr.splice(index, 1);
-    this.#setQueue(queueArr);
+    const queueArr = this.getQueue();
+    const newQueueArr = queueArr.filter(item => item.id !== id);
+    this.#setQueue(newQueueArr);
   }
 }

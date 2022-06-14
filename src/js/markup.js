@@ -2,7 +2,7 @@
 const cardSection = document.querySelector('.card-section');
 
 import { API_IMG_URL, refs } from './global';
-import { parseGenresByString } from './movies';
+import { genresInRow, watchedOrQueueClass } from './movies';
 import { openModal, printToModal } from './modal';
 
 export function clearMovies() {
@@ -13,7 +13,7 @@ export function showMovies(objectsArray) {
   let codeHTML = '';
   objectsArray.map(movie => {
     codeHTML += `
-        <li class="card ${movie.watchedOrQueueClass}">
+        <li class="card ${watchedOrQueueClass(movie)}">
           <a href="" class="card-link card-button-slider" data-id="${movie.id}">
               <img
                 src="${movie.posterPath}"
@@ -32,7 +32,7 @@ export function showMovies(objectsArray) {
               </div>
             <div class="card-body">
               <p class="card-title"><b>${movie.title}</b></p>
-              <p class="card-genres"><b>${movie.genresInRow(3)} | ${
+              <p class="card-genres"><b>${genresInRow(movie, 3)} | ${
       movie.releaseDate
     }</b></p>
         </li>`;
