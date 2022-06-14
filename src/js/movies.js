@@ -30,14 +30,13 @@ const dataStorage = new DataStorage();
 
 class Movie {
   constructor(responseData) {
-    // console.log(responseData);
     this.id = responseData.id;
     this.posterPath = this.#getPosterPath(responseData.poster_path);
     this.title = responseData.title;
     this.originalTitle = responseData.original_title;
-    this.popularity = responseData.popularity;
-    this.genres = responseData.genre_ids;
-    this.releaseDate = responseData.release_date.substr(0, 4);
+    this.popularity = responseData.popularity;    
+    this.genres = responseData.genre_ids;    
+    this.releaseDate = responseData.release_date ? responseData.release_date.substr(0, 4) : '';
     this.inWatched = this.#getInWatched();
     this.inQueue = this.#getInQueue();
     this.voteAverage = responseData.vote_average;
@@ -46,10 +45,11 @@ class Movie {
     this.overview = responseData.overview;
     // this.video = null;
     this.videos = [];
-
+    
     // В API метод getMovie возвращает жанры в свойстве "genres", значением которого есть массив объектов
     // Поэтому, если не удалось получить список жанров - получаем из метода "genres"
-    if (!this.genres) {
+    
+    if (!this.genres && responseData.genres) {
       this.genres = [];
       responseData.genres.map(item => {
         this.genres.push(item.id);
@@ -109,24 +109,13 @@ class Movie {
   }
 
   #getPosterPath(poster_path) {
-    const fullPosterPatch = `${API_IMG_URL}${poster_path}`;
-    return fullPosterPatch;
-    // return NOPOSTER_IMG_URL;
-
-    // const poster = new Image();
-    // poster.src = fullPosterPatch;
-    //
-    // poster.onload = () => fullPosterPatch;
-    // poster.onerror = () => alert("NoImage");
+    if (poster_path) {
+      return `${API_IMG_URL}${poster_path}`;
+    }   
+    return NOPOSTER_IMG_URL;
   }
 
-  getVideos(number = 0) {
-    // API.getVideos(this.id)
-    //   .then(video => {
-    //     console.log(video.results);
-    //     this.video = `https://www.youtube.com/watch?v=${video.results[number].key}`;
-    //   })
-
+  getVideos(number = 0) {    
     return API.getVideos(this.id);
   }
 }
@@ -162,6 +151,7 @@ export function getMovieList(params, page = 1, mode = '') {
         `Current page: ${responseData.page}, total pages: ${responseData.total_pages}`
       ); // --> for pagination
       showPagination(responseData.total_pages, responseData.page);
+      
       return responseData.results;
     })
     .then(movieList => {
@@ -169,15 +159,17 @@ export function getMovieList(params, page = 1, mode = '') {
 
       movieList.map(movieItem => {
         const movie = new Movie(movieItem); // class instance
-
+        
         objectsArray.push(movie);
       });
-
+      
       clearMovies();
       showMovies(objectsArray);
       hideLoader();
     })
-    .catch(result => console.log(result));
+    .catch(result => {
+      console.log(result)
+    });
   return;
 }
 
@@ -189,6 +181,7 @@ export function getAndShowLibrary(idArray) {
       API.getMovie(movieId)
         .then(response => {
           const libMovie = new Movie(response);
+          
           response.genres = response.genres.map(item => {
             return item.id;
           });
@@ -199,9 +192,7 @@ export function getAndShowLibrary(idArray) {
           return 0;
         })
     );
-    // } catch (err) {
-    //   console.log(err);
-    // }
+    
   });
   Promise.all(promisesMovies)
     .then(response => {
@@ -225,7 +216,6 @@ export function getMovieInfo(id) {
             movie.videos.push(`https://www.youtube.com/watch?v=${video.key}`);
           }
         });
-        console.log(movie.videos);
         showMovieInfo(movie);
       });
     });
