@@ -11,5 +11,5 @@ export const moviesCashe = {};
 moviesCashe.state = [];
 
 export const refs = {};
-export let watchedIdArr = [];
-export let queueIdArr = [];
+// export const watchedIdArr = [];
+// export const queueIdArr = [];

@@ -18,8 +18,6 @@ import {
   NOPOSTER_IMG_URL,
   refs,
   moviesCashe,
-  watchedIdArr,
-  queueIdArr,
 } from './global';
 
 import { showMovies, showMovieInfo, clearMovies } from './markup';

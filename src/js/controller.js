@@ -1,6 +1,6 @@
 // module for interface elements and their event listeners
 
-import { API_KEY, refs, watchedIdArr, queueIdArr, moviesCashe } from './global';
+import { API_KEY, refs, moviesCashe } from './global';
 import {
   getMovieList,
   getMovieInfo,
