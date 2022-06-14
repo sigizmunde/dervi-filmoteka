@@ -13,12 +13,15 @@ export function onQueueBtnCard(btn, id) {
     return;
   }
 
-  if (data.getWatched().find(item => item.id === id)) {
+  let movie = data.getWatched().find(item => item.id === id);
+  if (movie) {
     data.removeFromWatched(id);
     movieCard.classList.remove('in-watched');
   }
 
-  const movie = moviesCashe.find(item => item.id === id);
+  if (!movie) {
+    movie = moviesCashe.find(item => item.id === id);
+  }
   data.addToQueue(movie);
   movieCard.classList.add('in-queue');
   // add notify
@@ -34,13 +37,16 @@ export function onWatchedBtnCard(btn, id) {
     return;
   }
 
-  if (data.getQueue().find(item => item.id === id)) {
+  let movie = data.getQueue().find(item => item.id === id);
+  if (movie) {
     data.removeFromQueue(id);
     movieCard.classList.remove('in-queue');
   }
 
-  movieCard.classList.add('in-watched');
-  const movie = moviesCashe.find(item => item.id === id);
+  if (!movie) {
+    movie = moviesCashe.find(item => item.id === id);
+  }
   data.addToWatched(movie);
+  movieCard.classList.add('in-watched');
   // add notify
 }
