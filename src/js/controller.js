@@ -112,7 +112,7 @@ function onLibraryWatchBtnClick() {
   refs.libraryWatchBtn.classList.add('accent-btn');
   refs.libraryQueBtn.classList.remove('accent-btn');
   currentLibraryArr = data.getWatched();
-  moviesCashe = currentLibraryArr.filter(() => true);
+  // moviesCashe = currentLibraryArr.filter(() => true);
   if (currentLibraryArr.length === 0) {
     refs.cardsSection.classList.add('empty-library');
   } else {
@@ -129,7 +129,7 @@ function onLibraryQueBtnClick() {
   refs.libraryQueBtn.classList.add('accent-btn');
   refs.libraryWatchBtn.classList.remove('accent-btn');
   currentLibraryArr = data.getQueue();
-  moviesCashe = currentLibraryArr.filter(() => true);
+  // moviesCashe = currentLibraryArr.filter(() => true);
   if (currentLibraryArr.length === 0) {
     refs.cardsSection.classList.add('empty-library');
   } else {
