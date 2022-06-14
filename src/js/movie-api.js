@@ -158,7 +158,7 @@ export default class APIService {
     });
   }
 
-  getGenres() {
-    return this.genres;
+  getGenres() {    
+    return this.genres;    
   }
 }

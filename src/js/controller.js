@@ -15,6 +15,7 @@ import { DataStorage } from './data';
 import { onQueueBtnCard, onWatchedBtnCard, timerID } from './actions-library';
 
 import { onClickScrollTop } from './scroll-to-top';
+import { hidePagination } from './pagination';
 
 const data = new DataStorage();
 
@@ -82,7 +83,6 @@ function onHomeLinkClick(event) {
   // location.reload();
   refs.header.classList.remove('header-library');
   refs.header.classList.add('header-search');
-  refs.pagination.classList.remove('on-empty-library');
   refs.cardsSection.classList.remove('empty-library');
   refs.cardsBox.classList.remove('hide-labels');
 
@@ -102,7 +102,7 @@ function onLibraryLinkClick(event) {
   refs.libraryQueBtn.classList.remove('accent-btn');
   refs.cardsSection.classList.remove('empty-main-library');
 
-  refs.pagination.classList.add('on-empty-library');
+  hidePagination();
   if (data.getWatched().length === 0) {
     refs.cardsSection.classList.add('empty-library');
   } else {
