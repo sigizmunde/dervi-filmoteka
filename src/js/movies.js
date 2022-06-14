@@ -168,9 +168,8 @@ export function getMovieList(params, page = 1, mode = '') {
         const movie = new Movie(movieItem); // class instance
 
         objectsArray.push(movie);
+        moviesCashe.push(movie); // array cashing
       });
-
-      moviesCashe = [...objectsArray];
 
       clearMovies();
       showMovies(objectsArray);
@@ -183,7 +182,7 @@ export function getMovieList(params, page = 1, mode = '') {
 }
 
 export function getAndShowLibrary(moviesArray) {
-  moviesCashe = [...moviesArray];
+  moviesCashe = moviesArray.filter(() => true); // array cloning
   showMovies(moviesArray);
 }
 
@@ -261,4 +260,32 @@ export function getPremiers() {
         showMovies(objectsArray) - вывод списка на лгавную страницу
 
       ------------------ */
+}
+
+export function genresInRow(movie, maxCount = 0) {
+  return parseGenresByString(movie, maxCount);
+}
+
+function parseGenresByString(movie, maxCount = 0) {
+  const genreList = movie.genres;
+  const genreNames = [];
+
+  for (let i = 0; i < movie.genres.length; i++) {
+    if (maxCount && i === maxCount - 1 && i < movie.genres.length - 1) {
+      genreNames.push('others');
+      break;
+    }
+
+    const findValue = genreList.find(item => item.id === movie.genres[i]);
+
+    if (findValue) {
+      genreNames.push(findValue.name);
+    }
+  }
+
+  return genreNames.join(', ');
+}
+
+export function watchedOrQueueClass(movie) {
+  return movie.inWatched ? 'in-watched' : movie.inQueue ? 'in-queue' : '';
 }

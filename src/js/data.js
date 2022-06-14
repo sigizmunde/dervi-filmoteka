@@ -11,7 +11,9 @@ export class DataStorage {
   getWatched() {
     try {
       const serializedData = localStorage.getItem('watched');
-      return serializedData === null ? [] : JSON.parse(serializedData);
+      const movieArr =
+        serializedData === null ? [] : JSON.parse(serializedData);
+      return movieArr.filter(item => item.hasOwnProperty('id'));
     } catch (err) {
       console.error('Get library error: ', err);
     }
@@ -21,7 +23,9 @@ export class DataStorage {
   getQueue() {
     try {
       const serializedData = localStorage.getItem('queue');
-      return serializedData === null ? [] : JSON.parse(serializedData);
+      const movieArr =
+        serializedData === null ? [] : JSON.parse(serializedData);
+      return movieArr.filter(item => item.hasOwnProperty('id'));
     } catch (err) {
       console.error('Get library error: ', err);
     }
@@ -46,7 +50,13 @@ export class DataStorage {
 
   addToWatched(movie) {
     const watchedArr = this.getWatched();
-    if (watchedArr.find(item => item.id === movie.id)) {
+    let check = false;
+    try {
+      check = watchedArr.find(item => item.id === movie.id);
+    } catch (err) {
+      console.log(err);
+    }
+    if (check) {
       return;
     }
     watchedArr.unshift(movie);
@@ -54,8 +64,16 @@ export class DataStorage {
   }
 
   removeFromWatched(movie) {
+    let id = 0;
+    if (typeof movie === 'number') {
+      id = movie;
+      console.log('number!');
+    } else {
+      id = movie.id;
+      console.log('not a number!');
+    }
     const watchedArr = this.getWatched();
-    const newWatchedArr = watchedArr.filter(item => item.id !== movie.id);
+    const newWatchedArr = watchedArr.filter(item => item.id !== id);
     this.#setWatched(newWatchedArr);
   }
 
@@ -69,8 +87,16 @@ export class DataStorage {
   }
 
   removeFromQueue(movie) {
+    let id = 0;
+    if (typeof movie === 'number') {
+      id = movie;
+      console.log('number!');
+    } else {
+      id = movie.id;
+      console.log('not a number!');
+    }
     const queueArr = this.getQueue();
-    const newQueueArr = queueArr.filter(item => item.id !== movie.id);
+    const newQueueArr = queueArr.filter(item => item.id !== id);
     this.#setQueue(newQueueArr);
   }
 }
