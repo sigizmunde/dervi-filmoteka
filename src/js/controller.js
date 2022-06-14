@@ -1,6 +1,6 @@
 // module for interface elements and their event listeners
 
-import { API_KEY, refs, watchedIdArr, queueIdArr, moviesCashe } from './global';
+import { API_KEY, refs, moviesCashe } from './global';
 import {
   getMovieList,
   getMovieInfo,
@@ -116,7 +116,7 @@ function onLibraryWatchBtnClick() {
   refs.libraryWatchBtn.classList.add('accent-btn');
   refs.libraryQueBtn.classList.remove('accent-btn');
   currentLibraryArr = data.getWatched();
-  moviesCashe = currentLibraryArr.filter(() => true);
+  moviesCashe.state = currentLibraryArr.filter(() => true);
   if (currentLibraryArr.length === 0) {
     refs.cardsSection.classList.add('empty-library');
   } else {
@@ -133,7 +133,7 @@ function onLibraryQueBtnClick() {
   refs.libraryQueBtn.classList.add('accent-btn');
   refs.libraryWatchBtn.classList.remove('accent-btn');
   currentLibraryArr = data.getQueue();
-  moviesCashe = currentLibraryArr.filter(() => true);
+  moviesCashe.state = currentLibraryArr.filter(() => true);
   if (currentLibraryArr.length === 0) {
     refs.cardsSection.classList.add('empty-library');
   } else {
