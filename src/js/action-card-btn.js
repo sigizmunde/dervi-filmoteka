@@ -4,7 +4,7 @@ const data = new DataStorage();
 
 // action btn on the movie card
 export function onQueueBtnCard(btn, id) {
-  console.log('cashe is ', moviesCashe);
+  console.log('cashe is ', moviesCashe.state);
   const movieCard = btn.closest('.card');
 
   if (data.getQueue().find(item => item.id === id)) {
@@ -20,7 +20,7 @@ export function onQueueBtnCard(btn, id) {
   }
 
   if (!movie) {
-    movie = moviesCashe.find(item => item.id === id);
+    movie = moviesCashe.state.find(item => item.id === id);
   }
   data.addToQueue(movie);
   movieCard.classList.add('in-queue');
@@ -28,7 +28,7 @@ export function onQueueBtnCard(btn, id) {
 }
 
 export function onWatchedBtnCard(btn, id) {
-  console.log('cashe is ', moviesCashe);
+  console.log('cashe is ', moviesCashe.state);
   const movieCard = btn.closest('.card');
 
   if (data.getWatched().find(item => item.id === id)) {
@@ -44,7 +44,7 @@ export function onWatchedBtnCard(btn, id) {
   }
 
   if (!movie) {
-    movie = moviesCashe.find(item => item.id === id);
+    movie = moviesCashe.state.find(item => item.id === id);
   }
   data.addToWatched(movie);
   movieCard.classList.add('in-watched');

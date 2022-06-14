@@ -168,7 +168,7 @@ export function getMovieList(params, page = 1, mode = '') {
         const movie = new Movie(movieItem); // class instance
 
         objectsArray.push(movie);
-        moviesCashe.push(movie); // array cashing
+        moviesCashe.state.push(movie); // array cashing
       });
 
       clearMovies();
@@ -182,7 +182,7 @@ export function getMovieList(params, page = 1, mode = '') {
 }
 
 export function getAndShowLibrary(moviesArray) {
-  moviesCashe = moviesArray.filter(() => true); // array cloning
+  moviesCashe.state = moviesArray.filter(() => true); // array cloning
   showMovies(moviesArray);
 }
 
