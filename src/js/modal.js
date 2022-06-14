@@ -1,4 +1,5 @@
 import { DataStorage } from './data';
+import { refs, moviesCashe } from './global';
 
 const data = new DataStorage();
 let movieModal = document.querySelector('.movie-modal');
@@ -29,7 +30,7 @@ export function closeModal() {
   document.body.classList.remove('modal-open');
 }
 
-function onCloseClick(event) {
+function onCloseClick() {
   closeModal();
 }
 
@@ -42,10 +43,10 @@ export function printToModal(HTMLString) {
   watchedBtnModal = modalContent.querySelector('[data-watched-btn]');
   const movieId = Number(queueBtnModal.dataset.movieId);
 
-  if (data.getQueue().includes(movieId)) {
+  if (data.getQueue().find(item => item.id === movieId)) {
     queueBtnModal.classList.add('active-btn');
   }
-  if (data.getWatched().includes(movieId)) {
+  if (data.getWatched().find(item => item.id === movieId)) {
     watchedBtnModal.classList.add('active-btn');
   }
 
@@ -59,20 +60,27 @@ function onQueueBtnModal(event) {
   const currentMovieIdNum = Number(currentMovieId);
 
   if (
-    data.getWatched().includes(currentMovieIdNum) &&
+    data.getWatched().find(item => item.id === currentMovieIdNum) &&
     !queueBtnModal.classList.contains('active-btn')
   ) {
     data.removeFromWatched(currentMovieIdNum);
     watchedBtnModal.classList.remove('active-btn');
+    refs.currentMovieLi.classList.remove('in-watched');
   }
 
-  if (event.target.classList.contains('active-btn')) {
+  let movie = data.getQueue().find(item => item.id === currentMovieIdNum);
+  if (movie) {
     data.removeFromQueue(currentMovieIdNum);
     event.target.classList.remove('active-btn');
-  } else {
-    data.addToQueue(currentMovieIdNum);
-    event.target.classList.add('active-btn');
+    refs.currentMovieLi.classList.remove('in-queue');
   }
+  if (!movie) {
+    movie = moviesCashe.find(item => item.id === currentMovieIdNum);
+  }
+  data.addToQueue(currentMovieIdNum);
+  event.target.classList.add('active-btn');
+  refs.currentMovieLi.classList.add('in-queue');
+
   // add notify
 }
 
@@ -81,19 +89,27 @@ function onWatchedBtnModal(event) {
   const currentMovieIdNum = Number(currentMovieId);
 
   if (
-    data.getQueue().includes(currentMovieIdNum) &&
+    data.getQueue().find(item => item.id === currentMovieIdNum) &&
     !watchedBtnModal.classList.contains('active-btn')
   ) {
     data.removeFromQueue(currentMovieIdNum);
     queueBtnModal.classList.remove('active-btn');
+    refs.currentMovieLi.classList.remove('in-queue');
   }
 
-  if (event.target.classList.contains('active-btn')) {
+  let movie = data.getWatched().find(item => item.id === currentMovieIdNum);
+  if (movie) {
     data.removeFromWatched(currentMovieIdNum);
     event.target.classList.remove('active-btn');
-  } else {
-    data.addToWatched(currentMovieIdNum);
-    event.target.classList.add('active-btn');
+    refs.currentMovieLi.classList.remove('in-watched');
   }
+
+  if (!movie) {
+    movie = moviesCashe.find(item => item.id === currentMovieIdNum);
+  }
+  data.addToWatched(currentMovieIdNum);
+  event.target.classList.add('active-btn');
+  refs.currentMovieLi.classList.add('in-watched');
+
   // add notify
 }
