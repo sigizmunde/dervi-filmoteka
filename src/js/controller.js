@@ -11,6 +11,7 @@ import { modalInit } from './modal';
 import { clearMovies } from './markup';
 import { showLoader, hideLoader } from './loader';
 import { notiflix } from './notifications';
+import { showSliderMovies, splide } from './slider';
 
 import { DataStorage } from './data';
 import { onQueueBtnCard, onWatchedBtnCard, timerID } from './action-card-btn';
@@ -46,6 +47,8 @@ export function init() {
   refs.teamModal = document.querySelector('.js-team-modal');
   refs.movieModal = document.querySelector('.movie-modal');
   refs.searchForm = document.querySelector('#movie-search');
+  refs.sliderContainer = document.querySelector('.splide');
+  refs.sliderList = document.querySelector('.splide__list');
   refs.observeTarget = document.querySelector('.sentinel');
   refs.scrollTop = document.querySelector('.scroll-top');
   refs.body = document.querySelector('body');
@@ -66,6 +69,7 @@ export function init() {
     refs.backdrop.addEventListener('click', onBackdropClick);
     refs.searchForm.addEventListener('submit', onMoviesSearch);
     refs.cardsBox.addEventListener('click', onActionMovieCard);
+    refs.sliderList.addEventListener('click', onSliderClick);
     refs.scrollTop.addEventListener('click', onClickScrollTop);
     refs.cancelBtn.addEventListener('click', () => {
       onCancelBtnClick(timerID);
@@ -74,6 +78,7 @@ export function init() {
     console.log(error);
   }
   getMovieList();
+  showSliderMovies(refs.sliderList);
 
   // when init page, check localStorage
   data.getQueue();
@@ -87,6 +92,7 @@ function onHomeLinkClick(event) {
   refs.header.classList.add('header-search');
   refs.cardsSection.classList.remove('empty-library');
   refs.cardsBox.classList.remove('hide-labels');
+  refs.sliderContainer.style.display = 'block';
 
   pageObserver.unobserve(refs.observeTarget);
 
@@ -104,6 +110,7 @@ function onLibraryLinkClick(event) {
   refs.libraryQueBtn.classList.remove('accent-btn');
   refs.libraryLink.addEventListener('click', notiflix('authorization', '5000'));
   refs.cardsSection.classList.remove('empty-main-library');
+  refs.sliderContainer.style.display = 'none';
 
   hidePagination();
   if (data.getWatched().length === 0) {
@@ -166,6 +173,7 @@ function checkKeyPress(event) {
 function onBackdropClick(event) {
   if (event.currentTarget === event.target) {
     closeTeamModal();
+    // splide.Components.AutoScroll.play();
   }
 }
 
@@ -173,6 +181,7 @@ function onMoviesSearch(event) {
   event.preventDefault();
   const query = event.target.elements.query.value;
   refs.cardsBox.innerHTML = '';
+  refs.sliderContainer.style.display = 'none';
   clearMovies();
   getMovieList(query);
 }
@@ -218,6 +227,21 @@ function onScroll() {
   }
   pageObserver.unobserve(refs.observeTarget);
   getAndShowLibrary(currentLibraryArr);
+}
+
+function onSliderClick(evt) {
+  evt.preventDefault();
+  const id = Number(evt.target.closest('.card-link').dataset.id);
+
+  //search card in cardsBox if it exists (or even if not)
+  refs.currentMovieLi = refs.cardsBox
+    .querySelector(`[data-id="${id}"]`)
+    ?.closest('li');
+  console.log('currentMovieLi', refs.currentMovieLi);
+  getMovieInfo(id);
+  if (!refs.movieModal.classList.contains('is-hidden')) {
+    splide.Components.AutoScroll.pause();
+  }
 }
 
 function onCancelBtnClick(timerID) {

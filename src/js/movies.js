@@ -29,7 +29,7 @@ import { notiflix } from './notifications';
 
 const dataStorage = new DataStorage();
 
-class Movie {
+export class Movie {
   constructor(responseData) {
     this.id = responseData.id;
     this.posterPath = this.#getPosterPath(responseData.poster_path);
