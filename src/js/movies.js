@@ -37,7 +37,7 @@ class Movie {
     this.genres = responseData.genre_ids;
     this.releaseDate = responseData.release_date
       ? responseData.release_date.substr(0, 4)
-      : '';
+      : 'date not defined';
     // this.inWatched = this.#getInWatched(); // this property is dynamic
     // this.inQueue = this.#getInQueue(); // no need to assign inside object
     this.voteAverage = responseData.vote_average;
@@ -93,7 +93,9 @@ class Movie {
         genreNames.push(findValue.name);
       }
     }
-
+    if (genreNames.length === 0) {
+      return "genre not defined";
+    }
     return genreNames.join(', ');
   }
 

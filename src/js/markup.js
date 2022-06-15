@@ -82,12 +82,7 @@ export function showMovieInfo(movieObject) {
               <p class="movie-description">Genre</p>
               <p class="property" id="genre">${movieObject.genresInRow()}</p>
           </li>
-          <li class="movie-item">
-          <p class="movie-description">Trailer</p>
-              <a href=${
-                movieObject.video
-              } target="_blank" class="property">▶ Play</a>
-          </li>
+          ${checkVideo(movieObject.video)}
         </ul>
         <article class="article">
           <p class="article-caption">About</p>
@@ -107,4 +102,18 @@ export function showMovieInfo(movieObject) {
 
   printToModal(codeHTML);
   openModal();
+}
+
+function checkVideo(video) {
+  if (video) {
+    return `
+      <li class="movie-item">
+        <p class="movie-description">Trailer</p>
+        <a href=${video} target="_blank" class="property">▶ Play</a>
+      </li>
+    `; 
+  }
+
+  return '';
+  
 }
