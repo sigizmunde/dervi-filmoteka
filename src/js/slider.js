@@ -17,7 +17,7 @@ export const splide = new Splide('.splide', {
   focus: 'center',
   gap: '20px',
   pagination: false,
-  perPage: 3,
+  perPage: 10,
   autoScroll: {
     speed: 1,
   },
