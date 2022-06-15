@@ -17,12 +17,32 @@
 }
 
 .footer__button-about-us{
+    position: relative;
     padding: 0;
     border: none;
     border-bottom: 1px solid var(--ft-text-color);
     background-color: transparent;
     color: inherit;
     cursor: pointer;
+    transition: color var(--transition-params);
+}
+
+.footer__button-about-us:hover {
+    color:var(--accent-color)
+}
+
+.footer__button-about-us::after{
+    content: "";
+    position: absolute;
+    left:0;
+    bottom:-1px;
+    height: 1px;
+    width: 0px;
+    background-color: var(--accent-color) ;
+    transition: width var(--transition-params);
+}
+.footer__button-about-us:hover::after{
+    width: 100%;
 }
 
 .footer__text--second-part{
