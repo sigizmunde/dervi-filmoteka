@@ -135,7 +135,7 @@
   color: var(--secondary-text-color);
   @media screen and (min-width: $tablet) {
     overflow: auto;
-    max-height: 236px;
+    max-height: 160px;
   }
 
   @media screen and (min-width: $desktop) {

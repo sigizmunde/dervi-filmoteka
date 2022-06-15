@@ -13,7 +13,9 @@ export class DataStorage {
       const serializedData = localStorage.getItem('watched');
       const movieArr =
         serializedData === null ? [] : JSON.parse(serializedData);
-      return movieArr.filter(item => item.hasOwnProperty('id'));
+      if (movieArr) {
+        return movieArr.filter(item => item.hasOwnProperty('id'));
+      }
     } catch (err) {
       console.error('Get library error: ', err);
     }
@@ -25,7 +27,9 @@ export class DataStorage {
       const serializedData = localStorage.getItem('queue');
       const movieArr =
         serializedData === null ? [] : JSON.parse(serializedData);
-      return movieArr.filter(item => item.hasOwnProperty('id'));
+      if (movieArr) {
+        return movieArr.filter(item => item.hasOwnProperty('id'));
+      }
     } catch (err) {
       console.error('Get library error: ', err);
     }
