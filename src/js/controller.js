@@ -31,6 +31,7 @@ export function init() {
   // showLoader();
   // hideLoader();
 
+  moviesCashe.state = [];
   modalInit();
   refs.loader = document.querySelector('.lds-ripple');
   refs.cardsBox = document.querySelector('.cards-box');
