@@ -142,15 +142,22 @@ export function getMovieList(params, page = 1, mode = '') {
   }
   if (params && !mode) {
     queryFunction = () => API.searchMovie(params, page);
+
     // Notiflix show count of found films
 
-    if (queryFunction().then(result => result.total_results) !== 0) {
-      queryFunction()
-        .then(result => result.total_results)
-        .then(result => notiflix('success', `${result}`));
-    } else {
-      notiflix('failure', 0);
-    }
+    const filmCountPromice = queryFunction().then(result => {
+      return result.total_results;
+    });
+    const totalFilms = async () => {
+      const filmsCount = await filmCountPromice;
+      if (filmsCount !== 0) {
+        notiflix('success', `${filmsCount}`);
+      } else {
+        notiflix('failure', 0);
+      }
+    };
+    totalFilms();
+
     // Notiflix show count of found films
   }
   if (params && mode === 'repeat') {

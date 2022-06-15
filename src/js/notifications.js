@@ -62,6 +62,11 @@ if (window.matchMedia('(max-width: 767px)').matches) {
     success: {
       background: '#FF6B01',
     },
+    failure: {
+      background: '#cd2626',
+      textColor: '#fff',
+      distance: '190px',
+    },
   });
   Notiflix.Confirm.init({
     width: '460px',
