@@ -1,3 +1,4 @@
+import { initializeApp } from 'firebase/app';
 export default class Auth {
   constructor() {
     this.loginSignoutBtn = document.getElementById('login-btn');
@@ -29,12 +30,25 @@ export default class Auth {
     `;
   }
 
-  makeMarkup() {
+  makeAuthForm() {
     this.loginSignoutBtn.addEventListener('click', () => {
       document.querySelector('.movie-modal').classList.remove('is-hidden');
+      document.querySelector('body').classList.add('modal-open');
       document.querySelector('.modal-content').innerHTML = this.markup;
       const loginBtn = document.getElementById('login');
       const signupBtn = document.getElementById('signup');
+      const registerFormBtn = document.getElementById('register-btn');
+      const loginFormBtn = document.getElementById('register-btn2');
+      const LoginWithGoogleBtn = document.getElementById('register-btn1');
+      const signOutName = document.getElementById('register-name');
+      const signOutEmail = document.getElementById('register-email');
+      const loginEmail = document.getElementById('login-email');
+
+      registerFormBtn.addEventListener('click', e => {
+        e.preventDefault();
+        console.log('trst');
+      });
+
       loginBtn.addEventListener('click', e => {
         let parent = e.target.parentNode.parentNode;
         Array.from(e.target.parentNode.parentNode.classList).find(element => {

@@ -17,7 +17,6 @@ import { onQueueBtnCard, onWatchedBtnCard, timerID } from './action-card-btn';
 import { onClickScrollTop } from './scroll-to-top';
 import { hidePagination } from './pagination';
 
-import { onLoginBtnClick } from './firebase-auth';
 import Auth from './auth';
 
 const data = new DataStorage();
@@ -73,7 +72,7 @@ export function init() {
       onCancelBtnClick(timerID);
     });
     const auth = new Auth();
-    auth.makeMarkup();
+    auth.makeAuthForm();
   } catch (error) {
     console.log(error);
   }

@@ -18,6 +18,7 @@
     "url": "https://github.com/sigizmunde/dervi-filmoteka"
   },
   "dependencies": {
+    "firebase": "^9.8.3",
     "modern-normalize": "^1.1.0"
   },
   "devDependencies": {

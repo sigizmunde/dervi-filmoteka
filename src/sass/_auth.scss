@@ -268,3 +268,17 @@ modal-content {
     }
   }
 }
+
+#login-btn {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.17em;
+  text-transform: uppercase;
+  padding: 50px 0;
+  display: block;
+
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  color: var(--main-text-color);
+}
