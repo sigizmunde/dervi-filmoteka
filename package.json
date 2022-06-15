@@ -18,6 +18,8 @@
     "url": "https://github.com/sigizmunde/dervi-filmoteka"
   },
   "dependencies": {
+    "@splidejs/splide": "^4.0.7",
+    "@splidejs/splide-extension-auto-scroll": "^0.4.2",
     "modern-normalize": "^1.1.0"
   },
   "devDependencies": {

@@ -1,20 +1,22 @@
 // module for interface elements and their event listeners
 
-import { API_KEY, refs, watchedIdArr, queueIdArr } from './global';
+import { API_KEY, refs, moviesCashe } from './global';
 import {
   getMovieList,
   getMovieInfo,
   getAndShowLibrary,
   getPremiers,
 } from './movies';
-import { modalInit, queueBtnModal, watchedBtnModal } from './modal';
+import { modalInit } from './modal';
 import { clearMovies } from './markup';
 import { showLoader, hideLoader } from './loader';
+import { showSliderMovies, splide } from './slider';
 
 import { DataStorage } from './data';
-import { onQueueBtnCard, onWatchedBtnCard } from './action-card-btn';
+import { onQueueBtnCard, onWatchedBtnCard, timerID } from './action-card-btn';
 
 import { onClickScrollTop } from './scroll-to-top';
+import { hidePagination } from './pagination';
 
 import { addClassDarkToHTML } from './switch-theme';
 
@@ -32,6 +34,9 @@ export function init() {
   // hideLoader();
   addClassDarkToHTML();
 
+  if (!moviesCashe.state) {
+    moviesCashe.state = [];
+  }
   modalInit();
   refs.loader = document.querySelector('.lds-ripple');
   refs.cardsBox = document.querySelector('.cards-box');
@@ -47,12 +52,16 @@ export function init() {
   refs.teamModal = document.querySelector('.js-team-modal');
   refs.movieModal = document.querySelector('.movie-modal');
   refs.searchForm = document.querySelector('#movie-search');
+  refs.sliderContainer = document.querySelector('.splide');
+  refs.sliderList = document.querySelector('.splide__list');
   refs.observeTarget = document.querySelector('.sentinel');
   refs.scrollTop = document.querySelector('.scroll-top');
   refs.body = document.querySelector('body');
   refs.cardsSection = document.querySelector('.cards-section');
   refs.pagination = document.querySelector('.pagination');
   refs.searchInput = document.querySelector('.search-input');
+  refs.cancelBtn = document.querySelector('#cancel');
+  refs.currentMovieLi;
 
   try {
     refs.logo.addEventListener('click', onHomeLinkClick);
@@ -65,11 +74,16 @@ export function init() {
     refs.backdrop.addEventListener('click', onBackdropClick);
     refs.searchForm.addEventListener('submit', onMoviesSearch);
     refs.cardsBox.addEventListener('click', onActionMovieCard);
+    refs.sliderList.addEventListener('click', onSliderClick);
     refs.scrollTop.addEventListener('click', onClickScrollTop);
+    refs.cancelBtn.addEventListener('click', () => {
+      onCancelBtnClick(timerID);
+    });
   } catch (error) {
     console.log(error);
   }
   getMovieList();
+  showSliderMovies(refs.sliderList);
 
   // when init page, check localStorage
   data.getQueue();
@@ -81,9 +95,9 @@ function onHomeLinkClick(event) {
   // location.reload();
   refs.header.classList.remove('header-library');
   refs.header.classList.add('header-search');
-  refs.pagination.classList.remove('on-empty-library');
   refs.cardsSection.classList.remove('empty-library');
   refs.cardsBox.classList.remove('hide-labels');
+  refs.sliderContainer.style.display = 'block';
 
   pageObserver.unobserve(refs.observeTarget);
 
@@ -100,8 +114,9 @@ function onLibraryLinkClick(event) {
   refs.libraryWatchBtn.classList.add('accent-btn');
   refs.libraryQueBtn.classList.remove('accent-btn');
   refs.cardsSection.classList.remove('empty-main-library');
+  refs.sliderContainer.style.display = 'none';
 
-  refs.pagination.classList.add('on-empty-library');
+  hidePagination();
   if (data.getWatched().length === 0) {
     refs.cardsSection.classList.add('empty-library');
   } else {
@@ -113,13 +128,14 @@ function onLibraryWatchBtnClick() {
   refs.libraryWatchBtn.classList.remove('accent-btn');
   refs.libraryWatchBtn.classList.add('accent-btn');
   refs.libraryQueBtn.classList.remove('accent-btn');
-  if (data.getWatched().length === 0) {
+  currentLibraryArr = data.getWatched();
+  // currentLibraryArr.forEach(movie => moviesCashe.state.push(movie));
+  if (currentLibraryArr.length === 0) {
     refs.cardsSection.classList.add('empty-library');
   } else {
     refs.cardsSection.classList.remove('empty-library');
     clearMovies();
     // getAndShowLibrary(currentLibraryArr);
-    currentLibraryArr = data.getWatched();
     pageObserver.observe(refs.observeTarget);
   }
   // clearMovies();
@@ -129,12 +145,13 @@ function onLibraryQueBtnClick() {
   refs.libraryQueBtn.classList.remove('accent-btn');
   refs.libraryQueBtn.classList.add('accent-btn');
   refs.libraryWatchBtn.classList.remove('accent-btn');
-  if (data.getQueue().length === 0) {
+  currentLibraryArr = data.getQueue();
+  // currentLibraryArr.forEach(movie => moviesCashe.state.push(movie));
+  if (currentLibraryArr.length === 0) {
     refs.cardsSection.classList.add('empty-library');
   } else {
     refs.cardsSection.classList.remove('empty-library');
     clearMovies();
-    currentLibraryArr = data.getQueue();
     pageObserver.observe(refs.observeTarget);
   }
 }
@@ -160,6 +177,7 @@ function checkKeyPress(event) {
 function onBackdropClick(event) {
   if (event.currentTarget === event.target) {
     closeTeamModal();
+    // splide.Components.AutoScroll.play();
   }
 }
 
@@ -167,6 +185,7 @@ function onMoviesSearch(event) {
   event.preventDefault();
   const query = event.target.elements.query.value;
   refs.cardsBox.innerHTML = '';
+  refs.sliderContainer.style.display = 'none';
   clearMovies();
   getMovieList(query);
 }
@@ -176,7 +195,7 @@ function onActionMovieCard(event) {
 
   let btnClicked = false;
 
-  event.path.map(currentMovieLink => {
+  event.composedPath().map(currentMovieLink => {
     // check btn events on the movie card and add/delete to/from the library
     if (currentMovieLink.nodeName === 'BUTTON') {
       const currentMovieId = currentMovieLink.closest('.card-link').dataset.id;
@@ -194,6 +213,8 @@ function onActionMovieCard(event) {
     // catch a movie link and open the movie modal
     if (currentMovieLink.nodeName === 'A' && !btnClicked) {
       const currentMovieId = currentMovieLink.dataset.id;
+      refs.currentMovieLi = currentMovieLink.closest('.card');
+
       getMovieInfo(currentMovieId);
 
       // event.stopPropagation();
@@ -210,4 +231,25 @@ function onScroll() {
   }
   pageObserver.unobserve(refs.observeTarget);
   getAndShowLibrary(currentLibraryArr);
+}
+
+function onSliderClick(evt) {
+  evt.preventDefault();
+  const id = Number(evt.target.closest('.card-link').dataset.id);
+
+  //search card in cardsBox if it exists (or even if not)
+  refs.currentMovieLi = refs.cardsBox
+    .querySelector(`[data-id="${id}"]`)
+    ?.closest('li');
+  console.log('currentMovieLi', refs.currentMovieLi);
+  getMovieInfo(id);
+  if (!refs.movieModal.classList.contains('is-hidden')) {
+    splide.Components.AutoScroll.pause();
+  }
+}
+
+function onCancelBtnClick(timerID) {
+  clearTimeout(timerID);
+  refs.cancelBtn.classList.add('is-hidden');
+  refs.cancelBtn.classList.remove('cancel-animation');
 }

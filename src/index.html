@@ -9,12 +9,17 @@
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.0.6/dist/css/splide.min.css"
+    />
     <link rel="icon" type="image/x-icon" href="./images/favicon.png" />
     <title>Filmoteka</title>
   </head>
 
   <body>
     <include src="./partials/header.html"></include>
+    <include src="./partials/slider.html"></include>
     <main class="main">
       <include src="./partials/loader.html"></include>
       <include src="./partials/pagination_top.html"></include>
@@ -27,6 +32,7 @@
         <div class="sentinel"></div>
       </section>
 
+      <include src="./partials/cancel-btn.html"></include>
       <include src="./partials/pagination.html"></include>
       <include src="./partials/scroll-to-top.html"></include>
     </main>
@@ -34,7 +40,6 @@
     <include src="./partials/footer.html"></include>
     <include src="./partials/modal-our-team.html"></include>
     <include src="./partials/modal.html"></include>
-
     <script type="module" src="./index.js"></script>
   </body>
 </html>
