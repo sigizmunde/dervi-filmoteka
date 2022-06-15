@@ -1,7 +1,6 @@
 import APIService from './movie-api';
 import { API_IMG_URL, moviesCashe } from './global';
 import { Movie } from './movies';
-import { DataStorage } from './data';
 
 const api = new APIService();
 const genres = api.getGenres().reduce((acc, genre) => {
@@ -9,17 +8,14 @@ const genres = api.getGenres().reduce((acc, genre) => {
 }, {});
 
 export function showSliderMovies(selector) {
-  // api
-  //   .getPremiers()
-  //   .then(res => res.results)
-  //   .then(data => {
-  //     sliderCardsTpl(data, selector);
-  //     splide.mount(window.splide.Extensions);
-  //   })
-  //   .catch(reject => console.log(reject));
-  const data = new DataStorage();
-  sliderCardsTpl(data.getWatched(), selector);
-  splide.mount(window.splide.Extensions);
+  api
+    .getPremiers()
+    .then(res => res.results)
+    .then(data => {
+      sliderCardsTpl(data, selector);
+      splide.mount(window.splide.Extensions);
+    })
+    .catch(reject => console.log(reject));
 }
 
 export const splide = new Splide('.splide', {
@@ -53,21 +49,20 @@ function sliderCardsTpl(objectsArray, selector) {
   objectsArray.map(obj => {
     const movie = new Movie(obj);
     moviesCashe.state.push(movie);
-    const gendersList = getGenresForSlider(obj.genres, genres); //!!!!!!!!
+    const gendersList = getGenresForSlider(obj.genre_ids, genres);
     selector.innerHTML += `
         <li class="card splide__slide">
           <a href="" class="card-link" data-id="${obj.id}">
             <div class="splide__img-container">
               <img
-                src="${API_IMG_URL}${obj.posterPath}" 
+                src="${API_IMG_URL}${obj.poster_path}" 
                 class="splide__img"
                 alt=""
               />
             </div>
             <div class="splide__card-body">
               <p class="splide__card-title"><b>${obj.title}</b></p>
-              <p class="splide__card-genres"><b>${gendersList} | ${obj.releaseDate.slice(
-      // !!!!!!!
+              <p class="splide__card-genres"><b>${gendersList} | ${obj.release_date.slice(
       0,
       4
     )}</b>
