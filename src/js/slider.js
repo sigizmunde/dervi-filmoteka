@@ -33,7 +33,7 @@ export const splide = new Splide('.splide', {
 function getGenresForSlider(genreArr, genres) {
   const showedGenres = [];
   let index = 0;
-  for (item of genreArr) {
+  for (const item of genreArr) {
     index++;
     if (index > 2) {
       showedGenres.push('others');

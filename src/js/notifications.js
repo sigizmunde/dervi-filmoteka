@@ -5,7 +5,7 @@ export { notiflix };
 if (window.matchMedia('(max-width: 767px)').matches) {
   Notiflix.Notify.init({
     width: '250px',
-    position: 'center-top',
+    position: 'right-top', //'center' - 'center-top' - 'center-bottom' - 'right-top' - 'right-center' - 'right-bottom' - 'left-top' - 'left-center' - 'left-bottom'
     distance: '72px',
     clickToClose: 'true',
     fontFamily: 'Roboto',
@@ -109,17 +109,16 @@ function notiflix(status, value) {
     Notiflix.Notify.success(`Removed from queue list`);
   } else if (status === 'failure') {
     Notiflix.Notify.failure(`Oops, on yours request have no films`);
+  } else if (status === 'loginFailed') {
+    Notiflix.Notify.failure(`This login already registered`);
   }
-  // else if (status === 'removeFromWatched') {
-  //   Notiflix.Notify.failure(`Removed from watched list`);
-  // }
   // else if (status === 'removeFromQueue') {
   //   Notiflix.Notify.failure(`Removed from queue list`);
   // }
   else if (status === 'authorization') {
     Notiflix.Confirm.show(
       'Access Failure', //modal window Title
-      'Only autorized access', //modal window main text
+      'Register or login to get access to library', //modal window main text
       'Register/Log In', //button OK  "okCb"
       'Cancel', //button Cancel  "cancelCb"
       function okCb() {
