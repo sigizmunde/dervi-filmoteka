@@ -182,7 +182,7 @@ export function getMovieList(params, page = 1, mode = '') {
 }
 
 export function getAndShowLibrary(moviesArray) {
-  moviesCashe.state = moviesArray.filter(() => true); // array cloning
+  moviesArray.forEach(movie => moviesCashe.state.push(movie)); // array cloning
   showMovies(moviesArray);
 }
 

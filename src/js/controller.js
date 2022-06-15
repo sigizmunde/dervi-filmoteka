@@ -31,7 +31,9 @@ export function init() {
   // showLoader();
   // hideLoader();
 
-  moviesCashe.state = [];
+  if (!moviesCashe.state) {
+    moviesCashe.state = [];
+  }
   modalInit();
   refs.loader = document.querySelector('.lds-ripple');
   refs.cardsBox = document.querySelector('.cards-box');
@@ -124,7 +126,7 @@ function onLibraryWatchBtnClick() {
   refs.libraryWatchBtn.classList.add('accent-btn');
   refs.libraryQueBtn.classList.remove('accent-btn');
   currentLibraryArr = data.getWatched();
-  moviesCashe.state = currentLibraryArr.filter(() => true);
+  // currentLibraryArr.forEach(movie => moviesCashe.state.push(movie));
   if (currentLibraryArr.length === 0) {
     refs.cardsSection.classList.add('empty-library');
   } else {
@@ -141,7 +143,7 @@ function onLibraryQueBtnClick() {
   refs.libraryQueBtn.classList.add('accent-btn');
   refs.libraryWatchBtn.classList.remove('accent-btn');
   currentLibraryArr = data.getQueue();
-  moviesCashe.state = currentLibraryArr.filter(() => true);
+  // currentLibraryArr.forEach(movie => moviesCashe.state.push(movie));
   if (currentLibraryArr.length === 0) {
     refs.cardsSection.classList.add('empty-library');
   } else {
