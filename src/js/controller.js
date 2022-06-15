@@ -1,6 +1,6 @@
 // module for interface elements and their event listeners
 
-import { API_KEY, refs, watchedIdArr, queueIdArr } from './global';
+import { API_KEY, refs, moviesCashe } from './global';
 import {
   getMovieList,
   getMovieInfo,
@@ -12,9 +12,10 @@ import { clearMovies } from './markup';
 import { showLoader, hideLoader } from './loader';
 
 import { DataStorage } from './data';
-import { onQueueBtnCard, onWatchedBtnCard } from './actions-library';
+import { onQueueBtnCard, onWatchedBtnCard, timerID } from './action-card-btn';
 
 import { onClickScrollTop } from './scroll-to-top';
+import { hidePagination } from './pagination';
 
 const data = new DataStorage();
 
@@ -50,6 +51,8 @@ export function init() {
   refs.cardsSection = document.querySelector('.cards-section');
   refs.pagination = document.querySelector('.pagination');
   refs.searchInput = document.querySelector('.search-input');
+  refs.cancelBtn = document.querySelector('#cancel');
+  refs.currentMovieLi;
 
   try {
     refs.logo.addEventListener('click', onHomeLinkClick);
@@ -63,6 +66,9 @@ export function init() {
     refs.searchForm.addEventListener('submit', onMoviesSearch);
     refs.cardsBox.addEventListener('click', onActionMovieCard);
     refs.scrollTop.addEventListener('click', onClickScrollTop);
+    refs.cancelBtn.addEventListener('click', () => {
+      onCancelBtnClick(timerID);
+    });
   } catch (error) {
     console.log(error);
   }
@@ -78,7 +84,6 @@ function onHomeLinkClick(event) {
   // location.reload();
   refs.header.classList.remove('header-library');
   refs.header.classList.add('header-search');
-  refs.pagination.classList.remove('on-empty-library');
   refs.cardsSection.classList.remove('empty-library');
   refs.cardsBox.classList.remove('hide-labels');
 
@@ -96,8 +101,9 @@ function onLibraryLinkClick(event) {
   refs.cardsBox.classList.add('hide-labels');
   refs.libraryWatchBtn.classList.add('accent-btn');
   refs.libraryQueBtn.classList.remove('accent-btn');
+  refs.cardsSection.classList.remove('empty-main-library');
 
-  refs.pagination.classList.add('on-empty-library');
+  hidePagination();
   if (data.getWatched().length === 0) {
     refs.cardsSection.classList.add('empty-library');
   } else {
@@ -109,13 +115,14 @@ function onLibraryWatchBtnClick() {
   refs.libraryWatchBtn.classList.remove('accent-btn');
   refs.libraryWatchBtn.classList.add('accent-btn');
   refs.libraryQueBtn.classList.remove('accent-btn');
-  if (data.getWatched().length === 0) {
+  currentLibraryArr = data.getWatched();
+  moviesCashe.state = currentLibraryArr.filter(() => true);
+  if (currentLibraryArr.length === 0) {
     refs.cardsSection.classList.add('empty-library');
   } else {
     refs.cardsSection.classList.remove('empty-library');
     clearMovies();
     // getAndShowLibrary(currentLibraryArr);
-    currentLibraryArr = data.getWatched();
     pageObserver.observe(refs.observeTarget);
   }
   // clearMovies();
@@ -125,12 +132,13 @@ function onLibraryQueBtnClick() {
   refs.libraryQueBtn.classList.remove('accent-btn');
   refs.libraryQueBtn.classList.add('accent-btn');
   refs.libraryWatchBtn.classList.remove('accent-btn');
-  if (data.getQueue().length === 0) {
+  currentLibraryArr = data.getQueue();
+  moviesCashe.state = currentLibraryArr.filter(() => true);
+  if (currentLibraryArr.length === 0) {
     refs.cardsSection.classList.add('empty-library');
   } else {
     refs.cardsSection.classList.remove('empty-library');
     clearMovies();
-    currentLibraryArr = data.getQueue();
     pageObserver.observe(refs.observeTarget);
   }
 }
@@ -172,7 +180,7 @@ function onActionMovieCard(event) {
 
   let btnClicked = false;
 
-  event.path.map(currentMovieLink => {
+  event.composedPath().map(currentMovieLink => {
     // check btn events on the movie card and add/delete to/from the library
     if (currentMovieLink.nodeName === 'BUTTON') {
       const currentMovieId = currentMovieLink.closest('.card-link').dataset.id;
@@ -190,7 +198,8 @@ function onActionMovieCard(event) {
     // catch a movie link and open the movie modal
     if (currentMovieLink.nodeName === 'A' && !btnClicked) {
       const currentMovieId = currentMovieLink.dataset.id;
-      const currentMovieIdNum = Number(currentMovieId);
+      refs.currentMovieLi = currentMovieLink.closest('.card');
+
       getMovieInfo(currentMovieId);
 
       // event.stopPropagation();
@@ -207,4 +216,10 @@ function onScroll() {
   }
   pageObserver.unobserve(refs.observeTarget);
   getAndShowLibrary(currentLibraryArr);
+}
+
+function onCancelBtnClick(timerID) {
+  clearTimeout(timerID);
+  refs.cancelBtn.classList.add('is-hidden');
+  refs.cancelBtn.classList.remove('cancel-animation');
 }
