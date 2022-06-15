@@ -94,18 +94,18 @@ class Movie {
       }
     }
     if (genreNames.length === 0) {
-      return "genre not defined";
+      return 'genre not defined';
     }
     return genreNames.join(', ');
   }
 
-  #getInWatched() {
-    return !!dataStorage.getWatched().find(item => item === this.id);
-  }
+  // #getInWatched() {
+  //   return !!dataStorage.getWatched().find(item => item === this.id);
+  // }
 
-  #getInQueue() {
-    return !!dataStorage.getQueue().find(item => item === this.id);
-  }
+  // #getInQueue() {
+  //   return !!dataStorage.getQueue().find(item => item === this.id);
+  // }
 
   #getGenres() {
     return API.getGenres();
