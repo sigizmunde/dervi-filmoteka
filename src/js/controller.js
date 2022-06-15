@@ -7,7 +7,7 @@ import {
   getAndShowLibrary,
   getPremiers,
 } from './movies';
-import { modalInit } from './modal';
+import { modalInit, openModal } from './modal';
 import { clearMovies } from './markup';
 import { showLoader, hideLoader } from './loader';
 
@@ -16,6 +16,9 @@ import { onQueueBtnCard, onWatchedBtnCard, timerID } from './action-card-btn';
 
 import { onClickScrollTop } from './scroll-to-top';
 import { hidePagination } from './pagination';
+
+import { onLoginBtnClick } from './firebase-auth';
+import Auth from './auth';
 
 const data = new DataStorage();
 
@@ -53,7 +56,7 @@ export function init() {
   refs.searchInput = document.querySelector('.search-input');
   refs.cancelBtn = document.querySelector('#cancel');
   refs.currentMovieLi;
-
+  //   refs.loginSignoutBtn = document.getElementById('login-btn');
   try {
     refs.logo.addEventListener('click', onHomeLinkClick);
     refs.homeLink.addEventListener('click', onHomeLinkClick);
@@ -69,6 +72,8 @@ export function init() {
     refs.cancelBtn.addEventListener('click', () => {
       onCancelBtnClick(timerID);
     });
+    const auth = new Auth();
+    auth.makeMarkup();
   } catch (error) {
     console.log(error);
   }
