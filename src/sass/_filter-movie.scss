@@ -45,8 +45,8 @@
         margin-top: 10px;
         padding: 10px 5px;
         box-sizing: border-box;
-        border-bottom-right-radius: 5px;
-        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 10px;
+        border-bottom-left-radius: 10px;
         // border: 1px solid var(--main-text-color);
         // border-top: none;
         transition: background $animation-duration $timing-function, color $animation-duration $timing-function;
@@ -55,6 +55,7 @@
     &__dropdown {
         background-color: rgba(75, 57, 34, 0.5);
         color: #fff;
+        // border: 1px solid var(--main-text-color);
         position: absolute;
         z-index: 2;
 
