@@ -2,6 +2,11 @@ import APIService from './movie-api';
 import { API_IMG_URL, moviesCashe } from './global';
 import { Movie } from './movies';
 
+const api = new APIService();
+const genres = api.getGenres().reduce((acc, genre) => {
+  return { ...acc, [genre.id]: genre.name };
+}, {});
+
 export function showSliderMovies(selector) {
   api
     .getPremiers()
@@ -23,11 +28,6 @@ export const splide = new Splide('.splide', {
     speed: 1,
   },
 });
-
-const api = new APIService();
-const genres = api.getGenres().reduce((acc, genre) => {
-  return { ...acc, [genre.id]: genre.name };
-}, {});
 
 function getGenresForSlider(genreArr, genres) {
   const showedGenres = [];
