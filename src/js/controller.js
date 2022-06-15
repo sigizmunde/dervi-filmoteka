@@ -1,6 +1,6 @@
 // module for interface elements and their event listeners
 
-import { API_KEY, refs, watchedIdArr, queueIdArr, moviesCashe } from './global';
+import { API_KEY, refs, moviesCashe } from './global';
 import {
   getMovieList,
   getMovieInfo,
@@ -13,7 +13,7 @@ import { showLoader, hideLoader } from './loader';
 import { notiflix } from './notifications';
 
 import { DataStorage } from './data';
-import { onQueueBtnCard, onWatchedBtnCard } from './action-card-btn';
+import { onQueueBtnCard, onWatchedBtnCard, timerID } from './action-card-btn';
 
 import { onClickScrollTop } from './scroll-to-top';
 import { hidePagination } from './pagination';
@@ -52,6 +52,7 @@ export function init() {
   refs.cardsSection = document.querySelector('.cards-section');
   refs.pagination = document.querySelector('.pagination');
   refs.searchInput = document.querySelector('.search-input');
+  refs.cancelBtn = document.querySelector('#cancel');
   refs.currentMovieLi;
 
   try {
@@ -66,6 +67,9 @@ export function init() {
     refs.searchForm.addEventListener('submit', onMoviesSearch);
     refs.cardsBox.addEventListener('click', onActionMovieCard);
     refs.scrollTop.addEventListener('click', onClickScrollTop);
+    refs.cancelBtn.addEventListener('click', () => {
+      onCancelBtnClick(timerID);
+    });
   } catch (error) {
     console.log(error);
   }
@@ -114,7 +118,7 @@ function onLibraryWatchBtnClick() {
   refs.libraryWatchBtn.classList.add('accent-btn');
   refs.libraryQueBtn.classList.remove('accent-btn');
   currentLibraryArr = data.getWatched();
-  moviesCashe = currentLibraryArr.filter(() => true);
+  moviesCashe.state = currentLibraryArr.filter(() => true);
   if (currentLibraryArr.length === 0) {
     refs.cardsSection.classList.add('empty-library');
   } else {
@@ -131,7 +135,7 @@ function onLibraryQueBtnClick() {
   refs.libraryQueBtn.classList.add('accent-btn');
   refs.libraryWatchBtn.classList.remove('accent-btn');
   currentLibraryArr = data.getQueue();
-  moviesCashe = currentLibraryArr.filter(() => true);
+  moviesCashe.state = currentLibraryArr.filter(() => true);
   if (currentLibraryArr.length === 0) {
     refs.cardsSection.classList.add('empty-library');
   } else {
@@ -214,4 +218,10 @@ function onScroll() {
   }
   pageObserver.unobserve(refs.observeTarget);
   getAndShowLibrary(currentLibraryArr);
+}
+
+function onCancelBtnClick(timerID) {
+  clearTimeout(timerID);
+  refs.cancelBtn.classList.add('is-hidden');
+  refs.cancelBtn.classList.remove('cancel-animation');
 }

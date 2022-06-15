@@ -7,8 +7,9 @@ export const API_IMG_URL = 'http://image.tmdb.org/t/p/w500';
 export const NOPOSTER_IMG_URL = require('./../images/noposter.jpg');
 // export const NOPOSTER_IMG_URL = 'https://i.ibb.co/PzSPh6q/noposter.jpg';
 
-export let moviesCashe = [];
+export const moviesCashe = {};
+moviesCashe.state = [];
 
 export const refs = {};
-export let watchedIdArr = [];
-export let queueIdArr = [];
+// export const watchedIdArr = [];
+// export const queueIdArr = [];

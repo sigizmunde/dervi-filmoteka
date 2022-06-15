@@ -18,8 +18,6 @@ import {
   NOPOSTER_IMG_URL,
   refs,
   moviesCashe,
-  watchedIdArr,
-  queueIdArr,
 } from './global';
 
 import { showMovies, showMovieInfo, clearMovies } from './markup';
@@ -40,8 +38,8 @@ class Movie {
     this.releaseDate = responseData.release_date
       ? responseData.release_date.substr(0, 4)
       : '';
-    this.inWatched = this.#getInWatched();
-    this.inQueue = this.#getInQueue();
+    // this.inWatched = this.#getInWatched(); // this property is dynamic
+    // this.inQueue = this.#getInQueue(); // no need to assign inside object
     this.voteAverage = responseData.vote_average;
     this.voteCount = responseData.vote_count;
     this.popularity = responseData.popularity;
@@ -168,7 +166,7 @@ export function getMovieList(params, page = 1, mode = '') {
         const movie = new Movie(movieItem); // class instance
 
         objectsArray.push(movie);
-        moviesCashe.push(movie); // array cashing
+        moviesCashe.state.push(movie); // array cashing
       });
 
       clearMovies();
@@ -182,7 +180,7 @@ export function getMovieList(params, page = 1, mode = '') {
 }
 
 export function getAndShowLibrary(moviesArray) {
-  moviesCashe = moviesArray.filter(() => true); // array cloning
+  moviesCashe.state = moviesArray.filter(() => true); // array cloning
   showMovies(moviesArray);
 }
 
@@ -267,9 +265,12 @@ export function genresInRow(movie, maxCount = 0) {
 }
 
 function parseGenresByString(movie, maxCount = 0) {
-  const genreList = movie.genres;
+  const genreList = API.genres;
   const genreNames = [];
 
+  if (movie.genres.length === 0) {
+    genreNames.push('genre not defined');
+  }
   for (let i = 0; i < movie.genres.length; i++) {
     if (maxCount && i === maxCount - 1 && i < movie.genres.length - 1) {
       genreNames.push('others');
@@ -287,5 +288,15 @@ function parseGenresByString(movie, maxCount = 0) {
 }
 
 export function watchedOrQueueClass(movie) {
-  return movie.inWatched ? 'in-watched' : movie.inQueue ? 'in-queue' : '';
+  // return movie.inWatched ? 'in-watched' : movie.inQueue ? 'in-queue' : '';
+
+  const watchedArr = dataStorage.getWatched();
+  const queueArr = dataStorage.getQueue();
+  if (watchedArr.find(item => item.id === movie.id)) {
+    return 'in-watched';
+  }
+  if (queueArr.find(item => item.id === movie.id)) {
+    return 'in-queue';
+  }
+  return '';
 }

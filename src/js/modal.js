@@ -56,6 +56,7 @@ export function printToModal(HTMLString) {
 
 // action btn in the movie modal
 function onQueueBtnModal(event) {
+  console.log('cashe is ', moviesCashe);
   const currentMovieId = event.target.dataset.movieId;
   const currentMovieIdNum = Number(currentMovieId);
 
@@ -73,11 +74,15 @@ function onQueueBtnModal(event) {
     data.removeFromQueue(currentMovieIdNum);
     event.target.classList.remove('active-btn');
     refs.currentMovieLi.classList.remove('in-queue');
+
+    // add notify
+    return;
   }
+
   if (!movie) {
-    movie = moviesCashe.find(item => item.id === currentMovieIdNum);
+    movie = moviesCashe.state.find(item => item.id === currentMovieIdNum);
   }
-  data.addToQueue(currentMovieIdNum);
+  data.addToQueue(movie);
   event.target.classList.add('active-btn');
   refs.currentMovieLi.classList.add('in-queue');
 
@@ -85,6 +90,7 @@ function onQueueBtnModal(event) {
 }
 
 function onWatchedBtnModal(event) {
+  console.log('cashe is ', moviesCashe.state);
   const currentMovieId = event.target.dataset.movieId;
   const currentMovieIdNum = Number(currentMovieId);
 
@@ -102,12 +108,15 @@ function onWatchedBtnModal(event) {
     data.removeFromWatched(currentMovieIdNum);
     event.target.classList.remove('active-btn');
     refs.currentMovieLi.classList.remove('in-watched');
+
+    // add notify
+    return;
   }
 
   if (!movie) {
-    movie = moviesCashe.find(item => item.id === currentMovieIdNum);
+    movie = moviesCashe.state.find(item => item.id === currentMovieIdNum);
   }
-  data.addToWatched(currentMovieIdNum);
+  data.addToWatched(movie);
   event.target.classList.add('active-btn');
   refs.currentMovieLi.classList.add('in-watched');
 
