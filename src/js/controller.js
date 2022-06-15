@@ -109,10 +109,10 @@ function onLibraryLinkClick(event) {
   refs.cardsBox.classList.add('hide-labels');
   refs.libraryWatchBtn.classList.add('accent-btn');
   refs.libraryQueBtn.classList.remove('accent-btn');
-  refs.libraryLink.addEventListener('click', notiflix('authorization', '5000'));
   refs.cardsSection.classList.remove('empty-main-library');
   refs.sliderContainer.style.display = 'none';
 
+  // refs.libraryLink.addEventListener('click', notiflix('authorization', '5000'));
   hidePagination();
   if (data.getWatched().length === 0) {
     refs.cardsSection.classList.add('empty-library');
