@@ -8,7 +8,6 @@ export const NOPOSTER_IMG_URL = require('./../images/noposter.jpg');
 // export const NOPOSTER_IMG_URL = 'https://i.ibb.co/PzSPh6q/noposter.jpg';
 
 export const moviesCashe = {};
-moviesCashe.state = [];
 
 export const refs = {};
 // export const watchedIdArr = [];
