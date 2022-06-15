@@ -229,7 +229,13 @@ function onScroll() {
 
 function onSliderClick(evt) {
   evt.preventDefault();
-  const id = evt.target.closest('.card-link').dataset.id;
+  const id = Number(evt.target.closest('.card-link').dataset.id);
+
+  //search card in cardsBox if it exists (or even if not)
+  refs.currentMovieLi = refs.cardsBox
+    .querySelector(`[data-id="${id}"]`)
+    ?.closest('li');
+  console.log('currentMovieLi', refs.currentMovieLi);
   getMovieInfo(id);
   if (!refs.movieModal.classList.contains('is-hidden')) {
     splide.Components.AutoScroll.pause();
