@@ -78,6 +78,9 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    border-radius: 10px;
+    box-shadow: 0px 3px 6px -3px #000000;
+    
 
     @media screen and (min-width: $tablet) {
         grid-template-columns: repeat(4, 22%);
@@ -85,6 +88,7 @@
         justify-content: center;
     }
 }
+
 
 .team-members-container::-webkit-scrollbar {
     width: 1px;
