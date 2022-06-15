@@ -12,7 +12,7 @@ import { clearMovies } from './markup';
 import { showLoader, hideLoader } from './loader';
 
 import { DataStorage } from './data';
-import { onQueueBtnCard, onWatchedBtnCard } from './action-card-btn';
+import { onQueueBtnCard, onWatchedBtnCard, timerID } from './action-card-btn';
 
 import { onClickScrollTop } from './scroll-to-top';
 import { hidePagination } from './pagination';
@@ -51,6 +51,7 @@ export function init() {
   refs.cardsSection = document.querySelector('.cards-section');
   refs.pagination = document.querySelector('.pagination');
   refs.searchInput = document.querySelector('.search-input');
+  refs.cancelBtn = document.querySelector('#cancel');
   refs.currentMovieLi;
 
   try {
@@ -65,6 +66,9 @@ export function init() {
     refs.searchForm.addEventListener('submit', onMoviesSearch);
     refs.cardsBox.addEventListener('click', onActionMovieCard);
     refs.scrollTop.addEventListener('click', onClickScrollTop);
+    refs.cancelBtn.addEventListener('click', () => {
+      onCancelBtnClick(timerID);
+    });
   } catch (error) {
     console.log(error);
   }
@@ -212,4 +216,10 @@ function onScroll() {
   }
   pageObserver.unobserve(refs.observeTarget);
   getAndShowLibrary(currentLibraryArr);
+}
+
+function onCancelBtnClick(timerID) {
+  clearTimeout(timerID);
+  refs.cancelBtn.classList.add('is-hidden');
+  refs.cancelBtn.classList.remove('cancel-animation');
 }
