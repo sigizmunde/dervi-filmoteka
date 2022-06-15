@@ -265,9 +265,12 @@ export function genresInRow(movie, maxCount = 0) {
 }
 
 function parseGenresByString(movie, maxCount = 0) {
-  const genreList = movie.genres;
+  const genreList = API.genres;
   const genreNames = [];
 
+  if (movie.genres.length === 0) {
+    genreNames.push('genre not defined');
+  }
   for (let i = 0; i < movie.genres.length; i++) {
     if (maxCount && i === maxCount - 1 && i < movie.genres.length - 1) {
       genreNames.push('others');
