@@ -4,18 +4,23 @@ export { notiflix };
 
 if (window.matchMedia('(max-width: 767px)').matches) {
   Notiflix.Notify.init({
-    width: '200px',
+    width: '250px',
     position: 'center-top',
     distance: '72px',
     clickToClose: 'true',
     fontFamily: 'Roboto',
-    fontSize: '14px',
+    fontSize: '12px',
     cssAnimationStyle: 'from-right',
     useIcon: false,
-    //   timeout: 30000,
+    // timeout: 30000,
 
     success: {
       background: '#FF6B01',
+    },
+    failure: {
+      background: '#cd2626',
+      textColor: '#fff',
+      distance: '190px',
     },
   });
   Notiflix.Confirm.init({
@@ -95,7 +100,7 @@ function notiflix(status, value) {
   } else if (status === 'removeFromQueue') {
     Notiflix.Notify.success(`Removed from queue list`);
   } else if (status === 'failure') {
-    Notiflix.Notify.failure(`Oops, on yours request ${value} have no films`);
+    Notiflix.Notify.failure(`Oops, on yours request have no films`);
   }
   // else if (status === 'removeFromWatched') {
   //   Notiflix.Notify.failure(`Removed from watched list`);

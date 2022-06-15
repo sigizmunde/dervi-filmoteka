@@ -25,6 +25,8 @@ import { showLoader, hideLoader } from './loader';
 import APIService from './movie-api';
 import { DataStorage } from './data.js';
 import { showPagination, hidePagination } from './pagination';
+import { notiflix } from './notifications';
+
 const dataStorage = new DataStorage();
 
 class Movie {
@@ -140,6 +142,16 @@ export function getMovieList(params, page = 1, mode = '') {
   }
   if (params && !mode) {
     queryFunction = () => API.searchMovie(params, page);
+    // Notiflix show count of found films
+
+    if (queryFunction().then(result => result.total_results) !== 0) {
+      queryFunction()
+        .then(result => result.total_results)
+        .then(result => notiflix('success', `${result}`));
+    } else {
+      notiflix('failure', 0);
+    }
+    // Notiflix show count of found films
   }
   if (params && mode === 'repeat') {
     queryFunction = () => API.repeatLastSearch(page);
