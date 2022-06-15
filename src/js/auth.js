@@ -1,4 +1,22 @@
+// Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: 'AIzaSyDo1183-PB_7A9qygtI9_TfvjKvLJSyPDA',
+  authDomain: 'test-firebase-377da.firebaseapp.com',
+  databaseURL: 'https://test-firebase-377da-default-rtdb.firebaseio.com',
+  projectId: 'test-firebase-377da',
+  storageBucket: 'test-firebase-377da.appspot.com',
+  messagingSenderId: '1000137961183',
+  appId: '1:1000137961183:web:a6ceb146b1a5991749c36a',
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
 export default class Auth {
   constructor() {
     this.loginSignoutBtn = document.getElementById('login-btn');
@@ -40,13 +58,27 @@ export default class Auth {
       const registerFormBtn = document.getElementById('register-btn');
       const loginFormBtn = document.getElementById('register-btn2');
       const LoginWithGoogleBtn = document.getElementById('register-btn1');
-      const signOutName = document.getElementById('register-name');
-      const signOutEmail = document.getElementById('register-email');
-      const loginEmail = document.getElementById('login-email');
+      const loginEmail = document.getElementById('register-password').value;
 
       registerFormBtn.addEventListener('click', e => {
         e.preventDefault();
-        console.log('trst');
+        const auth = getAuth(app);
+        const email = document.getElementById('register-email').value;
+        const password = document.getElementById('register-email').value;
+        const name = document.getElementById('register-name').value;
+        createUserWithEmailAndPassword(auth, email, password, name)
+          .then(userCredential => {
+            // Signed in
+            const user = userCredential.user;
+            user.displayName = name;
+            console.log(user);
+            // ...
+          })
+          .catch(error => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // ..
+          });
       });
 
       loginBtn.addEventListener('click', e => {
