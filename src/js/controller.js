@@ -18,6 +18,8 @@ import { onQueueBtnCard, onWatchedBtnCard, timerID } from './action-card-btn';
 import { onClickScrollTop } from './scroll-to-top';
 import { hidePagination } from './pagination';
 
+import { addClassDarkToHTML } from './switch-theme';
+
 const data = new DataStorage();
 
 const SCROLL_PAGE_LEN = 6;
@@ -30,6 +32,7 @@ export function init() {
   //refs, event listeners, genres request, popular movies request
   // showLoader();
   // hideLoader();
+  addClassDarkToHTML();
 
   if (!moviesCashe.state) {
     moviesCashe.state = [];
