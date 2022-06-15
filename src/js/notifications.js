@@ -20,7 +20,6 @@ if (window.matchMedia('(max-width: 767px)').matches) {
     failure: {
       background: '#cd2626',
       textColor: '#fff',
-      distance: '190px',
     },
   });
   Notiflix.Confirm.init({
@@ -70,7 +69,7 @@ if (window.matchMedia('(max-width: 767px)').matches) {
   });
   Notiflix.Confirm.init({
     width: '460px',
-    borderRadius: '8px',
+    borderRadius: '10px',
     backgroundColor: '#ffffff',
     fontFamily: 'Roboto',
     cssAnimationStyle: 'zoom', // 'zoom' - 'fade'
@@ -78,14 +77,14 @@ if (window.matchMedia('(max-width: 767px)').matches) {
     backOverlayColor: 'rgba(0,0,0,0.3)',
 
     titleColor: '#1e1e1e',
-    titleFontSize: '19px',
-    titleMaxLength: 25,
+    titleFontSize: '24px',
+    titleMaxLength: 36,
 
     messageColor: '#1e1e1e',
-    messageFontSize: '17px',
-    messageMaxLength: 90,
+    messageFontSize: '20px',
+    messageMaxLength: 100,
 
-    buttonsFontSize: '15px',
+    buttonsFontSize: '17px',
     buttonsMaxLength: 34,
     okButtonColor: '#ffffff',
     okButtonBackground: '#FF6B01',
@@ -94,8 +93,12 @@ if (window.matchMedia('(max-width: 767px)').matches) {
   });
 }
 function notiflix(status, value) {
-  if (status === 'success') {
+  if (status === 'search') {
     Notiflix.Notify.success(`Found ${value} films`);
+  } else if (status === 'openWatchedLibrary') {
+    Notiflix.Notify.success(`Watched library count ${value} films`);
+  } else if (status === 'openQueueLibrary') {
+    Notiflix.Notify.success(`In yours queue ${value} films`);
   } else if (status === 'addInWatched') {
     Notiflix.Notify.success(`Added in watched list`);
   } else if (status === 'addInQueue') {
@@ -109,17 +112,18 @@ function notiflix(status, value) {
   }
   // else if (status === 'removeFromWatched') {
   //   Notiflix.Notify.failure(`Removed from watched list`);
-  // } else if (status === 'removeFromQueue') {
+  // }
+  // else if (status === 'removeFromQueue') {
   //   Notiflix.Notify.failure(`Removed from queue list`);
   // }
-  else if (status === 'confirm') {
+  else if (status === 'authorization') {
     Notiflix.Confirm.show(
-      'Access Failure',
-      'Only autorized access',
-      'Register/Log In',
-      'Cancel',
+      'Access Failure', //modal window Title
+      'Only autorized access', //modal window main text
+      'Register/Log In', //button OK  "okCb"
+      'Cancel', //button Cancel  "cancelCb"
       function okCb() {
-        alert('Open modal for autorization / register');
+        alert('Open modal for authorization / register');
       },
       function cancelCb() {
         return;

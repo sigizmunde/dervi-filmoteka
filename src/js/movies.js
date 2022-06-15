@@ -151,7 +151,7 @@ export function getMovieList(params, page = 1, mode = '') {
     const totalFilms = async () => {
       const filmsCount = await filmCountPromice;
       if (filmsCount !== 0) {
-        notiflix('success', `${filmsCount}`);
+        notiflix('search', `${filmsCount}`);
       } else {
         notiflix('failure', 0);
       }
