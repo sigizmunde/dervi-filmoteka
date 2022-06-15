@@ -1,0 +1,44 @@
+.cancel-button {
+  position: absolute;
+  width: 310px;
+  height: 450px;
+  color: rgb(0, 0, 0);
+  font-size: 30px;
+  font-weight: 700;
+  cursor: pointer;
+  text-transform: uppercase;
+  opacity: 0.3;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  justify-content: center;
+  align-items: center;
+  line-height: 1.33;
+  display: flex;
+}
+.cancel-animation {
+  opacity: 0.8;
+  transition: opacity 450ms ease-out;
+}
+.cancel-button::after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 55%;
+  left: 5%;
+  height: 5px;
+  width: 90%;
+  background-color: var(--accent-color);
+  animation: status-bar 3s running;
+}
+.cancel-button.is-hidden::after {
+  animation: none;
+}
+@keyframes status-bar {
+  0% {
+    width: 0;
+  }
+
+  100% {
+    width: 90%;
+  }
+}

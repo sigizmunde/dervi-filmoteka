@@ -1,11 +1,11 @@
 // module for interface elements and their event listeners
 
-import { API_KEY, refs, watchedIdArr, queueIdArr } from './global';
+import { API_KEY, refs, moviesCashe } from './global';
 import {
   getMovieList,
-  searchMovies,
   getMovieInfo,
   getAndShowLibrary,
+  getPremiers,
 } from './movies';
 import { modalInit } from './modal';
 import { clearMovies } from './markup';
@@ -13,7 +13,10 @@ import { showLoader, hideLoader } from './loader';
 import { showSliderMovies, splide } from './slider';
 
 import { DataStorage } from './data';
-import { onQueueBtnCard, onWatchedBtnCard } from './actions-library';
+import { onQueueBtnCard, onWatchedBtnCard, timerID } from './action-card-btn';
+
+import { onClickScrollTop } from './scroll-to-top';
+import { hidePagination } from './pagination';
 
 const data = new DataStorage();
 
@@ -29,6 +32,7 @@ export function init() {
   // hideLoader();
 
   modalInit();
+  refs.loader = document.querySelector('.lds-ripple');
   refs.cardsBox = document.querySelector('.cards-box');
   refs.header = document.querySelector('.header');
   refs.homeLink = document.querySelector('#home');
@@ -39,10 +43,19 @@ export function init() {
   refs.ourTeamLink = document.querySelector('#our-team');
   refs.closeModalBtn = document.querySelector('[data-action="close-modal"]');
   refs.backdrop = document.querySelector('.js-backdrop');
+  refs.teamModal = document.querySelector('.js-team-modal');
   refs.movieModal = document.querySelector('.movie-modal');
   refs.searchForm = document.querySelector('#movie-search');
+  refs.sliderContainer = document.querySelector('.splide');
   refs.sliderList = document.querySelector('.splide__list');
   refs.observeTarget = document.querySelector('.sentinel');
+  refs.scrollTop = document.querySelector('.scroll-top');
+  refs.body = document.querySelector('body');
+  refs.cardsSection = document.querySelector('.cards-section');
+  refs.pagination = document.querySelector('.pagination');
+  refs.searchInput = document.querySelector('.search-input');
+  refs.cancelBtn = document.querySelector('#cancel');
+  refs.currentMovieLi;
 
   try {
     refs.logo.addEventListener('click', onHomeLinkClick);
@@ -56,13 +69,15 @@ export function init() {
     refs.searchForm.addEventListener('submit', onMoviesSearch);
     refs.cardsBox.addEventListener('click', onActionMovieCard);
     refs.sliderList.addEventListener('click', onSliderClick);
+    refs.scrollTop.addEventListener('click', onClickScrollTop);
+    refs.cancelBtn.addEventListener('click', () => {
+      onCancelBtnClick(timerID);
+    });
   } catch (error) {
     console.log(error);
   }
-
-  showSliderMovies(refs.sliderList);
-
   getMovieList();
+  showSliderMovies(refs.sliderList);
 
   // when init page, check localStorage
   data.getQueue();
@@ -74,6 +89,13 @@ function onHomeLinkClick(event) {
   // location.reload();
   refs.header.classList.remove('header-library');
   refs.header.classList.add('header-search');
+  refs.cardsSection.classList.remove('empty-library');
+  refs.cardsBox.classList.remove('hide-labels');
+  refs.sliderContainer.style.display = 'block';
+
+  pageObserver.unobserve(refs.observeTarget);
+
+  refs.searchInput.value = '';
   clearMovies();
   getMovieList();
 }
@@ -82,34 +104,61 @@ function onLibraryLinkClick(event) {
   event.preventDefault();
   refs.header.classList.remove('header-search');
   refs.header.classList.add('header-library');
-  onLibraryWatchBtnClick();
+  refs.cardsBox.classList.add('hide-labels');
+  refs.libraryWatchBtn.classList.add('accent-btn');
+  refs.libraryQueBtn.classList.remove('accent-btn');
+  refs.cardsSection.classList.remove('empty-main-library');
+  refs.sliderContainer.style.display = 'none';
+
+  hidePagination();
+  if (data.getWatched().length === 0) {
+    refs.cardsSection.classList.add('empty-library');
+  } else {
+    onLibraryWatchBtnClick();
+  }
 }
 
 function onLibraryWatchBtnClick() {
   refs.libraryWatchBtn.classList.remove('accent-btn');
   refs.libraryWatchBtn.classList.add('accent-btn');
   refs.libraryQueBtn.classList.remove('accent-btn');
-  clearMovies();
   currentLibraryArr = data.getWatched();
-  pageObserver.observe(refs.observeTarget);
+  moviesCashe.state = currentLibraryArr.filter(() => true);
+  if (currentLibraryArr.length === 0) {
+    refs.cardsSection.classList.add('empty-library');
+  } else {
+    refs.cardsSection.classList.remove('empty-library');
+    clearMovies();
+    // getAndShowLibrary(currentLibraryArr);
+    pageObserver.observe(refs.observeTarget);
+  }
+  // clearMovies();
 }
 
 function onLibraryQueBtnClick() {
   refs.libraryQueBtn.classList.remove('accent-btn');
   refs.libraryQueBtn.classList.add('accent-btn');
   refs.libraryWatchBtn.classList.remove('accent-btn');
-  clearMovies();
   currentLibraryArr = data.getQueue();
-  pageObserver.observe(refs.observeTarget);
+  moviesCashe.state = currentLibraryArr.filter(() => true);
+  if (currentLibraryArr.length === 0) {
+    refs.cardsSection.classList.add('empty-library');
+  } else {
+    refs.cardsSection.classList.remove('empty-library');
+    clearMovies();
+    pageObserver.observe(refs.observeTarget);
+  }
 }
 
 function openTeamModal() {
   window.addEventListener('keydown', checkKeyPress);
+  refs.teamModal.classList.remove('is-hidden');
   document.body.classList.add('modal-open');
 }
 
 function closeTeamModal() {
   window.removeEventListener('keydown', checkKeyPress);
+  refs.teamModal.classList.add('is-hidden');
   document.body.classList.remove('modal-open');
 }
 
@@ -130,8 +179,9 @@ function onMoviesSearch(event) {
   event.preventDefault();
   const query = event.target.elements.query.value;
   refs.cardsBox.innerHTML = '';
+  refs.sliderContainer.style.display = 'none';
   clearMovies();
-  searchMovies(query);
+  getMovieList(query);
 }
 
 function onActionMovieCard(event) {
@@ -139,7 +189,7 @@ function onActionMovieCard(event) {
 
   let btnClicked = false;
 
-  event.path.map(currentMovieLink => {
+  event.composedPath().map(currentMovieLink => {
     // check btn events on the movie card and add/delete to/from the library
     if (currentMovieLink.nodeName === 'BUTTON') {
       const currentMovieId = currentMovieLink.closest('.card-link').dataset.id;
@@ -157,7 +207,8 @@ function onActionMovieCard(event) {
     // catch a movie link and open the movie modal
     if (currentMovieLink.nodeName === 'A' && !btnClicked) {
       const currentMovieId = currentMovieLink.dataset.id;
-      const currentMovieIdNum = Number(currentMovieId);
+      refs.currentMovieLi = currentMovieLink.closest('.card');
+
       getMovieInfo(currentMovieId);
 
       // event.stopPropagation();
@@ -183,4 +234,10 @@ function onSliderClick(evt) {
   if (!refs.movieModal.classList.contains('is-hidden')) {
     splide.Components.AutoScroll.pause();
   }
+}
+
+function onCancelBtnClick(timerID) {
+  clearTimeout(timerID);
+  refs.cancelBtn.classList.add('is-hidden');
+  refs.cancelBtn.classList.remove('cancel-animation');
 }

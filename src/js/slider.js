@@ -3,7 +3,7 @@ import { API_IMG_URL } from './global';
 
 export function showSliderMovies(selector) {
   api
-    .getTrending()
+    .getPremiers()
     .then(res => res.results)
     .then(data => {
       sliderCardsTpl(data, selector);
@@ -16,7 +16,6 @@ export const splide = new Splide('.splide', {
   drag: 'free',
   focus: 'center',
   gap: '20px',
-  width: '100vw',
   pagination: false,
   perPage: 3,
   autoScroll: {

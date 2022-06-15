@@ -1,16 +1,22 @@
-import { refs } from "./global";
-refs.loader = document.querySelector('.lds-ripple');
+import { refs } from './global';
+
 const DELAY = 500;
 
 export const showLoader = () => {
-    refs.loader.classList.add('loaded-hiding');
-    console.log("loader");
-}
+  try {
+    refs.loader.classList.remove('is-hidden');
+  } catch (err) {
+    console.log('loader failed ', err);
+  }
+};
 
 export const hideLoader = () => {
-    refs.loader.classList.add('loaded');
-    refs.loader.classList.remove('loaded-hiding');
-}
+  try {
+    refs.loader.classList.add('is-hidden');
+  } catch (err) {
+    console.log('loader failed ', err);
+  }
+};
 
 // window.onload = function () {
 //     showLoader();
