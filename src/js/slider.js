@@ -14,7 +14,8 @@ export function showSliderMovies(selector) {
     .then(data => {
       sliderCardsTpl(data, selector);
       splide.mount(window.splide.Extensions);
-    });
+    })
+    .catch(reject => console.log(reject));
 }
 
 export const splide = new Splide('.splide', {
