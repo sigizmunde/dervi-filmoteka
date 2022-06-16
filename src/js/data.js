@@ -1,3 +1,6 @@
+import { get, set, ref, child } from 'firebase/database';
+import { db } from './firebase';
+
 export class DataStorage {
   constructor() {
     // singleton pattern
@@ -37,6 +40,7 @@ export class DataStorage {
   #setWatched(watchedArr) {
     try {
       localStorage.setItem('watched', JSON.stringify(watchedArr));
+      this.setDatabase();
     } catch (err) {
       console.error(err);
     }
@@ -45,6 +49,7 @@ export class DataStorage {
   #setQueue(queueArr) {
     try {
       localStorage.setItem('queue', JSON.stringify(queueArr));
+      this.setDatabase();
     } catch (err) {
       console.error(err);
     }
@@ -101,7 +106,40 @@ export class DataStorage {
     const newQueueArr = queueArr.filter(item => item.id !== id);
     this.#setQueue(newQueueArr);
   }
-}
 
-//! getDatabase - если база пустая  - создать два пустьіх массива и записать в ls с помощью setWatch, setQueue, если пользователь есть - положить из firebase данньіе и записать их в ls. Вьвзьввается при регистрации в блоке регистрации. Окно закрьівается только после ее вьіполнения
-//! setDatabase - берет массивьі из ls, пишет их в fb - вьізьівается при методах изменения БД
+  //! getDatabase - если база пустая  - создать два пустьіх массива и записать в ls с помощью setWatch, setQueue, если пользователь есть - положить из firebase данньіе и записать их в ls. Вьвзьввается при регистрации в блоке регистрации. Окно закрьівается только после ее вьіполнения
+  getDatabase() {
+    if (this.user) {
+      get(child(ref(db), 'users/' + this.user.uid)).then(snapshot => {
+        if (snapshot.exists()) {
+          console.log(snapshot.val());
+          const library = JSON.parse(snapshot.val().library);
+
+          if (library.watched) {
+            this.#setWatched(library.watched);
+          }
+          if (library.queue) {
+            this.#setQueue(library.queue);
+          }
+        } else {
+          console.log('got no data');
+        }
+      });
+    }
+  }
+
+  //! setDatabase - берет массивьі из ls, пишет их в fb - вьізьівается при методах изменения БД
+  setDatabase() {
+    if (this.user) {
+      const libraryData = {
+        watched: this.getWatched(),
+        queue: this.getQueue(),
+      };
+      set(ref(db, 'users/' + this.user.uid), {
+        library: JSON.stringify(libraryData),
+      })
+        .then(() => console.log('Firebase Realtime Database synchronized'))
+        .catch(err => console.log('Oops! Database has not synchronized', err));
+    }
+  }
+}

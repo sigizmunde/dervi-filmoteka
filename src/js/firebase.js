@@ -22,7 +22,7 @@ import {
 import { refs } from './global';
 import { closeModal } from './modal';
 
-const data = new DataStorage();
+const localData = new DataStorage();
 const firebaseConfig = {
   apiKey: 'AIzaSyDo1183-PB_7A9qygtI9_TfvjKvLJSyPDA',
   authDomain: 'test-firebase-377da.firebaseapp.com',
@@ -34,7 +34,7 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
+export const db = getDatabase(app);
 const dbRef = ref(getDatabase(app));
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
@@ -125,7 +125,7 @@ function onSignupBtnClick(e) {
       const user = userCredential.user;
       user.displayName = name;
       console.log(user);
-      data.user = user;
+      localData.user = user;
       //   data.functionData = () =>
       //     set(ref(db, 'users/' + user.uid), {
       //       username: name,
@@ -165,7 +165,8 @@ function onLoginBtnClick(e) {
     .then(userCredential => {
       Notiflix.Notify.success(`Welcome back, ${mail}!`);
       const user = userCredential.user;
-      data.user = user;
+      localData.user = user;
+      localData.getDatabase();
       document.getElementById(
         'login-btn'
       ).textContent = `Hello ${user.displayName}`;
@@ -205,7 +206,7 @@ function onLoginWithGoogleBtnClick(e) {
       const token = credential.accessToken;
       Notiflix.Notify.success(`Welcome, ${result.user.displayName}!`);
       const user = result.user;
-      data.user = user;
+      localData.user = user;
 
       //   set(ref(db, 'users/' + user.uid), {
       //     username: user.displayName,

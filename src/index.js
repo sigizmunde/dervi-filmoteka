@@ -1,6 +1,6 @@
+import './js/firebase';
 import './sass/main.scss'; // draft file
 import { init } from './js/controller'; // movies
-import './js/firebase';
 
 document.addEventListener('DOMContentLoaded', init);
 
