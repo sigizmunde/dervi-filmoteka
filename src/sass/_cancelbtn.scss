@@ -1,5 +1,7 @@
 .cancel-button {
   position: absolute;
+  left: 0;
+  top: 0;
   width: 310px;
   height: 450px;
   color: rgb(0, 0, 0);
@@ -18,6 +20,10 @@
 .cancel-animation {
   opacity: 0.8;
   transition: opacity 450ms ease-out;
+}
+.cancel-button.is-hidden {
+  width: 20px;
+  height: 20px;
 }
 .cancel-button::after {
   content: '';

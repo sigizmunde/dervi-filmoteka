@@ -27,7 +27,7 @@ import { DataStorage } from './data.js';
 import { showPagination, hidePagination } from './pagination';
 const dataStorage = new DataStorage();
 
-class Movie {
+export class Movie {
   constructor(responseData) {
     this.id = responseData.id;
     this.posterPath = this.#getPosterPath(responseData.poster_path);
@@ -37,7 +37,7 @@ class Movie {
     this.genres = responseData.genre_ids;
     this.releaseDate = responseData.release_date
       ? responseData.release_date.substr(0, 4)
-      : '';
+      : 'date not defined';
     // this.inWatched = this.#getInWatched(); // this property is dynamic
     // this.inQueue = this.#getInQueue(); // no need to assign inside object
     this.voteAverage = responseData.vote_average;
@@ -93,17 +93,19 @@ class Movie {
         genreNames.push(findValue.name);
       }
     }
-
+    if (genreNames.length === 0) {
+      return 'genre not defined';
+    }
     return genreNames.join(', ');
   }
 
-  #getInWatched() {
-    return !!dataStorage.getWatched().find(item => item === this.id);
-  }
+  // #getInWatched() {
+  //   return !!dataStorage.getWatched().find(item => item === this.id);
+  // }
 
-  #getInQueue() {
-    return !!dataStorage.getQueue().find(item => item === this.id);
-  }
+  // #getInQueue() {
+  //   return !!dataStorage.getQueue().find(item => item === this.id);
+  // }
 
   #getGenres() {
     return API.getGenres();
@@ -166,8 +168,9 @@ export function getMovieList(params, page = 1, mode = '') {
         const movie = new Movie(movieItem); // class instance
 
         objectsArray.push(movie);
-        moviesCashe.state.push(movie); // array cashing
+        // moviesCashe.state.push(movie); // array cashing
       });
+      refreshCashe(objectsArray);
 
       clearMovies();
       showMovies(objectsArray);
@@ -180,7 +183,8 @@ export function getMovieList(params, page = 1, mode = '') {
 }
 
 export function getAndShowLibrary(moviesArray) {
-  moviesCashe.state = moviesArray.filter(() => true); // array cloning
+  // moviesArray.forEach(movie => moviesCashe.state.push(movie)); //array cashing
+  refreshCashe(moviesArray);
   showMovies(moviesArray);
 }
 
@@ -299,4 +303,16 @@ export function watchedOrQueueClass(movie) {
     return 'in-queue';
   }
   return '';
+}
+
+export function refreshCashe(array = []) {
+  array.forEach(movie => moviesCashe.state.push(movie));
+
+  //deleting duplicates
+  const uniqueObjects = Array.from(
+    new Set(moviesCashe.state.map(a => a.id))
+  ).map(id => {
+    return moviesCashe.state.find(a => a.id === id);
+  });
+  moviesCashe.state = uniqueObjects;
 }
