@@ -81,10 +81,8 @@ export class DataStorage {
     let id = 0;
     if (typeof movie === 'number') {
       id = movie;
-      console.log('number!');
     } else {
       id = movie.id;
-      console.log('not a number!');
     }
     const watchedArr = this.getWatched();
     const newWatchedArr = watchedArr.filter(item => item && item.id !== id);
@@ -104,10 +102,8 @@ export class DataStorage {
     let id = 0;
     if (typeof movie === 'number') {
       id = movie;
-      console.log('number!');
     } else {
       id = movie.id;
-      console.log('not a number!');
     }
     const queueArr = this.getQueue();
     const newQueueArr = queueArr.filter(item => item && item.id !== id);
