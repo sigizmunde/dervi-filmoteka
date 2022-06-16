@@ -19,7 +19,10 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
 } from 'firebase/auth';
+import { refs } from './global';
+import { closeModal } from './modal';
 
+const data = new DataStorage();
 const firebaseConfig = {
   apiKey: 'AIzaSyDo1183-PB_7A9qygtI9_TfvjKvLJSyPDA',
   authDomain: 'test-firebase-377da.firebaseapp.com',
@@ -112,6 +115,7 @@ function switchToSignupForm(signupBtn, loginBtn) {
 }
 function onSignupBtnClick(e) {
   e.preventDefault();
+  //   const library = JSON.stringify({ watched: [], queue: [] });
   const mail = document.getElementById('register-email').value;
   const name = document.getElementById('register-name').value;
   const password = document.getElementById('register-password').value;
@@ -120,12 +124,15 @@ function onSignupBtnClick(e) {
       Notiflix.Notify.success(`Success! User ${mail} created!`);
       const user = userCredential.user;
       user.displayName = name;
-      set(ref(db, 'users/' + user.uid), {
-        username: name,
-        email: mail,
-        watched: [],
-        queue: [],
-      });
+      console.log(user);
+      data.user = user;
+      //   data.functionData = () =>
+      //     set(ref(db, 'users/' + user.uid), {
+      //       username: name,
+      //       email: mail,
+      //       library: library,
+      //     });
+      document.getElementById('test-btn1').addEventListener('click', test);
     })
     .catch(error => {
       const errorCode = error.code;
@@ -158,6 +165,12 @@ function onLoginBtnClick(e) {
     .then(userCredential => {
       Notiflix.Notify.success(`Welcome back, ${mail}!`);
       const user = userCredential.user;
+      data.user = user;
+      document.getElementById(
+        'login-btn'
+      ).textContent = `Hello ${user.displayName}`;
+      console.log(user);
+      closeModal();
     })
     .catch(error => {
       const errorCode = error.code;
@@ -192,19 +205,20 @@ function onLoginWithGoogleBtnClick(e) {
       const token = credential.accessToken;
       Notiflix.Notify.success(`Welcome, ${result.user.displayName}!`);
       const user = result.user;
-      set(ref(db, 'users/' + user.uid), {
-        username: user.displayName,
-        email: user.email,
-        watched: [],
-        queue: [],
-      });
-      get(child(dbRef, `users/${user.uid}`)).then(snapshot => {
-        if (snapshot.exists()) {
-          console.log(snapshot.val());
-        } else {
-          console.log('No data available');
-        }
-      });
+      data.user = user;
+
+      //   set(ref(db, 'users/' + user.uid), {
+      //     username: user.displayName,
+      //     email: user.email,
+      //   });
+      //   get(child(dbRef, `users/${user.uid}`)).then(snapshot => {
+      //     if (snapshot.exists()) {
+      //       console.log(snapshot.val());
+      //     } else {
+      //       console.log('No data available');
+      //     }
+      //   });
+      closeModal();
     })
     .catch(error => {
       console.error(error);
@@ -219,4 +233,11 @@ function onLoginWithGoogleBtnClick(e) {
       const credential = GoogleAuthProvider.credentialFromError(error);
       // ...
     });
+}
+
+function test() {
+  const date = Date.now();
+  set(ref(db, 'users/' + 'test1'), {
+    date: date,
+  });
 }

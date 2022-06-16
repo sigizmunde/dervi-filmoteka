@@ -6,6 +6,8 @@ export class DataStorage {
     }
     DataStorage._instance = this;
     // singleton pattern
+    this.user = null;
+    this.functionData = null;
   }
 
   getWatched() {
