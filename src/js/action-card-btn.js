@@ -1,33 +1,34 @@
 import { moviesCashe } from './global.js';
 import { refs } from './global.js';
 import { DataStorage } from './data.js';
+
 const data = new DataStorage();
+let movieCard;
 export let timerID = null;
 
 // action btn on the movie card
 export function onQueueBtnCard(btn, id) {
-  console.log('cashe is ', moviesCashe.state);
-  const movieCard = btn.closest('.card');
+  movieCard = btn.closest('.card');
 
   if (data.getQueue().find(item => item.id === id)) {
-    cancelBtnApperingAndPlacement(movieCard);
-
-    timerID = setTimeout(() => {
-      refs.cancelBtn.classList.add('is-hidden');
-      refs.cancelBtn.classList.remove('cancel-animation');
+    if (!refs.header.classList.contains('header-library')) {
       data.removeFromQueue(id);
       movieCard.classList.remove('in-queue');
-      movieCard.remove();
-    }, 3000);
+      return;
+    }
 
+    cancelDeletingMovieCardFromQueueLibrary(movieCard, id);
     return;
   }
 
   let movie = data.getWatched().find(item => item.id === id);
-  console.log(movie);
   if (movie) {
-    data.removeFromWatched(id);
-    movieCard.classList.remove('in-watched');
+    // NEED TO COMPLETE
+    if (!refs.header.classList.contains('header-library')) {
+      data.removeFromWatched(id);
+      movieCard.classList.remove('in-watched');
+    }
+    cancelDeletingMovieCardFromWatchedLibrary(movieCard, id);
   }
 
   if (!movie) {
@@ -39,26 +40,26 @@ export function onQueueBtnCard(btn, id) {
 }
 
 export function onWatchedBtnCard(btn, id) {
-  console.log('cashe is ', moviesCashe.state);
-  const movieCard = btn.closest('.card');
+  movieCard = btn.closest('.card');
 
   if (data.getWatched().find(item => item.id === id)) {
-    cancelBtnApperingAndPlacement(movieCard);
-
-    timerID = setTimeout(() => {
-      refs.cancelBtn.classList.add('is-hidden');
-      refs.cancelBtn.classList.remove('cancel-animation');
+    if (!refs.header.classList.contains('header-library')) {
       data.removeFromWatched(id);
       movieCard.classList.remove('in-watched');
-      movieCard.remove();
-    }, 3000);
+      return;
+    }
+    cancelDeletingMovieCardFromWatchedLibrary(movieCard, id);
     return;
   }
 
   let movie = data.getQueue().find(item => item.id === id);
   if (movie) {
-    data.removeFromQueue(id);
-    movieCard.classList.remove('in-queue');
+    // !!! NEED TO COMPLETE
+    if (!refs.header.classList.contains('header-library')) {
+      data.removeFromQueue(id);
+      movieCard.classList.remove('in-queue');
+    }
+    cancelDeletingMovieCardFromQueueLibrary(movieCard, id);
   }
 
   if (!movie) {
@@ -74,4 +75,38 @@ function cancelBtnApperingAndPlacement(movieCard) {
   refs.cancelBtn.classList.add('cancel-animation');
   refs.cancelBtn.style.top = `${movieCard.offsetTop}px`;
   refs.cancelBtn.style.left = `${Math.floor(movieCard.offsetLeft - 1)}px`;
+}
+
+function cancelDeletingMovieCardFromQueueLibrary(movieCard, id) {
+  cancelBtnApperingAndPlacement(movieCard);
+
+  timerID = setTimeout(() => {
+    refs.cancelBtn.classList.add('is-hidden');
+    refs.cancelBtn.classList.remove('cancel-animation');
+    data.removeFromQueue(id);
+    movieCard.classList.remove('in-queue');
+    movieCard.remove();
+
+    // check if delete last movie in page, show an empty queue-library
+    data.getQueue().length === 0
+      ? refs.cardsSection.classList.add('empty-library')
+      : null;
+  }, 2500);
+}
+
+function cancelDeletingMovieCardFromWatchedLibrary(movieCard, id) {
+  cancelBtnApperingAndPlacement(movieCard);
+
+  timerID = setTimeout(() => {
+    refs.cancelBtn.classList.add('is-hidden');
+    refs.cancelBtn.classList.remove('cancel-animation');
+    data.removeFromWatched(id);
+    movieCard.classList.remove('in-watched');
+    movieCard.remove();
+
+    // check if delete last movie in page, show an empty queue-library
+    data.getWatched().length === 0
+      ? refs.cardsSection.classList.add('empty-library')
+      : null;
+  }, 2500);
 }
