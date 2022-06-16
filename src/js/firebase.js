@@ -146,22 +146,25 @@ function onSignupBtnClick(e) {
       const errorMessage = error.message;
       if (errorCode === 'auth/internal-error') {
         Notiflix.Notify.warning(`Please, enter your password`);
+        return;
       }
       if (errorCode === 'auth/email-already-in-use') {
         Notiflix.Notify.warning(
           `Oops, user ${mail} already exists in database. Please, try Log In!`
         );
+        return;
       }
       if (errorCode === 'auth/invalid-email') {
         Notiflix.Notify.warning(
           `Incorrect email! Please check it and try again`
         );
+        return;
       }
       if (errorCode === 'auth/weak-password') {
         Notiflix.Notify.warning(`Password should be at least 6 characters`);
-      } else {
-        Notiflix.Notify.failure(`Something went wrong! ${errorMessage}`);
+        return;
       }
+      Notiflix.Notify.failure(`Something went wrong! ${errorMessage}`);
     });
 }
 function onLoginBtnClick(e) {
@@ -200,22 +203,25 @@ function onLoginBtnClick(e) {
       const errorMessage = error.message;
       if (errorCode === 'auth/wrong-password') {
         Notiflix.Notify.warning(`Wrong password! Please, try again`);
+        return;
       }
       if (errorCode === 'auth/internal-error') {
         Notiflix.Notify.warning(`Please, enter your password`);
+        return;
       }
       if (errorCode === 'auth/user-not-found') {
         Notiflix.Notify.warning(
           `Oops, user ${mail} not found in database. Please, try Sign Up!`
         );
+        return;
       }
       if (errorCode === 'auth/invalid-email') {
         Notiflix.Notify.warning(
           `Incorrect email! Please check it and try again`
         );
-      } else {
-        Notiflix.Notify.failure(`Something went wrong! ${errorMessage}`);
+        return;
       }
+      Notiflix.Notify.failure(`Something went wrong! ${errorMessage}`);
     });
 }
 
