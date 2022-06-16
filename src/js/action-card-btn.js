@@ -22,7 +22,6 @@ export function onQueueBtnCard(btn, id) {
 
   let movie = data.getWatched().find(item => item.id === id);
   if (movie) {
-    //   // NEED TO COMPLETE
     if (refs.header.classList.contains('header-library')) {
       toggleAddAndDeleteMovieInLibrary(movieCard, id);
       // add notify
@@ -90,16 +89,11 @@ function cancelDeletingMovieCardFromQueueLibrary(movieCard, id) {
     movieCard.classList.remove('in-queue');
     movieCard.remove();
 
-    // if (movie) {
-    //   data.addToWatched(movie);
-    //   movieCard.classList.add('in-watched');
-    // }
-
     // check if delete last movie in page, show an empty queue-library
     data.getQueue().length === 0
       ? refs.cardsSection.classList.add('empty-library')
       : null;
-  }, 1000);
+  }, 1200);
 }
 
 function cancelDeletingMovieCardFromWatchedLibrary(movieCard, id) {
@@ -116,7 +110,7 @@ function cancelDeletingMovieCardFromWatchedLibrary(movieCard, id) {
     data.getWatched().length === 0
       ? refs.cardsSection.classList.add('empty-library')
       : null;
-  }, 1000);
+  }, 1200);
 }
 
 function toggleAddAndDeleteMovieInLibrary(movieCard, id) {
@@ -128,23 +122,28 @@ function toggleAddAndDeleteMovieInLibrary(movieCard, id) {
   timerID = setTimeout(() => {
     refs.cancelBtn.classList.add('is-hidden');
     refs.cancelBtn.classList.remove('cancel-animation');
+    movieCard.remove();
 
     if (movieInW) {
       data.removeFromWatched(id);
       movieCard.classList.remove('in-watched');
       data.addToQueue(movieInW);
       movieCard.classList.add('in-queue');
+
+      // check if delete last movie in page, show an empty queue-library
+      data.getWatched().length === 0
+        ? refs.cardsSection.classList.add('empty-library')
+        : null;
     } else if (movieInQ) {
       data.removeFromQueue(id);
       movieCard.classList.remove('in-queue');
       data.addToWatched(movieInQ);
       movieCard.classList.add('in-watched');
-    }
-    movieCard.remove();
 
-    // check if delete last movie in page, show an empty queue-library
-    data.getWatched().length === 0
-      ? refs.cardsSection.classList.add('empty-library')
-      : null;
-  }, 1000);
+      // check if delete last movie in page, show an empty queue-library
+      data.getQueue().length === 0
+        ? refs.cardsSection.classList.add('empty-library')
+        : null;
+    }
+  }, 1200);
 }
