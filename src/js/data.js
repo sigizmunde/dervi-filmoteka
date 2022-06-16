@@ -49,6 +49,7 @@ export class DataStorage {
           watchedArr.filter(item => item && item.hasOwnProperty('id'))
         )
       );
+      this.setDatabase();
     } catch (err) {
       console.error(err);
     }
@@ -62,6 +63,7 @@ export class DataStorage {
           queueArr.filter(item => item && item.hasOwnProperty('id'))
         )
       );
+      this.setDatabase();
     } catch (err) {
       console.error(err);
     }
@@ -118,21 +120,33 @@ export class DataStorage {
   //! getDatabase - если база пустая  - создать два пустьіх массива и записать в ls с помощью setWatch, setQueue, если пользователь есть - положить из firebase данньіе и записать их в ls. Вьвзьввается при регистрации в блоке регистрации. Окно закрьівается только после ее вьіполнения
   getDatabase() {
     if (this.user) {
-      get(child(ref(db), 'users/' + this.user.uid)).then(snapshot => {
-        if (snapshot.exists()) {
-          console.log(snapshot.val());
-          const library = JSON.parse(snapshot.val().library);
+      get(child(ref(db), 'users/' + this.user.uid))
+        .then(snapshot => {
+          if (snapshot.exists()) {
+            console.log(snapshot.val());
+            if (snapshot.val().library) {
+              const library = JSON.parse(snapshot.val().library);
 
-          if (library.watched) {
-            this.#setWatched(library.watched);
+              if (library.watched) {
+                this.#setWatched(library.watched);
+              } else {
+                localStorage.setItem('watched', JSON.stringify([]));
+              }
+              if (library.queue) {
+                this.#setQueue(library.queue);
+              } else {
+                localStorage.setItem('queue', JSON.stringify([]));
+              }
+              return 'Library synchronized';
+            }
+          } else {
+            localStorage.setItem('watched', JSON.stringify([]));
+            localStorage.setItem('queue', JSON.stringify([]));
+            return 'Library emptied';
           }
-          if (library.queue) {
-            this.#setQueue(library.queue);
-          }
-        } else {
-          console.log('got no data');
-        }
-      });
+        })
+        .then(resolve => console.log(resolve))
+        .catch(err => console.log(err));
     }
   }
 

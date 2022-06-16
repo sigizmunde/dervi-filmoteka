@@ -124,15 +124,19 @@ function onSignupBtnClick(e) {
       Notiflix.Notify.success(`Success! User ${mail} created!`);
       const user = userCredential.user;
       user.displayName = name;
+      set(ref(db, 'users/' + user.uid), {
+        username: name,
+        email: mail,
+      });
       console.log(user);
       localData.user = user;
-      //   data.functionData = () =>
-      //     set(ref(db, 'users/' + user.uid), {
-      //       username: name,
-      //       email: mail,
-      //       library: library,
-      //     });
+      localData.getDatabase();
       document.getElementById('test-btn1').addEventListener('click', test);
+    })
+    .then(() => {
+      document.getElementById(
+        'login-btn'
+      ).textContent = `Hello, ${user.displayName}`;
     })
     .catch(error => {
       const errorCode = error.code;
@@ -169,10 +173,24 @@ function onLoginBtnClick(e) {
       localData.getDatabase();
       document.getElementById(
         'login-btn'
-      ).textContent = `Hello ${user.displayName}`;
-      console.log(user);
+      ).textContent = `Logged in with ${mail}`;
       closeModal();
+      return user;
     })
+    .then(user =>
+      get(child(ref(db), 'users/' + user.uid)).then(snapshot => {
+        if (snapshot.exists()) {
+          console.log(snapshot.val());
+          if (snapshot.val().username) {
+            document.getElementById('login-btn').textContent = `Hello, ${
+              snapshot.val().username
+            }`;
+          }
+        } else {
+          console.log('got no data');
+        }
+      })
+    )
     .catch(error => {
       const errorCode = error.code;
       const errorMessage = error.message;
@@ -207,22 +225,26 @@ function onLoginWithGoogleBtnClick(e) {
       Notiflix.Notify.success(`Welcome, ${result.user.displayName}!`);
       const user = result.user;
       localData.user = user;
-
-      //   set(ref(db, 'users/' + user.uid), {
-      //     username: user.displayName,
-      //     email: user.email,
-      //   });
-      //   get(child(dbRef, `users/${user.uid}`)).then(snapshot => {
-      //     if (snapshot.exists()) {
-      //       console.log(snapshot.val());
-      //     } else {
-      //       console.log('No data available');
-      //     }
-      //   });
-      closeModal();
+      document.getElementById(
+        'login-btn'
+      ).textContent = `Hello, ${user.displayName}`;
+      set(ref(db, 'users/' + user.uid), {
+        username: user.displayName,
+        email: user.email,
+      });
+      get(child(dbRef, `users/${user.uid}`))
+        .then(snapshot => {
+          if (snapshot.exists()) {
+            console.log(snapshot.val());
+          } else {
+            console.log('No data available');
+          }
+          closeModal();
+        })
+        .catch(error => console.log(error));
     })
     .catch(error => {
-      console.error(error);
+      console.log(error);
     })
     .catch(error => {
       // Handle Errors here.
