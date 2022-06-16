@@ -1,20 +1,20 @@
 :root {
-    --main-text-color: #fff;
-    --secondary-text-color: #000;
-    --helpers-text-color: #8C8C8C;
-    --accent-color: #FF6B01;
-    --warning-text-color: #FF001B;
-    --ft-text-color: #545454;
-    --main-bg-color: #fff;
-    --secondary-bg-color: #F7F7F7;
-    --helpers-bg-color: #000;
-    --overlay-color: rgba(0, 0, 0, 0.5);
-    --btn-shadow: 0px 8px 43px rgba(255, 107, 1, 0.6);
-    --bg-dark-theme: #292c35;
-    --light-title-color: #000;
-    --modal-team-role-color: #8c8c8c;
-    --modal-team-member-icon: #000;
-    --transition-params: 250ms ease-out;
+  --main-text-color: #fff;
+  --secondary-text-color: #000;
+  --helpers-text-color: #8c8c8c;
+  --accent-color: #ff6b01;
+  --warning-text-color: #ff001b;
+  --ft-text-color: #545454;
+  --main-bg-color: #fff;
+  --secondary-bg-color: #f7f7f7;
+  --helpers-bg-color: #000;
+  --overlay-color: rgba(0, 0, 0, 0.5);
+  --btn-shadow: 0px 8px 43px rgba(255, 107, 1, 0.6);
+  --bg-dark-theme: #292c35;
+  --light-title-color: #000;
+  --modal-team-role-color: #8c8c8c;
+  --modal-team-member-icon: #000;
+  --transition-params: 250ms ease-out;
 }
 
 $mobile: 480px;
