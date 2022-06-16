@@ -100,7 +100,7 @@ function onHomeLinkClick(event) {
   refs.header.classList.add('header-search');
   refs.cardsSection.classList.remove('empty-library');
   refs.cardsBox.classList.remove('hide-labels');
-  refs.sliderContainer.style.display = 'block';
+  refs.sliderContainer.classList.remove('splide--hidden');
 
   pageObserver.unobserve(refs.observeTarget);
 
@@ -117,7 +117,7 @@ function onLibraryLinkClick(event) {
   refs.libraryWatchBtn.classList.add('accent-btn');
   refs.libraryQueBtn.classList.remove('accent-btn');
   refs.cardsSection.classList.remove('empty-main-library');
-  refs.sliderContainer.style.display = 'none';
+  refs.sliderContainer.classList.add('splide--hidden');
 
   hidePagination();
   if (data.getWatched().length === 0) {
@@ -180,7 +180,6 @@ function checkKeyPress(event) {
 function onBackdropClick(event) {
   if (event.currentTarget === event.target) {
     closeTeamModal();
-    // splide.Components.AutoScroll.play();
   }
 }
 
@@ -188,7 +187,11 @@ function onMoviesSearch(event) {
   event.preventDefault();
   const query = event.target.elements.query.value;
   refs.cardsBox.innerHTML = '';
-  refs.sliderContainer.style.display = 'none';
+  if (query) {
+    refs.sliderContainer.classList.add('splide--hidden');
+  } else {
+    refs.sliderContainer.classList.remove('splide--hidden');
+  }
   clearMovies();
   getMovieList(query);
 }
