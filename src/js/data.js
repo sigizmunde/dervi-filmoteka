@@ -1,3 +1,6 @@
+import { get, update, ref, child } from 'firebase/database';
+import { db } from './firebase';
+
 export class DataStorage {
   constructor() {
     // singleton pattern
@@ -6,6 +9,8 @@ export class DataStorage {
     }
     DataStorage._instance = this;
     // singleton pattern
+    this.user = null;
+    this.functionData = null;
   }
 
   getWatched() {
@@ -44,6 +49,7 @@ export class DataStorage {
           watchedArr.filter(item => item && item.hasOwnProperty('id'))
         )
       );
+      this.updateDatabase();
     } catch (err) {
       console.error(err);
     }
@@ -57,6 +63,7 @@ export class DataStorage {
           queueArr.filter(item => item && item.hasOwnProperty('id'))
         )
       );
+      this.updateDatabase();
     } catch (err) {
       console.error(err);
     }
@@ -108,5 +115,53 @@ export class DataStorage {
     const queueArr = this.getQueue();
     const newQueueArr = queueArr.filter(item => item && item.id !== id);
     this.#setQueue(newQueueArr);
+  }
+
+  //! getDatabase - если база пустая  - создать два пустьіх массива и записать в ls с помощью setWatch, setQueue, если пользователь есть - положить из firebase данньіе и записать их в ls. Вьвзьввается при регистрации в блоке регистрации. Окно закрьівается только после ее вьіполнения
+  getDatabase() {
+    if (this.user) {
+      get(child(ref(db), 'users/' + this.user.uid))
+        .then(snapshot => {
+          if (snapshot.exists()) {
+            console.log(snapshot.val());
+            if (snapshot.val().library) {
+              const library = JSON.parse(snapshot.val().library);
+
+              if (library.watched) {
+                this.#setWatched(library.watched);
+              } else {
+                localStorage.setItem('watched', JSON.stringify([]));
+              }
+              if (library.queue) {
+                this.#setQueue(library.queue);
+              } else {
+                localStorage.setItem('queue', JSON.stringify([]));
+              }
+              return 'Library synchronized';
+            }
+          } else {
+            localStorage.setItem('watched', JSON.stringify([]));
+            localStorage.setItem('queue', JSON.stringify([]));
+            return 'Library emptied';
+          }
+        })
+        .then(resolve => console.log(resolve))
+        .catch(err => console.log(err));
+    }
+  }
+
+  //! setDatabase - берет массивьі из ls, пишет их в fb - вьізьівается при методах изменения БД
+  updateDatabase() {
+    if (this.user) {
+      const libraryData = {
+        watched: this.getWatched(),
+        queue: this.getQueue(),
+      };
+      update(ref(db, 'users/' + this.user.uid), {
+        library: JSON.stringify(libraryData),
+      })
+        .then(() => console.log('Firebase Realtime Database synchronized'))
+        .catch(err => console.log('Oops! Database has not synchronized', err));
+    }
   }
 }
