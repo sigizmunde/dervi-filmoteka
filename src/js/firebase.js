@@ -119,14 +119,16 @@ function onSignupBtnClick(e) {
   const mail = document.getElementById('register-email').value;
   const name = document.getElementById('register-name').value;
   const password = document.getElementById('register-password').value;
+  let user;
   createUserWithEmailAndPassword(auth, mail, password)
     .then(userCredential => {
       Notiflix.Notify.success(`Success! User ${mail} created!`);
-      const user = userCredential.user;
+      user = userCredential.user;
       user.displayName = name;
       set(ref(db, 'users/' + user.uid), {
         username: name,
         email: mail,
+        library: '{"watched":[],"queue":[]}',
       });
       console.log(user);
       localData.user = user;
@@ -230,7 +232,7 @@ function onLoginWithGoogleBtnClick(e) {
       document.getElementById(
         'login-btn'
       ).textContent = `Hello, ${user.displayName}`;
-      set(ref(db, 'users/' + user.uid), {
+      update(ref(db, 'users/' + user.uid), {
         username: user.displayName,
         email: user.email,
       });
@@ -261,9 +263,9 @@ function onLoginWithGoogleBtnClick(e) {
     });
 }
 
-function test() {
-  const date = Date.now();
-  set(ref(db, 'users/' + 'test1'), {
-    date: date,
-  });
-}
+// function test() {
+//   const date = Date.now();
+//   set(ref(db, 'users/' + 'test1'), {
+//     date: date,
+//   });
+// }
