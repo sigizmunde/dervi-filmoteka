@@ -36,7 +36,8 @@ function onCloseClick(event) {
 export function printToModal(HTMLString) {
   const modalContent = document.querySelector('.modal-content');
   modalContent.innerHTML = HTMLString;
-
+  const trailerBtn = document.querySelector('#play');
+  trailerBtn.innerHTML = HTMLString;
   // get modal action buttons
   queueBtnModal = modalContent.querySelector('[data-queue-btn]');
   watchedBtnModal = modalContent.querySelector('[data-watched-btn]');
@@ -49,8 +50,15 @@ export function printToModal(HTMLString) {
     watchedBtnModal.classList.add('active-btn');
   }
 
+  trailerBtn.addEventListener('click', onClickBtnTrailer);
+
   queueBtnModal.addEventListener('click', onQueueBtnModal);
   watchedBtnModal.addEventListener('click', onWatchedBtnModal);
+}
+
+function onClickBtnTrailer() {
+const trailerBtn = document.querySelector('#play');
+  trailerBtn.innerHTML = HTMLString;
 }
 
 // action btn in the movie modal
