@@ -50,7 +50,7 @@ function getGenresForSlider(genreArr, genres) {
 function sliderCardsTpl(objectsArray, selector) {
   objectsArray.map(obj => {
     const movie = new Movie(obj);
-    moviesCashe.state.push(movie);
+    moviesCashe.state.push(movie); //array cashing
     const gendersList = getGenresForSlider(obj.genre_ids, genres);
     selector.innerHTML += `
         <li class="card splide__slide">

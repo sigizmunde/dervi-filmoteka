@@ -5,7 +5,7 @@
   width: 310px;
   height: 450px;
   color: rgb(0, 0, 0);
-  font-size: 30px;
+  font-size: 16px;
   font-weight: 700;
   cursor: pointer;
   text-transform: uppercase;
@@ -20,6 +20,10 @@
 .cancel-animation {
   opacity: 0.8;
   transition: opacity 450ms ease-out;
+}
+.cancel-button.is-hidden {
+  width: 20px;
+  height: 20px;
 }
 .cancel-button::after {
   content: '';
