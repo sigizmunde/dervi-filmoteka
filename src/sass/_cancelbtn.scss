@@ -34,7 +34,7 @@
   height: 5px;
   width: 90%;
   background-color: var(--accent-color);
-  animation: status-bar 3s running;
+  animation: status-bar 1.2s running;
 }
 .cancel-button.is-hidden::after {
   animation: none;
