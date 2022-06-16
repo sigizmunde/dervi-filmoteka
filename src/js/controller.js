@@ -18,11 +18,8 @@ import { onQueueBtnCard, onWatchedBtnCard, timerID } from './action-card-btn';
 import { onClickScrollTop } from './scroll-to-top';
 import { hidePagination } from './pagination';
 
-<<<<<<< HEAD
 // import Auth from './auth';
-=======
 import { addClassDarkToHTML } from './switch-theme';
->>>>>>> main
 
 const data = new DataStorage();
 
