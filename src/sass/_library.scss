@@ -57,7 +57,7 @@
   flex-direction: column;
   align-items: center;
   height: 100%;
-  background-image: url(../images/Movie-camera-and-film-clipart-3-resize.png);
+  background-image: url(../images/placeholder-empty-library.png);
   background-position: 50% 100%;
   background-size: 70%;
   background-repeat: no-repeat;
@@ -87,7 +87,7 @@
 }
 
 .empty-library::before {
-  content: 'Oops, there are no movies.\A Press START to choose movie';
+  content: 'Oops, there are no movies.\A Let\'s add some movies, press GO TO MOVIES';
   color: var(--light-title-color);
   white-space: pre;
   // display: flex;
