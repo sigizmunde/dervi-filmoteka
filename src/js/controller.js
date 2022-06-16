@@ -93,7 +93,7 @@ export function init() {
   data.getWatched();
 }
 
-function onHomeLinkClick(event) {
+export function onHomeLinkClick(event) {
   event.preventDefault();
   // location.reload();
   refs.header.classList.remove('header-library');

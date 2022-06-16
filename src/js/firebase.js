@@ -19,7 +19,7 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
 } from 'firebase/auth';
-import { refs } from './global';
+import { onHomeLinkClick } from './controller';
 import { closeModal } from './modal';
 
 const localData = new DataStorage();
@@ -131,12 +131,13 @@ function onSignupBtnClick(e) {
       console.log(user);
       localData.user = user;
       localData.getDatabase();
-      document.getElementById('test-btn1').addEventListener('click', test);
     })
     .then(() => {
       document.getElementById(
         'login-btn'
       ).textContent = `Hello, ${user.displayName}`;
+      onHomeLinkClick(e);
+      closeModal();
     })
     .catch(error => {
       const errorCode = error.code;
@@ -174,6 +175,7 @@ function onLoginBtnClick(e) {
       document.getElementById(
         'login-btn'
       ).textContent = `Logged in with ${mail}`;
+      onHomeLinkClick(e);
       closeModal();
       return user;
     })
@@ -239,6 +241,7 @@ function onLoginWithGoogleBtnClick(e) {
           } else {
             console.log('No data available');
           }
+          onHomeLinkClick(e);
           closeModal();
         })
         .catch(error => console.log(error));

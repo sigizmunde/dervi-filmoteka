@@ -1,4 +1,4 @@
-import { get, set, ref, child } from 'firebase/database';
+import { get, update, ref, child } from 'firebase/database';
 import { db } from './firebase';
 
 export class DataStorage {
@@ -49,7 +49,7 @@ export class DataStorage {
           watchedArr.filter(item => item && item.hasOwnProperty('id'))
         )
       );
-      this.setDatabase();
+      this.updateDatabase();
     } catch (err) {
       console.error(err);
     }
@@ -63,7 +63,7 @@ export class DataStorage {
           queueArr.filter(item => item && item.hasOwnProperty('id'))
         )
       );
-      this.setDatabase();
+      this.updateDatabase();
     } catch (err) {
       console.error(err);
     }
@@ -151,13 +151,13 @@ export class DataStorage {
   }
 
   //! setDatabase - берет массивьі из ls, пишет их в fb - вьізьівается при методах изменения БД
-  setDatabase() {
+  updateDatabase() {
     if (this.user) {
       const libraryData = {
         watched: this.getWatched(),
         queue: this.getQueue(),
       };
-      set(ref(db, 'users/' + this.user.uid), {
+      update(ref(db, 'users/' + this.user.uid), {
         library: JSON.stringify(libraryData),
       })
         .then(() => console.log('Firebase Realtime Database synchronized'))
