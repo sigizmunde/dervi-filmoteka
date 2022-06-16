@@ -47,6 +47,7 @@ export function init() {
   refs.logo = document.querySelector('#logo');
   refs.libraryWatchBtn = document.querySelector('#lib-w');
   refs.libraryQueBtn = document.querySelector('#lib-q');
+  refs.emptyLibBtn = document.querySelector('.empty-library-btn');
   refs.ourTeamLink = document.querySelector('#our-team');
   refs.closeModalBtn = document.querySelector('[data-action="close-modal"]');
   refs.backdrop = document.querySelector('.js-backdrop');
@@ -62,6 +63,7 @@ export function init() {
   refs.pagination = document.querySelector('.pagination');
   refs.searchInput = document.querySelector('.search-input');
   refs.cancelBtn = document.querySelector('#cancel');
+  refs.tempCardWrap = document.createElement('div');
   refs.currentMovieLi;
   //   refs.loginSignoutBtn = document.getElementById('login-btn');
   try {
@@ -70,6 +72,7 @@ export function init() {
     refs.libraryLink.addEventListener('click', onLibraryLinkClick);
     refs.libraryWatchBtn.addEventListener('click', onLibraryWatchBtnClick);
     refs.libraryQueBtn.addEventListener('click', onLibraryQueBtnClick);
+    refs.emptyLibBtn.addEventListener('click', onHomeLinkClick);
     refs.ourTeamLink.addEventListener('click', openTeamModal);
     refs.closeModalBtn.addEventListener('click', closeTeamModal);
     refs.backdrop.addEventListener('click', onBackdropClick);
@@ -213,7 +216,6 @@ function onActionMovieCard(event) {
         onWatchedBtnCard(currentMovieLink, currentMovieIdNum);
       }
       btnClicked = true;
-      // event.stopImmediatePropagation();
     }
 
     // catch a movie link and open the movie modal
@@ -222,8 +224,6 @@ function onActionMovieCard(event) {
       refs.currentMovieLi = currentMovieLink.closest('.card');
 
       getMovieInfo(currentMovieId);
-
-      // event.stopPropagation();
     }
   });
 }

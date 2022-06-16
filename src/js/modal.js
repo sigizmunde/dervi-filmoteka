@@ -1,6 +1,7 @@
 import { splide } from './slider';
 import { DataStorage } from './data';
 import { refs, moviesCashe } from './global';
+import { ref } from '@firebase/database';
 
 const data = new DataStorage();
 let movieModal = document.querySelector('.movie-modal');
@@ -31,6 +32,7 @@ export function closeModal() {
   movieModal.classList.add('is-hidden');
   document.body.classList.remove('modal-open');
   splide.Components.AutoScroll.play();
+  refs.tempCardWrap.innerHTML = '';
 }
 
 function onCloseClick() {
@@ -61,9 +63,24 @@ export function printToModal(HTMLString) {
 
 // action btn in the movie modal
 function onQueueBtnModal(event) {
-  console.log('cashe is ', moviesCashe);
   const currentMovieId = event.target.dataset.movieId;
   const currentMovieIdNum = Number(currentMovieId);
+
+  let movie = data.getQueue().find(item => item.id === currentMovieIdNum);
+  if (movie) {
+    data.removeFromQueue(currentMovieIdNum);
+    event.target.classList.remove('active-btn');
+    if (refs.currentMovieLi) {
+      refs.currentMovieLi.classList.remove('in-queue');
+    }
+    showHideMovieCard(currentMovieIdNum);
+    // add notify
+    return;
+  }
+
+  if (!movie) {
+    movie = moviesCashe.state.find(item => item.id === currentMovieIdNum);
+  }
 
   if (
     data.getWatched().find(item => item.id === currentMovieIdNum) &&
@@ -76,14 +93,32 @@ function onQueueBtnModal(event) {
     }
   }
 
-  let movie = data.getQueue().find(item => item.id === currentMovieIdNum);
+  data.addToQueue(movie);
+  event.target.classList.add('active-btn');
+
+  // add label on a movie card
+  if (refs.currentMovieLi) {
+    refs.currentMovieLi.classList.add('in-queue');
+  }
+
+  showHideMovieCard(currentMovieIdNum);
+  // add notify
+}
+
+function onWatchedBtnModal(event) {
+  const currentMovieId = event.target.dataset.movieId;
+  const currentMovieIdNum = Number(currentMovieId);
+
+  let movie = data.getWatched().find(item => item.id === currentMovieIdNum);
   if (movie) {
-    data.removeFromQueue(currentMovieIdNum);
+    data.removeFromWatched(currentMovieIdNum);
     event.target.classList.remove('active-btn');
+    // hideMovieCard();
     if (refs.currentMovieLi) {
-      refs.currentMovieLi.classList.remove('in-queue');
+      refs.currentMovieLi.classList.remove('in-watched');
     }
 
+    showHideMovieCard(currentMovieIdNum);
     // add notify
     return;
   }
@@ -91,19 +126,6 @@ function onQueueBtnModal(event) {
   if (!movie) {
     movie = moviesCashe.state.find(item => item.id === currentMovieIdNum);
   }
-  data.addToQueue(movie);
-  event.target.classList.add('active-btn');
-  if (refs.currentMovieLi) {
-    refs.currentMovieLi.classList.add('in-queue');
-  }
-
-  // add notify
-}
-
-function onWatchedBtnModal(event) {
-  console.log('cashe is ', moviesCashe.state);
-  const currentMovieId = event.target.dataset.movieId;
-  const currentMovieIdNum = Number(currentMovieId);
 
   if (
     data.getQueue().find(item => item.id === currentMovieIdNum) &&
@@ -116,26 +138,39 @@ function onWatchedBtnModal(event) {
     }
   }
 
-  let movie = data.getWatched().find(item => item.id === currentMovieIdNum);
-  if (movie) {
-    data.removeFromWatched(currentMovieIdNum);
-    event.target.classList.remove('active-btn');
-    if (refs.currentMovieLi) {
-      refs.currentMovieLi.classList.remove('in-watched');
-    }
-
-    // add notify
-    return;
-  }
-
-  if (!movie) {
-    movie = moviesCashe.state.find(item => item.id === currentMovieIdNum);
-  }
   data.addToWatched(movie);
   event.target.classList.add('active-btn');
+  // showMovieCard();
+
   if (refs.currentMovieLi) {
     refs.currentMovieLi.classList.add('in-watched');
   }
 
+  showHideMovieCard(currentMovieIdNum);
   // add notify
+}
+
+// hide a movie card after some action in the movie modal if we are in the library page
+function showHideMovieCard(movieId, movieLi = refs.currentMovieLi) {
+  if (!refs.header.classList.contains('header-library')) {
+    return;
+  }
+  if (refs.header.querySelector('#lib-w').classList.contains('accent-btn')) {
+    if (data.getWatched().find(item => item.id === movieId)) {
+      refs.cardsBox.prepend(movieLi);
+      return;
+    } else {
+      refs.tempCardWrap.append(movieLi);
+      return;
+    }
+  }
+  if (refs.header.querySelector('#lib-q').classList.contains('accent-btn')) {
+    if (data.getQueue().find(item => item.id === movieId)) {
+      refs.cardsBox.prepend(movieLi);
+      return;
+    } else {
+      refs.tempCardWrap.append(movieLi);
+      return;
+    }
+  }
 }
