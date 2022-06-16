@@ -81,6 +81,7 @@ body.modal-open {
 }
 .close-btn {
   position: absolute;
+  z-index: 1;
   right: 16px;
   top: 16px;
   width: 14px;

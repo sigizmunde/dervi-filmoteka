@@ -7,7 +7,7 @@ import {
   getAndShowLibrary,
   getPremiers,
 } from './movies';
-import { modalInit } from './modal';
+import { modalInit, openModal } from './modal';
 import { clearMovies } from './markup';
 import { showLoader, hideLoader } from './loader';
 import { showSliderMovies, splide } from './slider';
@@ -18,6 +18,7 @@ import { onQueueBtnCard, onWatchedBtnCard, timerID } from './action-card-btn';
 import { onClickScrollTop } from './scroll-to-top';
 import { hidePagination } from './pagination';
 
+// import Auth from './auth';
 import { addClassDarkToHTML } from './switch-theme';
 
 const data = new DataStorage();
@@ -62,7 +63,7 @@ export function init() {
   refs.searchInput = document.querySelector('.search-input');
   refs.cancelBtn = document.querySelector('#cancel');
   refs.currentMovieLi;
-
+  //   refs.loginSignoutBtn = document.getElementById('login-btn');
   try {
     refs.logo.addEventListener('click', onHomeLinkClick);
     refs.homeLink.addEventListener('click', onHomeLinkClick);
@@ -79,6 +80,8 @@ export function init() {
     refs.cancelBtn.addEventListener('click', () => {
       onCancelBtnClick(timerID);
     });
+    // const auth = new Auth();
+    // auth.makeAuthForm();
   } catch (error) {
     console.log(error);
   }
@@ -90,7 +93,7 @@ export function init() {
   data.getWatched();
 }
 
-function onHomeLinkClick(event) {
+export function onHomeLinkClick(event) {
   event.preventDefault();
   // location.reload();
   refs.header.classList.remove('header-library');

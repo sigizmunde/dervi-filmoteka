@@ -1,3 +1,4 @@
+import './js/firebase';
 // import '@splidejs/splide/css';
 import './sass/main.scss'; // draft file
 import { init } from './js/controller'; // movies
