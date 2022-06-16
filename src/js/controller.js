@@ -19,6 +19,8 @@ import { onQueueBtnCard, onWatchedBtnCard, timerID } from './action-card-btn';
 import { onClickScrollTop } from './scroll-to-top';
 import { hidePagination } from './pagination';
 
+import { addClassDarkToHTML } from './switch-theme';
+
 const data = new DataStorage();
 
 const SCROLL_PAGE_LEN = 6;
@@ -31,8 +33,11 @@ export function init() {
   //refs, event listeners, genres request, popular movies request
   // showLoader();
   // hideLoader();
+  addClassDarkToHTML();
 
-  moviesCashe.state = [];
+  if (!moviesCashe.state) {
+    moviesCashe.state = [];
+  }
   modalInit();
   refs.loader = document.querySelector('.lds-ripple');
   refs.cardsBox = document.querySelector('.cards-box');
@@ -126,7 +131,7 @@ function onLibraryWatchBtnClick() {
   refs.libraryWatchBtn.classList.add('accent-btn');
   refs.libraryQueBtn.classList.remove('accent-btn');
   currentLibraryArr = data.getWatched();
-  moviesCashe.state = currentLibraryArr.filter(() => true);
+  // currentLibraryArr.forEach(movie => moviesCashe.state.push(movie));
   if (currentLibraryArr.length === 0) {
     refs.cardsSection.classList.add('empty-library');
   } else {
@@ -143,7 +148,7 @@ function onLibraryQueBtnClick() {
   refs.libraryQueBtn.classList.add('accent-btn');
   refs.libraryWatchBtn.classList.remove('accent-btn');
   currentLibraryArr = data.getQueue();
-  moviesCashe.state = currentLibraryArr.filter(() => true);
+  // currentLibraryArr.forEach(movie => moviesCashe.state.push(movie));
   if (currentLibraryArr.length === 0) {
     refs.cardsSection.classList.add('empty-library');
   } else {

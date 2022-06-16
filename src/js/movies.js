@@ -187,8 +187,9 @@ export function getMovieList(params, page = 1, mode = '') {
         const movie = new Movie(movieItem); // class instance
 
         objectsArray.push(movie);
-        moviesCashe.state.push(movie); // array cashing
+        // moviesCashe.state.push(movie); // array cashing
       });
+      refreshCashe(objectsArray);
 
       clearMovies();
       showMovies(objectsArray);
@@ -201,7 +202,8 @@ export function getMovieList(params, page = 1, mode = '') {
 }
 
 export function getAndShowLibrary(moviesArray) {
-  moviesCashe.state = moviesArray.filter(() => true); // array cloning
+  // moviesArray.forEach(movie => moviesCashe.state.push(movie)); //array cashing
+  refreshCashe(moviesArray);
   showMovies(moviesArray);
 }
 
@@ -320,4 +322,16 @@ export function watchedOrQueueClass(movie) {
     return 'in-queue';
   }
   return '';
+}
+
+export function refreshCashe(array = []) {
+  array.forEach(movie => moviesCashe.state.push(movie));
+
+  //deleting duplicates
+  const uniqueObjects = Array.from(
+    new Set(moviesCashe.state.map(a => a.id))
+  ).map(id => {
+    return moviesCashe.state.find(a => a.id === id);
+  });
+  moviesCashe.state = uniqueObjects;
 }

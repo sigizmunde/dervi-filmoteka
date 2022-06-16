@@ -1,3 +1,4 @@
+// import '@splidejs/splide/css';
 import './sass/main.scss'; // draft file
 import { init } from './js/controller'; // movies
 
@@ -37,4 +38,5 @@ const data = new DataStorage();
 
 // console.log(data.getWatched());
 // console.log(data.getQueue());
-// ====================================================================================
+
+//=====================================================================================

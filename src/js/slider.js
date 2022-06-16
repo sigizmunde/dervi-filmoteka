@@ -1,22 +1,13 @@
 import APIService from './movie-api';
 import { API_IMG_URL, moviesCashe } from './global';
 import { Movie } from './movies';
+import Splide from '@splidejs/splide';
+import { AutoScroll } from '@splidejs/splide-extension-auto-scroll';
 
 const api = new APIService();
 const genres = api.getGenres().reduce((acc, genre) => {
   return { ...acc, [genre.id]: genre.name };
 }, {});
-
-export function showSliderMovies(selector) {
-  api
-    .getPremiers()
-    .then(res => res.results)
-    .then(data => {
-      sliderCardsTpl(data, selector);
-      splide.mount(window.splide.Extensions);
-    })
-    .catch(reject => console.log(reject));
-}
 
 export const splide = new Splide('.splide', {
   type: 'loop',
@@ -29,6 +20,17 @@ export const splide = new Splide('.splide', {
     speed: 1,
   },
 });
+
+export function showSliderMovies(selector) {
+  api
+    .getPremiers()
+    .then(res => res.results)
+    .then(data => {
+      sliderCardsTpl(data, selector);
+      splide.mount({ AutoScroll });
+    })
+    .catch(reject => console.log(reject));
+}
 
 function getGenresForSlider(genreArr, genres) {
   const showedGenres = [];
@@ -48,7 +50,7 @@ function getGenresForSlider(genreArr, genres) {
 function sliderCardsTpl(objectsArray, selector) {
   objectsArray.map(obj => {
     const movie = new Movie(obj);
-    moviesCashe.state.push(movie);
+    moviesCashe.state.push(movie); //array cashing
     const gendersList = getGenresForSlider(obj.genre_ids, genres);
     selector.innerHTML += `
         <li class="card splide__slide">

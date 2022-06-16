@@ -1,47 +1,47 @@
 .splide {
- display: none;
-    @media screen and (min-width: $tablet){
+  display: none;
+  @media screen and (min-width: $tablet) {
     display: block;
     margin-top: 20px;
     max-width: 100vw;
     margin-left: auto;
     margin-right: auto;
-    }
+  }
 }
 
 .splide__slide {
-    max-width: 150px;
-    cursor: pointer;
+  max-width: 150px;
+  cursor: pointer;
 }
 
 .splide__arrows .splide__arrow {
-    background-color: #FF6B08;
+  background-color: #ff6b08;
 }
 
 .splide__arrows .splide__arrow--next {
-    right: 2.3em;
+  right: 2.3em;
 }
 
-.splide__img{
+.splide__img {
   width: 100%;
   height: 100%;
 }
 
-.splide__card-body{
-    padding-top: 5px;
+.splide__card-body {
+  padding-top: 5px;
 }
 
-.splide__card-title{
-    text-transform: uppercase;
-    color: var(--secondary-text-color);
-    font-size: 10px;
-    font-weight: 500;
-    line-height: 1.3;
+.splide__card-title {
+  text-transform: uppercase;
+  color: var(--secondary-text-color);
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1.3;
 }
 
-.splide__card-genres{
-    color: var(--accent-color);
-    font-size: 10px;
-    font-weight: 500;
-    line-height: 1.3;
+.splide__card-genres {
+  color: var(--accent-color);
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1.3;
 }
