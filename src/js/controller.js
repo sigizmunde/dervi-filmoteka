@@ -7,7 +7,7 @@ import {
   getAndShowLibrary,
   getPremiers,
 } from './movies';
-import { modalInit, openModal } from './modal';
+import { modalInit, closeModal } from './modal';
 import { clearMovies } from './markup';
 import { showLoader, hideLoader } from './loader';
 import { notiflix } from './notifications';
@@ -73,6 +73,7 @@ export function init() {
     refs.libraryQueBtn.addEventListener('click', onLibraryQueBtnClick);
     refs.ourTeamLink.addEventListener('click', openTeamModal);
     refs.closeModalBtn.addEventListener('click', closeTeamModal);
+    window.addEventListener('keydown', checkKeyPress);
     refs.backdrop.addEventListener('click', onBackdropClick);
     refs.searchForm.addEventListener('submit', onMoviesSearch);
     refs.cardsBox.addEventListener('click', onActionMovieCard);
@@ -162,13 +163,13 @@ function onLibraryQueBtnClick() {
 }
 
 function openTeamModal() {
-  window.addEventListener('keydown', checkKeyPress);
+  // window.addEventListener('keydown', checkKeyPress);
   refs.teamModal.classList.remove('is-hidden');
   document.body.classList.add('modal-open');
 }
 
 function closeTeamModal() {
-  window.removeEventListener('keydown', checkKeyPress);
+  // window.removeEventListener('keydown', checkKeyPress);
   refs.teamModal.classList.add('is-hidden');
   document.body.classList.remove('modal-open');
 }
@@ -176,12 +177,14 @@ function closeTeamModal() {
 function checkKeyPress(event) {
   if (event.code === 'Escape') {
     closeTeamModal();
+    closeModal();
   }
 }
 
 function onBackdropClick(event) {
   if (event.currentTarget === event.target) {
     closeTeamModal();
+    closeModal();
   }
 }
 
