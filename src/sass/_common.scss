@@ -19,6 +19,8 @@ body.modal-open .backdrop {
 }
 
 .container {
+  position: relative;
+  height: 100%;
   padding-left: 20px;
   padding-right: 20px;
   margin-left: auto;

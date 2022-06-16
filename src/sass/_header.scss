@@ -19,11 +19,21 @@
 }
 
 .header.header-search {
-  background-image: url(../images/hero.jpg);
+  background-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.56),
+      rgba(0, 0, 0, 0.56)
+    ),
+    url(../images/hero.jpg);
 }
 
 .header.header-library {
-  background-image: url(../images/library.jpg);
+  background-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.56),
+      rgba(0, 0, 0, 0.56)
+    ),
+    url(../images/library.jpg);
 }
 
 .header-box {

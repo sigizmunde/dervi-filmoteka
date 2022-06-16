@@ -2,7 +2,10 @@
   display: flex;
   justify-content: space-between;
 
-  width: 142px;
+  width: 118px;
+  @media screen and (min-width: $tablet) {
+    width: 142px;
+  }
 }
 
 .nav-link {

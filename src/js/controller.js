@@ -198,7 +198,7 @@ function onMoviesSearch(event) {
     refs.sliderContainer.classList.remove('splide--hidden');
   }
   clearMovies();
-  getMovieList(query);
+  getMovieList(query.trim());
 }
 
 function onActionMovieCard(event) {
