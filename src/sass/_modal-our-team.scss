@@ -3,7 +3,6 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(1);
-
   width: calc(100vw - 40px);
   max-width: 375px;
   height: calc(100vh - 60px);
@@ -14,14 +13,12 @@
   background-position: center;
   background-repeat: no-repeat;
   transition: transform --transition-params, opacity --transition-params;
-
   @media screen and (min-width: $tablet) {
     height: 550px;
     width: 700px;
     padding: 40px 35px;
     max-width: none;
   }
-
   @media screen and (min-width: $desktop) {
     height: 560px;
     width: 815px;
@@ -51,7 +48,6 @@
   border: none;
   cursor: pointer;
   transition: color var(--transition-params);
-
   &:hover {
     color: var(--accent-color);
   }
@@ -68,7 +64,6 @@
   grid-template-columns: 1fr;
   grid-template-rows: fit-content;
   row-gap: 20px;
-
   overflow: hidden;
   overflow-y: scroll;
   height: calc(100% - 80px);
@@ -83,7 +78,6 @@
   background-repeat: no-repeat;
   border-radius: 10px;
   border: 1px solid rgba(47, 48, 58, 0.2);
-
   @media screen and (min-width: $tablet) {
     grid-template-columns: repeat(4, 22%);
     column-gap: 15px;
@@ -137,7 +131,6 @@
   line-height: 1.14;
   text-align: center;
   color: var(--secondary-text-color);
-
   @media screen and (min-width: $tablet) {
     align-self: center;
     margin-bottom: 5px;
@@ -148,7 +141,6 @@
 .team-member__link {
   display: block;
   text-align: center;
-
   @media screen and (min-width: $tablet) {
     align-self: flex-end;
     font-size: 10px;
@@ -159,10 +151,9 @@
   margin-bottom: 10px;
   font-size: 14px;
   line-height: 1.14;
-  color: var(--helpers-text-color);
+  color: var(--modal-team-role-color);
   text-transform: uppercase;
   text-align: center;
-
   @media screen and (min-width: $tablet) {
     margin-bottom: 5px;
     align-self: flex-end;
@@ -171,6 +162,7 @@
 }
 
 .team-member-icon {
+  fill: var(--modal-team-member-icon);
   width: 40px;
   height: 40px;
   @media screen and (min-width: $tablet) {

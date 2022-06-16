@@ -18,11 +18,11 @@
     "url": "https://github.com/sigizmunde/dervi-filmoteka"
   },
   "dependencies": {
+    "modern-normalize": "^1.1.0",
     "firebase": "^9.8.3",
     "notiflix": "^3.2.5",
     "@splidejs/splide": "^4.0.7",
-    "@splidejs/splide-extension-auto-scroll": "^0.4.2",
-    "modern-normalize": "^1.1.0"
+    "@splidejs/splide-extension-auto-scroll": "^0.4.2"
   },
   "devDependencies": {
     "@parcel/transformer-sass": "^2.6.0",
