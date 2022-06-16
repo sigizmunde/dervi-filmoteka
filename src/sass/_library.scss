@@ -2,26 +2,22 @@
   display: flex;
   margin: 0 auto;
 }
+
 .library-btn {
   width: 130px;
   height: 42px;
-
   display: flex;
   justify-content: center;
   align-items: center;
-
   color: var(--main-text-color);
   border: 1px solid var(--main-text-color);
   background: transparent;
   cursor: pointer;
   border-radius: 5px;
   text-transform: uppercase;
-
   line-height: 1.33;
-
   transition: background-color var(--transition-params),
     border var(--transition-params);
-
   @media screen and(min-width: $tablet) {
     width: 152px;
   }
@@ -41,7 +37,6 @@
       margin-right: 16px;
     }
   }
-
   &:hover,
   &:focus {
     background-color: var(--accent-color);
@@ -49,10 +44,12 @@
     border: 1px solid transparent;
   }
 }
+
 .accent-btn {
   background: var(--accent-color);
   border: 1px solid transparent;
 }
+
 // ---------------------- cards content sorting -----------------//
 .empty-library,
 .empty-main-library {
@@ -61,7 +58,7 @@
   align-items: center;
   height: 100%;
 
-  background-image: url(../images/Movie-camera-and-film-clipart-3-resize.png);
+  background-image: url(../images/Movie-camera-and-film-clipart-3-hd.png);
   background-position: 50% 100%;
   background-size: 70%;
   background-repeat: no-repeat;
@@ -76,6 +73,7 @@
     display: none;
   }
 }
+
 .empty-main-library::before {
   content: 'Oops, something going wrong.\A Change your request. \AOr refresh page.';
   white-space: pre;
@@ -85,13 +83,13 @@
   max-width: 320px;
   @media screen and(min-width: $tablet) {
     content: 'Oops, something going wrong.\A Change your request or refresh page.';
-
     font-size: 25px;
   }
 }
 
 .empty-library::before {
   content: 'Oops, there are no movies.\A Press START to choose movie';
+  color: var(--light-title-color);
   white-space: pre;
   // display: flex;
   // align-items: center;
@@ -105,17 +103,18 @@
   @media screen and(min-width: $tablet) {
     font-size: 25px;
   }
-
   // position: absolute;
   // top: 50%;
   // left: 50%;
   // transform: translate(-50%, -50%);
 }
+
 .container:not(.empty-library) {
   .empty-library-btn {
     display: none;
   }
 }
+
 .empty-library-btn:first-child {
   margin-top: 20px;
   margin-right: 0;

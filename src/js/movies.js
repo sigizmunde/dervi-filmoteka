@@ -25,6 +25,8 @@ import { showLoader, hideLoader } from './loader';
 import APIService from './movie-api';
 import { DataStorage } from './data.js';
 import { showPagination, hidePagination } from './pagination';
+import { notiflix } from './notifications';
+
 const dataStorage = new DataStorage();
 
 export class Movie {
@@ -140,6 +142,23 @@ export function getMovieList(params, page = 1, mode = '') {
   }
   if (params && !mode) {
     queryFunction = () => API.searchMovie(params, page);
+
+    // Notiflix show count of found films
+
+    const filmCountPromice = queryFunction().then(result => {
+      return result.total_results;
+    });
+    const totalFilms = async () => {
+      const filmsCount = await filmCountPromice;
+      if (filmsCount !== 0) {
+        notiflix('search', `${filmsCount}`);
+      } else {
+        notiflix('failure', 0);
+      }
+    };
+    totalFilms();
+
+    // Notiflix show count of found films
   }
   if (params && mode === 'repeat') {
     queryFunction = () => API.repeatLastSearch(page);
@@ -168,8 +187,9 @@ export function getMovieList(params, page = 1, mode = '') {
         const movie = new Movie(movieItem); // class instance
 
         objectsArray.push(movie);
-        moviesCashe.state.push(movie); // array cashing
+        // moviesCashe.state.push(movie); // array cashing
       });
+      refreshCashe(objectsArray);
 
       clearMovies();
       showMovies(objectsArray);
@@ -182,7 +202,8 @@ export function getMovieList(params, page = 1, mode = '') {
 }
 
 export function getAndShowLibrary(moviesArray) {
-  moviesCashe.state = moviesArray.filter(() => true); // array cloning
+  // moviesArray.forEach(movie => moviesCashe.state.push(movie)); //array cashing
+  refreshCashe(moviesArray);
   showMovies(moviesArray);
 }
 
@@ -301,4 +322,16 @@ export function watchedOrQueueClass(movie) {
     return 'in-queue';
   }
   return '';
+}
+
+export function refreshCashe(array = []) {
+  array.forEach(movie => moviesCashe.state.push(movie));
+
+  //deleting duplicates
+  const uniqueObjects = Array.from(
+    new Set(moviesCashe.state.map(a => a.id))
+  ).map(id => {
+    return moviesCashe.state.find(a => a.id === id);
+  });
+  moviesCashe.state = uniqueObjects;
 }
