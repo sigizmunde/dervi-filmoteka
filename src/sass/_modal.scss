@@ -40,6 +40,8 @@
   width: 100vw;
   height: 100vh;
   background: var(--overlay-color);
+  border-radius: 5px;
+  box-shadow: var(--btn-shadow);
   // z-index: 1;
 }
 
@@ -59,6 +61,8 @@ body.modal-open {
   height: auto;
   // height: 100vh;
   background-color: var(--main-bg-color);
+  border-radius: 5px;
+  box-shadow: var(--btn-shadow);
 
   @media screen and(min-width: $tablet) {
     position: fixed;
