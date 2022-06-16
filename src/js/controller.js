@@ -17,7 +17,7 @@ import { onQueueBtnCard, onWatchedBtnCard, timerID } from './action-card-btn';
 import { onClickScrollTop } from './scroll-to-top';
 import { hidePagination } from './pagination';
 
-import Auth from './auth';
+// import Auth from './auth';
 
 const data = new DataStorage();
 
@@ -71,8 +71,8 @@ export function init() {
     refs.cancelBtn.addEventListener('click', () => {
       onCancelBtnClick(timerID);
     });
-    const auth = new Auth();
-    auth.makeAuthForm();
+    // const auth = new Auth();
+    // auth.makeAuthForm();
   } catch (error) {
     console.log(error);
   }

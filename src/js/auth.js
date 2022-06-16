@@ -1,8 +1,18 @@
+import Notiflix from 'notiflix';
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+
+import { getDatabase, ref, get, child, set } from 'firebase/database';
+
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from 'firebase/auth';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -17,6 +27,9 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
 export default class Auth {
   constructor() {
     this.loginSignoutBtn = document.getElementById('login-btn');
@@ -38,9 +51,9 @@ export default class Auth {
             <input type="email" id="login-email" class="input" placeholder="Email" />
             <input type="password" id="login-password" class="input" placeholder="Password" />
           </div>
-    	  		    <button type="button" id="register-btn1" class="submit-btn" form="register-form">
-          Log in with Google
-        </button>
+    	   		    <button type="button" id="register-btn1" class="submit-btn" form="register-form">
+           Log in with Google
+         </button>
           <button id="register-btn2" class="submit-btn">Log in</button>
         </div>
       </div>
@@ -58,26 +71,35 @@ export default class Auth {
       const registerFormBtn = document.getElementById('register-btn');
       const loginFormBtn = document.getElementById('register-btn2');
       const LoginWithGoogleBtn = document.getElementById('register-btn1');
-      const loginEmail = document.getElementById('register-password').value;
 
       registerFormBtn.addEventListener('click', e => {
         e.preventDefault();
-        const auth = getAuth(app);
         const email = document.getElementById('register-email').value;
         const password = document.getElementById('register-email').value;
         const name = document.getElementById('register-name').value;
-        createUserWithEmailAndPassword(auth, email, password, name)
+        createUserWithEmailAndPassword(auth, email, password)
           .then(userCredential => {
             // Signed in
             const user = userCredential.user;
             user.displayName = name;
-            console.log(user);
-            // ...
+            set(ref(db, 'users/' + user.uid), {
+              username: name,
+              email: email,
+              watched: watched,
+              queue: queue,
+            });
           })
           .catch(error => {
             const errorCode = error.code;
             const errorMessage = error.message;
-            // ..
+            console.log(error.message);
+            if (
+              errorMessage === 'Firebase: Error (auth/email-already-in-use).'
+            ) {
+              Notiflix.Notify.failure(
+                `User with email "${email}" already exists! Please press "Log in"`
+              );
+            }
           });
       });
 
