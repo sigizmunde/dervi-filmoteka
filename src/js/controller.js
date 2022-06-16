@@ -10,6 +10,7 @@ import {
 import { modalInit, openModal } from './modal';
 import { clearMovies } from './markup';
 import { showLoader, hideLoader } from './loader';
+import { notiflix } from './notifications';
 import { showSliderMovies, splide } from './slider';
 
 import { DataStorage } from './data';
@@ -119,6 +120,7 @@ function onLibraryLinkClick(event) {
   refs.cardsSection.classList.remove('empty-main-library');
   refs.sliderContainer.classList.add('splide--hidden');
 
+  // refs.libraryLink.addEventListener('click', notiflix('authorization', '5000'));
   hidePagination();
   if (data.getWatched().length === 0) {
     refs.cardsSection.classList.add('empty-library');
