@@ -22,9 +22,8 @@ export function onQueueBtnCard(btn, id) {
 
   let movie = data.getWatched().find(item => item.id === id);
   if (movie) {
-    //   // NEED TO COMPLETE
     if (refs.header.classList.contains('header-library')) {
-      cancelDeletingMovieCardFromWatchedLibrary(movieCard, id);
+      toggleAddAndDeleteMovieInLibrary(movieCard, id);
       // add notify
       return;
     } else {
@@ -57,8 +56,7 @@ export function onWatchedBtnCard(btn, id) {
   let movie = data.getQueue().find(item => item.id === id);
   if (movie) {
     if (refs.header.classList.contains('header-library')) {
-      cancelDeletingMovieCardFromQueueLibrary(movieCard, id);
-      // add notify
+      toggleAddAndDeleteMovieInLibrary(movieCard, id); // add notify
       return;
     } else {
       data.removeFromQueue(id);
@@ -85,46 +83,67 @@ function cancelDeletingMovieCardFromQueueLibrary(movieCard, id) {
   cancelBtnApperingAndPlacement(movieCard);
 
   timerID = setTimeout(() => {
-    const movie = data.getQueue().find(item => item.id === id);
-
     refs.cancelBtn.classList.add('is-hidden');
     refs.cancelBtn.classList.remove('cancel-animation');
     data.removeFromQueue(id);
     movieCard.classList.remove('in-queue');
     movieCard.remove();
 
-    if (movie) {
-      data.addToWatched(movie);
-      movieCard.classList.add('in-watched');
-    }
-
     // check if delete last movie in page, show an empty queue-library
     data.getQueue().length === 0
       ? refs.cardsSection.classList.add('empty-library')
       : null;
-  }, 2500);
+  }, 1200);
 }
 
 function cancelDeletingMovieCardFromWatchedLibrary(movieCard, id) {
   cancelBtnApperingAndPlacement(movieCard);
 
   timerID = setTimeout(() => {
-    const movie = data.getWatched().find(item => item.id === id);
-
     refs.cancelBtn.classList.add('is-hidden');
     refs.cancelBtn.classList.remove('cancel-animation');
     data.removeFromWatched(id);
     movieCard.classList.remove('in-watched');
     movieCard.remove();
 
-    if (movie) {
-      data.addToQueue(movie);
-      movieCard.classList.add('in-queue');
-    }
-
     // check if delete last movie in page, show an empty queue-library
     data.getWatched().length === 0
       ? refs.cardsSection.classList.add('empty-library')
       : null;
-  }, 2500);
+  }, 1200);
+}
+
+function toggleAddAndDeleteMovieInLibrary(movieCard, id) {
+  const movieInW = data.getWatched().find(item => item.id === id);
+  const movieInQ = data.getQueue().find(item => item.id === id);
+
+  cancelBtnApperingAndPlacement(movieCard);
+
+  timerID = setTimeout(() => {
+    refs.cancelBtn.classList.add('is-hidden');
+    refs.cancelBtn.classList.remove('cancel-animation');
+    movieCard.remove();
+
+    if (movieInW) {
+      data.removeFromWatched(id);
+      movieCard.classList.remove('in-watched');
+      data.addToQueue(movieInW);
+      movieCard.classList.add('in-queue');
+
+      // check if delete last movie in page, show an empty queue-library
+      data.getWatched().length === 0
+        ? refs.cardsSection.classList.add('empty-library')
+        : null;
+    } else if (movieInQ) {
+      data.removeFromQueue(id);
+      movieCard.classList.remove('in-queue');
+      data.addToWatched(movieInQ);
+      movieCard.classList.add('in-watched');
+
+      // check if delete last movie in page, show an empty queue-library
+      data.getQueue().length === 0
+        ? refs.cardsSection.classList.add('empty-library')
+        : null;
+    }
+  }, 1200);
 }
