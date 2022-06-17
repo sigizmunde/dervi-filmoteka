@@ -135,7 +135,7 @@ export function getMovieList(params, page = 1, mode = '') {
   hidePagination();
 
   // depending on params choses API function
-  console.log('getMovies with params ', params, page, mode);
+  // console.log('getMovies with params ', params, page, mode);
   let queryFunction;
   if (!params) {
     queryFunction = () => API.getTrending();
@@ -169,9 +169,6 @@ export function getMovieList(params, page = 1, mode = '') {
 
   queryFunction()
     .then(responseData => {
-      console.log(
-        `Current page: ${responseData.page}, total pages: ${responseData.total_pages}`
-      ); // --> for pagination
       showPagination(responseData.total_pages, responseData.page);
       if (responseData.total_pages === 0) {
         refs.cardsSection.classList.add('empty-main-library');

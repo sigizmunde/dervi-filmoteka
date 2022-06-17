@@ -44,8 +44,6 @@ export function printToModal(HTMLString) {
   const modalContent = document.querySelector('.modal-content');
   modalContent.innerHTML = HTMLString;
 
-  console.log('currentMovieLi', refs.currentMovieLi);
-
   // get modal action buttons
   queueBtnModal = modalContent.querySelector('[data-queue-btn]');
   watchedBtnModal = modalContent.querySelector('[data-watched-btn]');

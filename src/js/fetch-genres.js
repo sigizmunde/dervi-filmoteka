@@ -15,6 +15,6 @@ fetch(`${BASE_URL}genre/movie/list?api_key=${API_KEY}`)
   });
 
 function fetchGenres(data) {
-  console.log(data);
+  // console.log(data);
 }
 // *------------------------------------------------------------------
