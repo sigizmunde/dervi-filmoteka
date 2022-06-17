@@ -69,6 +69,8 @@ loginSignupBtn.addEventListener('click', makeRegisterFormRender);
 
 function makeRegisterFormRender() {
   document.querySelector('.movie-modal').classList.remove('is-hidden');
+  document.querySelector('.movie-modal').classList.add('modal-register');
+
   document.querySelector('body').classList.add('modal-open');
   document.querySelector('.modal-content').innerHTML = markup;
 

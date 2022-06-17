@@ -102,3 +102,11 @@ body.modal-open {
   width: 14px;
   height: 14px;
 }
+@media screen and (max-width: $tablet) {
+  .modal-register {
+    .modal-window {
+      overflow: hidden;
+      bottom: 10px;
+    }
+  }
+}
