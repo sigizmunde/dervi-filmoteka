@@ -99,7 +99,6 @@ export function showPagination(totalPages, currentPage) {
     for (let i = 1; i <= totalPages; i += 1) {
       curArray.push(i);
     }
-    console.log(curArray);
     generatePagList(curArray, currentPage);
   }
   if (totalPages > 7) {

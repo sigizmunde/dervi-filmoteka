@@ -154,11 +154,11 @@ export default class APIService {
 
     this.#fetchQuery(pathParams.split, searchParams).then(result => {
       this.genres = result.genres;
-      console.log('loadGenres complete');
+      // console.log('loadGenres complete');
     });
   }
 
-  getGenres() {    
-    return this.genres;    
+  getGenres() {
+    return this.genres;
   }
 }

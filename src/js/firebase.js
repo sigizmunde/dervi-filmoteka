@@ -132,7 +132,7 @@ function onSignupBtnClick(e) {
         email: mail,
         library: '{"watched":[],"queue":[]}',
       });
-      console.log(user);
+      // console.log(user);
       localData.user = user;
       localData.getDatabase();
     })
@@ -189,14 +189,14 @@ function onLoginBtnClick(e) {
     .then(user =>
       get(child(ref(db), 'users/' + user.uid)).then(snapshot => {
         if (snapshot.exists()) {
-          console.log(snapshot.val());
+          // console.log(snapshot.val());
           if (snapshot.val().username) {
             document.getElementById('login-btn').textContent = `Hello, ${
               snapshot.val().username
             }`;
           }
         } else {
-          console.log('got no data');
+          // console.log('got no data');
         }
       })
     )
@@ -247,9 +247,9 @@ function onLoginWithGoogleBtnClick(e) {
       get(child(dbRef, `users/${user.uid}`))
         .then(snapshot => {
           if (snapshot.exists()) {
-            console.log(snapshot.val());
+            // console.log(snapshot.val());
           } else {
-            console.log('No data available');
+            // console.log('No data available');
           }
           onHomeLinkClick(e);
           closeModal();

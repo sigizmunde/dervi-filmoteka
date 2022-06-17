@@ -234,7 +234,7 @@ function onActionMovieCard(event) {
 }
 
 function onScroll() {
-  console.log(`i'm scrolling to the infinity`);
+  // console.log(`i'm scrolling to the infinity`);
   if (currentLibraryArr.length > SCROLL_PAGE_LEN) {
     const newPage = currentLibraryArr.splice(0, SCROLL_PAGE_LEN);
     getAndShowLibrary(newPage);
@@ -252,7 +252,7 @@ function onSliderClick(evt) {
   refs.currentMovieLi = refs.cardsBox
     .querySelector(`[data-id="${id}"]`)
     ?.closest('li');
-  console.log('currentMovieLi', refs.currentMovieLi);
+
   getMovieInfo(id);
   if (!refs.movieModal.classList.contains('is-hidden')) {
     splide.Components.AutoScroll.pause();
