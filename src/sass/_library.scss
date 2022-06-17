@@ -76,6 +76,7 @@
 .empty-main-library::before {
   content: 'Oops, something going wrong.\A Change your request. \AOr refresh page.';
   white-space: pre;
+  color: var(--light-title-color);
   font-size: 20px;
   font-weight: 500;
   line-height: 1.33;
@@ -87,7 +88,7 @@
 }
 
 .empty-library::before {
-  content: 'Oops, there are no movies.\A Let\'s add some movies, press GO TO MOVIES';
+  content: "Oops, there are no movies.\A Let's add some movies. \APress GO TO MOVIES";
   color: var(--light-title-color);
   white-space: pre;
   // display: flex;
