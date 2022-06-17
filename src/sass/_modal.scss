@@ -42,7 +42,7 @@
   background: var(--overlay-color);
   border-radius: 5px;
   box-shadow: var(--btn-shadow);
-  // z-index: 1;
+  z-index: 199;
 }
 
 body.modal-open {
@@ -55,6 +55,7 @@ body.modal-open {
   left: 50%;
   bottom: 0px;
   transform: translateX(-50%);
+  z-index: 199;
   overflow: auto;
   // width: 90%;
   width: 280px;
