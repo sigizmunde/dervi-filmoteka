@@ -30,6 +30,7 @@ export function openModal() {
 export function closeModal() {
   movieModal.classList.remove('open');
   movieModal.classList.add('is-hidden');
+  movieModal.classList.remove('modal-register');
   document.body.classList.remove('modal-open');
   splide.Components.AutoScroll.play();
   refs.tempCardWrap.innerHTML = '';
