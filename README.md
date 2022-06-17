@@ -23,7 +23,7 @@
 <a align="center" href="https://github.com/ShenyaLipinsky">![GitHub](https://img.shields.io/badge/-Yevhen-05122A?style=for-the-badge&logo=github)</a>
 <a align="center" href="https://github.com/Shan-Vision">![GitHub](https://img.shields.io/badge/-Shan-05122A?style=for-the-badge&logo=github)</a>
 <a align="center" href="https://github.com/LagodaAnna">![GitHub](https://img.shields.io/badge/-Anna-05122A?style=for-the-badge&logo=github)</a>
-<a align="center" href="https://github.com/Sergeevi44">![GitHub](https://img.shields.io/badge/-Oleksii-05122A??style=for-the-badge&logo=github)</a>
+<a align="center" href="https://github.com/Sergeevi44">![GitHub](https://img.shields.io/badge/-Oleksii-05122A?style=for-the-badge&logo=github)</a>
 <a align="center" href="https://github.com/belinskiy-and">![GitHub](https://img.shields.io/badge/-Andrew-05122A?style=for-the-badge&logo=github)</a>
 <a align="center" href="https://github.com/Serhii1727">![GitHub](https://img.shields.io/badge/-Serhii-05122A?style=for-the-badge&logo=github)</a>
 <a align="center" href="https://github.com/elenbond">![GitHub](https://img.shields.io/badge/-Olena-05122A?style=for-the-badge&logo=github)</a>
