@@ -4,10 +4,9 @@
   margin-right: auto;
   margin-left: auto;
   justify-content: center;
-  @media screen and (max-width: $mobile), (min-width: $mobile) {
-    width: 280px;
-    margin-bottom: 40px;
-  }
+  width: 280px;
+  margin-bottom: 40px;
+
   @media screen and (min-width: $tablet) {
     width: 374px;
     margin-bottom: 60px;

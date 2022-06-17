@@ -20,7 +20,6 @@ body.modal-open .backdrop {
 
 .container {
   position: relative;
-  height: 100%;
   padding-left: 20px;
   padding-right: 20px;
   margin-left: auto;
@@ -35,6 +34,10 @@ body.modal-open .backdrop {
   @media screen and (min-width: $desktop) {
     max-width: 1024px;
   }
+}
+
+.container-position {
+  height: 100%;
 }
 
 .main {
